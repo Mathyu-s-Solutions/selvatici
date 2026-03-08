@@ -22,7 +22,11 @@ function SeedComposition() {
       <Float speed={1.2} rotationIntensity={0.22} floatIntensity={0.45}>
         <mesh scale={[1.55, 1.15, 1.2]}>
           <icosahedronGeometry args={[1.1, 6]} />
-          <meshStandardMaterial color="#8e9f93" metalness={0.05} roughness={0.42} />
+          <meshStandardMaterial
+            color="#8e9f93"
+            metalness={0.05}
+            roughness={0.42}
+          />
         </mesh>
         <mesh scale={[1.72, 1.28, 1.34]}>
           <icosahedronGeometry args={[1.05, 3]} />
@@ -39,7 +43,11 @@ function SeedComposition() {
 
       <mesh rotation={[Math.PI / 2.7, 0.4, 0.7]} scale={[1.05, 0.7, 1]}>
         <torusGeometry args={[1.95, 0.08, 20, 180]} />
-        <meshStandardMaterial color="#f8ce79" metalness={0.08} roughness={0.32} />
+        <meshStandardMaterial
+          color="#f8ce79"
+          metalness={0.08}
+          roughness={0.32}
+        />
       </mesh>
 
       <Float speed={1.8} rotationIntensity={0.3} floatIntensity={0.6}>
@@ -63,17 +71,31 @@ function SeedComposition() {
         </mesh>
       </Float>
 
-      <Sparkles color="#ffb067" count={48} scale={[5.8, 4.2, 4]} size={2.8} speed={0.25} />
+      <Sparkles
+        color="#ffb067"
+        count={48}
+        scale={[5.8, 4.2, 4]}
+        size={2.8}
+        speed={0.25}
+      />
     </group>
   );
 }
 
 export function HeroCanvas() {
   return (
-    <Canvas camera={{ fov: 42, position: [0, 0, 5.5] }} dpr={[1, 1.5]} gl={{ alpha: true, antialias: true }}>
+    <Canvas
+      camera={{ fov: 42, position: [0, 0, 5.5] }}
+      dpr={[1, 1.5]}
+      gl={{ alpha: true, antialias: true }}
+    >
       <ambientLight intensity={0.8} />
       <hemisphereLight args={["#fff7eb", "#c6b8a1", 1.15]} />
-      <directionalLight color="#fff3db" intensity={2.2} position={[3.5, 4, 2.5]} />
+      <directionalLight
+        color="#fff3db"
+        intensity={2.2}
+        position={[3.5, 4, 2.5]}
+      />
       <pointLight color="#ffb067" intensity={14} position={[-2, 1.5, 3]} />
       <SeedComposition />
     </Canvas>

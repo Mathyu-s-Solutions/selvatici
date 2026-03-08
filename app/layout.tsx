@@ -50,7 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="it">
-      <body className={`${bodyFont.variable} ${displayFont.variable} bg-background text-foreground font-sans antialiased`}>
+      <body
+        className={`${bodyFont.variable} ${displayFont.variable} bg-background text-foreground font-sans antialiased`}
+      >
         {children}
       </body>
     </html>

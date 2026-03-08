@@ -97,7 +97,8 @@ const services: Service[] = [
       "Creativita, precisione e autostima attraverso il fare",
       "Recupero di saperi dimenticati e riduzione degli sprechi",
     ],
-    context: "Per chi vuole creare, imparare e trasformare la materia con consapevolezza.",
+    context:
+      "Per chi vuole creare, imparare e trasformare la materia con consapevolezza.",
     icon: Scissors,
     span: "lg:col-span-5",
   },
@@ -110,7 +111,8 @@ const services: Service[] = [
       "Preparazione, impiattamento e presentazione dei piatti",
       "Convivialita domestica, cura degli ospiti e riordino finale",
     ],
-    context: "Per case, strutture ricettive, eventi privati e momenti speciali.",
+    context:
+      "Per case, strutture ricettive, eventi privati e momenti speciali.",
     icon: ChefHat,
     span: "lg:col-span-7",
     featured: true,
@@ -125,7 +127,8 @@ const services: Service[] = [
       "Cooking class, assaggi guidati e raccolte stagionali",
       "Itinerari tra paesaggio, biodiversita e cultura alimentare",
     ],
-    context: "Per gruppi turistici, associazioni ed esperienze territoriali su misura.",
+    context:
+      "Per gruppi turistici, associazioni ed esperienze territoriali su misura.",
     icon: Map,
     span: "lg:col-span-12",
   },
@@ -136,42 +139,48 @@ const audiences: Audience[] = [
     title: "Scuole",
     description:
       "Attivita didattiche che uniscono educazione ambientale, alimentare e apprendimento attraverso il fare.",
-    activities: "Laboratori di cucina, orti condivisi, manualita creativa e progetti tematici.",
+    activities:
+      "Laboratori di cucina, orti condivisi, manualita creativa e progetti tematici.",
     icon: School,
   },
   {
     title: "Centri estivi",
     description:
       "Proposte giocose e coinvolgenti per trasformare il tempo libero in un'esperienza viva, creativa e concreta.",
-    activities: "Attivita tematiche, esperienze outdoor, cucina e piccoli percorsi di gruppo.",
+    activities:
+      "Attivita tematiche, esperienze outdoor, cucina e piccoli percorsi di gruppo.",
     icon: SunMedium,
   },
   {
     title: "Case di riposo",
     description:
       "Percorsi pensati per attivare memoria, manualita e relazioni, restituendo spazio alle tradizioni locali e al fare insieme.",
-    activities: "Stimolazione cognitiva, gesti lenti, laboratori intergenerazionali e condivisione di storie.",
+    activities:
+      "Stimolazione cognitiva, gesti lenti, laboratori intergenerazionali e condivisione di storie.",
     icon: HeartHandshake,
   },
   {
     title: "Carceri e comunita",
     description:
       "Attivita orientate all'inclusione, alla collaborazione e allo sviluppo di competenze pratiche che restituiscono fiducia.",
-    activities: "Percorsi di gruppo, riabilitazione attraverso il fare e manualita applicata.",
+    activities:
+      "Percorsi di gruppo, riabilitazione attraverso il fare e manualita applicata.",
     icon: Users,
   },
   {
     title: "Gruppi turistici",
     description:
       "Esperienze territoriali per chi cerca autenticita, cucina italiana, biodiversita e incontri veri con i luoghi.",
-    activities: "Cooking class, visite, degustazioni guidate e percorsi immersivi nel territorio.",
+    activities:
+      "Cooking class, visite, degustazioni guidate e percorsi immersivi nel territorio.",
     icon: Compass,
   },
   {
     title: "Famiglie e comunita locali",
     description:
       "Occasioni per stare insieme, imparare con le mani e creare nuovi rituali condivisi tra generazioni diverse.",
-    activities: "Giornate esperienziali, laboratori partecipati e momenti di benessere comunitario.",
+    activities:
+      "Giornate esperienziali, laboratori partecipati e momenti di benessere comunitario.",
     icon: House,
   },
 ];
@@ -309,7 +318,9 @@ function ServiceCard({ service }: { service: Service }) {
                   </li>
                 ))}
               </ul>
-              <p className="mt-6 text-sm font-medium text-(--brown)">{service.context}</p>
+              <p className="mt-6 text-sm font-medium text-(--brown)">
+                {service.context}
+              </p>
             </div>
             <div className="hidden items-end justify-end p-8 md:flex">
               <div className="rounded-[1.75rem] border border-white/70 bg-white/72 p-4 backdrop-blur-sm">
@@ -330,8 +341,12 @@ function ServiceCard({ service }: { service: Service }) {
             <div className="mb-4 inline-flex size-12 items-center justify-center rounded-2xl bg-(--petrol)/12 text-(--olive)">
               <Icon className="size-5" />
             </div>
-            <CardTitle className="text-[2rem] leading-tight">{service.title}</CardTitle>
-            <CardDescription className="text-base leading-8">{service.description}</CardDescription>
+            <CardTitle className="text-[2rem] leading-tight">
+              {service.title}
+            </CardTitle>
+            <CardDescription className="text-base leading-8">
+              {service.description}
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-3 text-sm leading-7 text-black/72">
@@ -342,7 +357,9 @@ function ServiceCard({ service }: { service: Service }) {
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-sm font-medium text-(--brown)">{service.context}</p>
+            <p className="mt-6 text-sm font-medium text-(--brown)">
+              {service.context}
+            </p>
           </CardContent>
         </>
       )}
@@ -360,7 +377,9 @@ function AudienceCard({ audience }: { audience: Audience }) {
           <Icon className="size-5" />
         </div>
         <CardTitle className="text-[1.75rem]">{audience.title}</CardTitle>
-        <CardDescription className="text-base leading-8">{audience.description}</CardDescription>
+        <CardDescription className="text-base leading-8">
+          {audience.description}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <p className="rounded-3xl bg-(--sand)/66 px-4 py-4 text-sm leading-7 text-black/72">
@@ -376,7 +395,10 @@ export default function Home() {
     <div className="relative overflow-x-clip">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-136 bg-[radial-gradient(circle_at_18%_0%,rgba(255,176,103,0.24),transparent_36%),radial-gradient(circle_at_88%_8%,rgba(142,159,147,0.2),transparent_28%)]" />
 
-      <section id="home" className="scroll-mt-24 px-6 pb-20 pt-6 lg:px-8 lg:pb-28">
+      <section
+        id="home"
+        className="scroll-mt-24 px-6 pb-20 pt-6 lg:px-8 lg:pb-28"
+      >
         <header className="mx-auto flex max-w-7xl flex-col gap-5 rounded-4xl border border-white/55 bg-white/52 px-5 py-4 backdrop-blur-md lg:flex-row lg:items-center lg:justify-between lg:px-6">
           <a href="#home" className="flex items-center gap-4">
             <Image
@@ -399,7 +421,12 @@ export default function Home() {
                 {label}
               </a>
             ))}
-            <Button asChild size="lg" variant="outline" className="ml-0 lg:ml-2">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="ml-0 lg:ml-2"
+            >
               <a href="#contact">Prenota un contatto</a>
             </Button>
           </nav>
@@ -414,9 +441,10 @@ export default function Home() {
                 Coltiviamo legami. Cuciniamo comunita. Intrecciamo territori.
               </h1>
               <p className="max-w-2xl text-lg leading-8 text-black/72 md:text-xl md:leading-9">
-                I Selvatici crea laboratori, esperienze culinarie e percorsi di comunita radicati
-                nella terra, nei saperi manuali e nel benessere condiviso. Ogni incontro e un
-                invito a rallentare, fare con le mani e tornare a stare insieme davvero.
+                I Selvatici crea laboratori, esperienze culinarie e percorsi di
+                comunita radicati nella terra, nei saperi manuali e nel
+                benessere condiviso. Ogni incontro e un invito a rallentare,
+                fare con le mani e tornare a stare insieme davvero.
               </p>
             </div>
 
@@ -439,7 +467,8 @@ export default function Home() {
                     Esperienze
                   </p>
                   <p className="mt-2 text-sm leading-7 text-black/72">
-                    Cucina, ortoterapia, cucito, chef a domicilio e tour enogastronomici.
+                    Cucina, ortoterapia, cucito, chef a domicilio e tour
+                    enogastronomici.
                   </p>
                 </CardContent>
               </Card>
@@ -449,7 +478,8 @@ export default function Home() {
                     Persone
                   </p>
                   <p className="mt-2 text-sm leading-7 text-black/72">
-                    Scuole, famiglie, comunita, gruppi turistici e contesti educativi o sociali.
+                    Scuole, famiglie, comunita, gruppi turistici e contesti
+                    educativi o sociali.
                   </p>
                 </CardContent>
               </Card>
@@ -459,7 +489,8 @@ export default function Home() {
                     Territorio
                   </p>
                   <p className="mt-2 text-sm leading-7 text-black/72">
-                    Con base a Castelgrande e disponibilita operativa in Basilicata e in tutta Italia.
+                    Con base a Castelgrande e disponibilita operativa in
+                    Basilicata e in tutta Italia.
                   </p>
                 </CardContent>
               </Card>
@@ -517,7 +548,8 @@ export default function Home() {
                   Mani, tempo, relazione
                 </p>
                 <p className="mt-2 text-sm leading-7 text-black/72">
-                  Ogni laboratorio parte dal gesto, passa dalla cura e arriva alla condivisione.
+                  Ogni laboratorio parte dal gesto, passa dalla cura e arriva
+                  alla condivisione.
                 </p>
               </CardContent>
             </Card>
@@ -562,11 +594,12 @@ export default function Home() {
                 <Card className="border-white/50 bg-(--sand)/78">
                   <CardContent className="pt-8">
                     <p className="font-display text-3xl leading-tight text-foreground">
-                      &ldquo;Il vero benessere nasce quando il singolo sta bene nella comunita.&rdquo;
+                      &ldquo;Il vero benessere nasce quando il singolo sta bene
+                      nella comunita.&rdquo;
                     </p>
                     <p className="mt-5 text-sm leading-7 text-black/70">
-                      Da Castelgrande partono percorsi che mettono insieme persone, paesaggi,
-                      biodiversita e saperi locali.
+                      Da Castelgrande partono percorsi che mettono insieme
+                      persone, paesaggi, biodiversita e saperi locali.
                     </p>
                   </CardContent>
                 </Card>
@@ -576,12 +609,19 @@ export default function Home() {
             <div className="space-y-8">
               <div className="grid gap-4 md:grid-cols-3">
                 {values.map((value) => (
-                  <Card key={value.title} className="border-white/45 bg-white/76">
+                  <Card
+                    key={value.title}
+                    className="border-white/45 bg-white/76"
+                  >
                     <CardHeader className="pb-4">
-                      <CardTitle className="text-[1.8rem] leading-tight">{value.title}</CardTitle>
+                      <CardTitle className="text-[1.8rem] leading-tight">
+                        {value.title}
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-sm leading-7 text-black/72">{value.text}</p>
+                      <p className="text-sm leading-7 text-black/72">
+                        {value.text}
+                      </p>
                     </CardContent>
                   </Card>
                 ))}
@@ -594,13 +634,17 @@ export default function Home() {
                       Perche esiste I Selvatici
                     </p>
                     <p className="mt-4 text-lg leading-9 text-black/74">
-                      Esiste per ricucire il rapporto tra persone, terra e cibo. Per riportare le
-                      tradizioni dentro esperienze contemporanee. Per creare luoghi in cui imparare
-                      significa anche rallentare, ascoltare e prendersi cura.
+                      Esiste per ricucire il rapporto tra persone, terra e cibo.
+                      Per riportare le tradizioni dentro esperienze
+                      contemporanee. Per creare luoghi in cui imparare significa
+                      anche rallentare, ascoltare e prendersi cura.
                     </p>
                     <ul className="mt-8 grid gap-3 sm:grid-cols-2">
                       {benefits.map((benefit) => (
-                        <li key={benefit} className="flex items-start gap-3 rounded-[1.4rem] bg-(--paper) px-4 py-4 text-sm leading-7 text-black/72">
+                        <li
+                          key={benefit}
+                          className="flex items-start gap-3 rounded-[1.4rem] bg-(--paper) px-4 py-4 text-sm leading-7 text-black/72"
+                        >
                           <Sparkles className="mt-1 size-4 shrink-0 text-(--olive)" />
                           <span>{benefit}</span>
                         </li>
@@ -671,12 +715,13 @@ export default function Home() {
                 <Card className="border-white/18 bg-white/10 text-white shadow-none">
                   <CardContent className="pt-8">
                     <p className="font-display text-3xl leading-tight text-balance md:text-[2.5rem]">
-                      Un ecosistema di persone che si scambiano semi, ricette, tecniche, storie e
-                      modi di stare al mondo piu consapevoli.
+                      Un ecosistema di persone che si scambiano semi, ricette,
+                      tecniche, storie e modi di stare al mondo piu consapevoli.
                     </p>
                     <p className="mt-5 max-w-xl text-sm leading-7 text-white/76">
-                      Il Cammino dei Selvatici immagina connessioni reali tra territori diversi,
-                      dove il cibo e la manualita diventano linguaggi comuni e strumenti di cura.
+                      Il Cammino dei Selvatici immagina connessioni reali tra
+                      territori diversi, dove il cibo e la manualita diventano
+                      linguaggi comuni e strumenti di cura.
                     </p>
                   </CardContent>
                 </Card>
@@ -689,12 +734,19 @@ export default function Home() {
               <div className="space-y-5">
                 <div className="grid gap-4 md:grid-cols-2">
                   {camminoPillars.map((pillar) => (
-                    <Card key={pillar.title} className="border-white/16 bg-white/10 text-white shadow-none">
+                    <Card
+                      key={pillar.title}
+                      className="border-white/16 bg-white/10 text-white shadow-none"
+                    >
                       <CardHeader>
-                        <CardTitle className="text-[2rem] text-white">{pillar.title}</CardTitle>
+                        <CardTitle className="text-[2rem] text-white">
+                          {pillar.title}
+                        </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-sm leading-7 text-white/76">{pillar.text}</p>
+                        <p className="text-sm leading-7 text-white/76">
+                          {pillar.text}
+                        </p>
                       </CardContent>
                     </Card>
                   ))}
@@ -713,15 +765,17 @@ export default function Home() {
                       <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(51,51,51,0.05),rgba(51,51,51,0.42))]" />
                     </div>
                     <div className="p-8">
-                        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-(--sun)">
+                      <p className="text-xs font-semibold uppercase tracking-[0.24em] text-(--sun)">
                         Visione in divenire
                       </p>
                       <p className="mt-4 font-display text-3xl leading-tight text-white">
-                        Dalle esperienze di oggi a una rete viva di territori in ascolto reciproco.
+                        Dalle esperienze di oggi a una rete viva di territori in
+                        ascolto reciproco.
                       </p>
                       <p className="mt-5 text-sm leading-7 text-white/76">
-                        Un domani fatto di cucine condivise, orti connessi, identita locali valorizzate
-                        e nuovi modi di riconoscersi comunita attraverso la cura.
+                        Un domani fatto di cucine condivise, orti connessi,
+                        identita locali valorizzate e nuovi modi di riconoscersi
+                        comunita attraverso la cura.
                       </p>
                     </div>
                   </div>
@@ -746,9 +800,12 @@ export default function Home() {
                     <div className="mb-4 inline-flex size-12 items-center justify-center rounded-2xl bg-(--petrol)/12 text-(--olive)">
                       <MapPin className="size-5" />
                     </div>
-                    <CardTitle className="text-[2rem]">Castelgrande, Basilicata</CardTitle>
+                    <CardTitle className="text-[2rem]">
+                      Castelgrande, Basilicata
+                    </CardTitle>
                     <CardDescription className="text-base leading-8">
-                      Sede operativa e punto di partenza di esperienze che possono muoversi in tutta Italia.
+                      Sede operativa e punto di partenza di esperienze che
+                      possono muoversi in tutta Italia.
                     </CardDescription>
                   </CardHeader>
                 </Card>
@@ -758,20 +815,31 @@ export default function Home() {
                     <div className="mb-4 inline-flex size-12 items-center justify-center rounded-2xl bg-(--sun)/28 text-(--brown)">
                       <Phone className="size-5" />
                     </div>
-                    <CardTitle className="text-[2rem]">Parliamone direttamente</CardTitle>
+                    <CardTitle className="text-[2rem]">
+                      Parliamone direttamente
+                    </CardTitle>
                     <CardDescription className="text-base leading-8">
-                      Per richieste rapide, prenotazioni o collaborazioni, questi sono i riferimenti attivi.
+                      Per richieste rapide, prenotazioni o collaborazioni,
+                      questi sono i riferimenti attivi.
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-3 text-base text-black/74">
-                    <a className="block rounded-[1.35rem] bg-(--paper) px-4 py-4 transition hover:bg-white" href="tel:+393477930530">
+                    <a
+                      className="block rounded-[1.35rem] bg-(--paper) px-4 py-4 transition hover:bg-white"
+                      href="tel:+393477930530"
+                    >
                       +39 3477930530
                     </a>
-                    <a className="block rounded-[1.35rem] bg-(--paper) px-4 py-4 transition hover:bg-white" href="tel:+393471551887">
+                    <a
+                      className="block rounded-[1.35rem] bg-(--paper) px-4 py-4 transition hover:bg-white"
+                      href="tel:+393471551887"
+                    >
                       +39 3471551887
                     </a>
                     <p className="rounded-[1.35rem] bg-(--paper) px-4 py-4 text-sm leading-7 text-black/68">
-                      Email in aggiornamento. Intanto puoi contattarci telefonicamente oppure avviare una richiesta dal modulo qui accanto.
+                      Email in aggiornamento. Intanto puoi contattarci
+                      telefonicamente oppure avviare una richiesta dal modulo
+                      qui accanto.
                     </p>
                   </CardContent>
                 </Card>
@@ -779,17 +847,34 @@ export default function Home() {
 
               <Card className="border-white/55 bg-white/82">
                 <CardHeader>
-                  <CardTitle className="text-[2.1rem]">Modulo di primo contatto</CardTitle>
+                  <CardTitle className="text-[2.1rem]">
+                    Modulo di primo contatto
+                  </CardTitle>
                   <CardDescription className="text-base leading-8">
-                    Raccontaci chi sei, che tipo di esperienza immagini e per quale realta stai scrivendo.
+                    Raccontaci chi sei, che tipo di esperienza immagini e per
+                    quale realta stai scrivendo.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <Input placeholder="Nome e cognome" aria-label="Nome e cognome" />
-                    <Input placeholder="Email" aria-label="Email" type="email" />
-                    <Input placeholder="Telefono" aria-label="Telefono" type="tel" />
-                    <Input placeholder="Organizzazione o contesto" aria-label="Organizzazione o contesto" />
+                    <Input
+                      placeholder="Nome e cognome"
+                      aria-label="Nome e cognome"
+                    />
+                    <Input
+                      placeholder="Email"
+                      aria-label="Email"
+                      type="email"
+                    />
+                    <Input
+                      placeholder="Telefono"
+                      aria-label="Telefono"
+                      type="tel"
+                    />
+                    <Input
+                      placeholder="Organizzazione o contesto"
+                      aria-label="Organizzazione o contesto"
+                    />
                   </div>
 
                   <select
@@ -822,8 +907,9 @@ export default function Home() {
                   </div>
 
                   <p className="text-sm leading-7 text-black/60">
-                    Questa prima versione raccoglie gia la struttura del contatto. L&apos;invio via email
-                    verra collegato appena il canale definitivo sara attivo.
+                    Questa prima versione raccoglie gia la struttura del
+                    contatto. L&apos;invio via email verra collegato appena il
+                    canale definitivo sara attivo.
                   </p>
                 </CardContent>
               </Card>
@@ -843,8 +929,8 @@ export default function Home() {
               className="h-auto w-40"
             />
             <p className="max-w-xl text-sm leading-7 text-black/68">
-              Esperienze di comunita tra terra, cibo e tradizione. Da Castelgrande, con radici forti
-              e una visione aperta ai territori.
+              Esperienze di comunita tra terra, cibo e tradizione. Da
+              Castelgrande, con radici forti e una visione aperta ai territori.
             </p>
           </div>
 
