@@ -8,10 +8,10 @@ import { SectionHeading } from "./section-heading";
 
 export function CamminoSection() {
   return (
-    <section id="cammino" className="scroll-mt-24 px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-[3rem] bg-(--petrol) text-(--paper) shadow-[0_30px_90px_-38px_rgba(51,51,51,0.55)]">
-        <div className="grid gap-12 px-6 py-12 lg:grid-cols-[0.88fr_1.12fr] lg:px-10 lg:py-14">
-          <div className="space-y-8">
+    <section id="cammino" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl overflow-hidden rounded-2xl bg-(--petrol) text-(--paper) shadow-[0_30px_90px_-38px_rgba(51,51,51,0.55)] sm:rounded-[3rem]">
+        <div className="grid items-start gap-8 px-4 py-8 sm:gap-12 sm:px-6 sm:py-12 lg:grid-cols-[0.88fr_1.12fr] lg:px-10 lg:py-14">
+          <div className="space-y-8 lg:sticky lg:top-28">
             <SectionHeading
               eyebrow="Cammino dei Selvatici"
               title="Un cammino che unisce territori, persone e saperi."
@@ -61,7 +61,7 @@ export function CamminoSection() {
                       <div className="mb-4 inline-flex size-11 items-center justify-center rounded-2xl bg-white/12 text-(--sun)">
                         <Icon className="size-5" />
                       </div>
-                      <CardTitle className="text-[2rem] text-white">
+                      <CardTitle className="text-2xl text-white">
                         {pillar.title}
                       </CardTitle>
                     </CardHeader>
@@ -116,7 +116,7 @@ export function CamminoSection() {
 
             <div className="grid gap-4 md:grid-cols-2">
               <Card className="overflow-hidden border-white/16 bg-white/8 text-white shadow-none">
-                <div className="relative h-52">
+                <div className="relative h-full min-h-52">
                   <Image
                     src={siteImages.camminoDetail}
                     alt="Dettaglio di un momento condiviso"

@@ -7,7 +7,7 @@ import { SectionHeading } from "./section-heading";
 
 export function AboutSection() {
   return (
-    <section id="about" className="scroll-mt-24 px-6 lg:px-8">
+    <section id="about" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.84fr_1.16fr] lg:items-start">
         <div className="space-y-8">
           <SectionHeading
@@ -55,7 +55,7 @@ export function AboutSection() {
 
         <div className="grid gap-4 md:grid-cols-2">
           <Card className="overflow-hidden border-white/45 bg-white/78 md:row-span-2">
-            <div className="relative min-h-80 md:min-h-full">
+            <div className="relative h-80 md:h-full md:min-h-80">
               <Image
                 src={siteImages.aboutMain}
                 alt="Ritratto di un momento vissuto nei laboratori I Selvatici"
@@ -114,16 +114,16 @@ export function AboutSection() {
                 </div>
               </div>
 
-              <div className="grid gap-3 sm:grid-cols-3">
+              <div className="grid gap-3 md:grid-cols-3">
                 {values.map((value) => (
                   <div
                     key={value.title}
                     className="rounded-4xl bg-(--paper) p-5"
                   >
-                    <p className="font-display text-2xl leading-tight text-foreground">
+                    <p className="font-display text-xl leading-tight text-foreground">
                       {value.title}
                     </p>
-                    <p className="mt-3 text-sm leading-7 text-black/68">
+                    <p className="mt-2 text-sm leading-7 text-black/68">
                       {value.text}
                     </p>
                   </div>

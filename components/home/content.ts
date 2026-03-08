@@ -122,16 +122,16 @@ export const processSteps: Pillar[] = [
 
 export const values = [
   {
-    title: "Connessione con la terra",
-    text: "Biodiversita, stagionalita e rispetto dei cicli naturali diventano il punto di partenza di ogni esperienza.",
+    title: "Terra",
+    text: "Biodiversita, stagionalita e rispetto dei cicli naturali come punto di partenza.",
   },
   {
-    title: "Condivisione e comunita",
-    text: "Si impara facendo insieme: attorno a un tavolo, in cucina o in un orto, le relazioni prendono forma concreta.",
+    title: "Comunita",
+    text: "Si impara facendo insieme: le relazioni prendono forma concreta.",
   },
   {
-    title: "Consapevolezza alimentare",
-    text: "Il cibo torna a essere cultura, cura e scelta informata, non soltanto consumo veloce.",
+    title: "Cibo",
+    text: "Il cibo torna a essere cultura, cura e scelta consapevole.",
   },
 ] as const;
 
@@ -172,7 +172,7 @@ export const services: Service[] = [
   {
     title: "Laboratori di cucito",
     description:
-      "Dal materiale grezzo al capo finito: un percorso di manualita e sostenibilita che restituisce valore ai gesti lenti e ai materiali del territorio.",
+      "Dal materiale grezzo al capo finito: manualita e sostenibilita che restituiscono valore ai gesti lenti.",
     points: [
       "Dalla lana tosata al filo e alla creazione finale",
       "Creativita, precisione e autostima attraverso il fare",
@@ -185,7 +185,7 @@ export const services: Service[] = [
   {
     title: "Chef a domicilio",
     description:
-      "Un servizio privato e su misura in cui menu, materie prime e racconto dei piatti si intrecciano in un'esperienza accogliente e curata.",
+      "Un servizio su misura in cui menu, materie prime e racconto si intrecciano in un'esperienza curata e accogliente.",
     points: [
       "Menu personalizzati e ingredienti stagionali",
       "Preparazione, impiattamento e presentazione dei piatti",
@@ -200,7 +200,7 @@ export const services: Service[] = [
   {
     title: "Tour esperienziali",
     description:
-      "Percorsi immersivi tra produttori, cucine, raccolte stagionali e degustazioni per vivere il territorio in modo autentico e condiviso.",
+      "Percorsi immersivi tra produttori, cucine e degustazioni per vivere il territorio in modo autentico.",
     points: [
       "Visite a realta agricole e produttori locali",
       "Cooking class, assaggi guidati e raccolte stagionali",
@@ -233,17 +233,17 @@ export const audiences: Audience[] = [
   {
     title: "Case di riposo",
     description:
-      "Percorsi pensati per attivare memoria, manualita e relazioni, restituendo spazio alle tradizioni locali e al fare insieme.",
+      "Percorsi per attivare memoria, manualita e relazioni attraverso tradizioni locali e fare insieme.",
     activities:
-      "Stimolazione cognitiva, gesti lenti, laboratori intergenerazionali e condivisione di storie.",
+      "Stimolazione cognitiva, gesti lenti e laboratori intergenerazionali.",
     icon: HeartHandshake,
   },
   {
     title: "Carceri e comunita",
     description:
-      "Attivita orientate all'inclusione, alla collaborazione e allo sviluppo di competenze pratiche che restituiscono fiducia.",
+      "Attivita orientate all'inclusione e allo sviluppo di competenze pratiche che restituiscono fiducia.",
     activities:
-      "Percorsi di gruppo, riabilitazione attraverso il fare e manualita applicata.",
+      "Percorsi di gruppo, riabilitazione attraverso il fare e manualita.",
     icon: Users,
   },
   {
@@ -257,9 +257,9 @@ export const audiences: Audience[] = [
   {
     title: "Famiglie e comunita locali",
     description:
-      "Occasioni per stare insieme, imparare con le mani e creare nuovi rituali condivisi tra generazioni diverse.",
+      "Occasioni per stare insieme, imparare con le mani e creare rituali condivisi.",
     activities:
-      "Giornate esperienziali, laboratori partecipati e momenti di benessere comunitario.",
+      "Giornate esperienziali, laboratori partecipati e benessere comunitario.",
     icon: House,
   },
 ];

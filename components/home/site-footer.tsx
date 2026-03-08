@@ -4,8 +4,8 @@ import { contactDetails, quickLinks, siteImages } from "./content";
 
 export function SiteFooter() {
   return (
-    <footer className="px-6 pb-10 pt-4 lg:px-8">
-      <div className="mx-auto max-w-7xl rounded-[2.5rem] border border-white/55 bg-white/64 px-6 py-8 backdrop-blur-sm lg:px-8">
+    <footer className="px-4 pb-10 pt-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl rounded-2xl border border-white/55 bg-white/64 px-4 py-6 backdrop-blur-sm sm:rounded-[2.5rem] sm:px-6 sm:py-8 lg:px-8">
         <div className="grid gap-8 lg:grid-cols-[1.05fr_0.65fr_0.8fr]">
           <div className="space-y-4">
             <Image

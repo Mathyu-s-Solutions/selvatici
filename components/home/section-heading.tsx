@@ -17,7 +17,7 @@ export function SectionHeading({
       <Badge variant={inverted ? "inverted" : "olive"}>{eyebrow}</Badge>
       <h2
         className={cn(
-          "font-display text-4xl leading-none tracking-tight text-balance md:text-5xl lg:text-[3.6rem]",
+          "font-display text-3xl leading-none tracking-tight text-balance sm:text-4xl md:text-5xl lg:text-[3.6rem]",
           inverted ? "text-(--paper)" : "text-foreground",
         )}
       >

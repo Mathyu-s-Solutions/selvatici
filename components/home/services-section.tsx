@@ -50,7 +50,7 @@ function FeaturedServiceCard({
             />
             <div className="absolute inset-0 bg-[linear-gradient(125deg,rgba(255,250,244,0.95),rgba(255,250,244,0.82)_46%,rgba(255,250,244,0.42))]" />
           </div>
-          <div className="relative p-8 lg:p-10">
+          <div className="relative p-5 sm:p-8 lg:p-10">
             <div className="mb-6 inline-flex size-12 items-center justify-center rounded-2xl bg-(--peach)/18 text-(--olive)">
               <Icon className="size-5" />
             </div>
@@ -101,8 +101,8 @@ function CompactServiceCard({
         <div className="mb-4 inline-flex size-11 items-center justify-center rounded-2xl bg-(--petrol)/12 text-(--olive)">
           <Icon className="size-5" />
         </div>
-        <CardTitle className="text-[2rem] leading-tight">{title}</CardTitle>
-        <CardDescription className="text-base leading-8">
+        <CardTitle className="text-2xl leading-tight">{title}</CardTitle>
+        <CardDescription className="text-sm leading-7">
           {description}
         </CardDescription>
       </CardHeader>
@@ -125,7 +125,7 @@ export function ServicesSection() {
   const [cooking, orto, cucito, chef, tour] = services;
 
   return (
-    <section id="services" className="scroll-mt-24 px-6 lg:px-8">
+    <section id="services" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-10">
         <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
           <SectionHeading
@@ -145,17 +145,17 @@ export function ServicesSection() {
           </Card>
         </div>
 
-        <div className="grid gap-5 xl:grid-cols-12">
-          <FeaturedServiceCard {...cooking} className="xl:col-span-7" />
+        <div className="grid gap-5 lg:grid-cols-12">
+          <FeaturedServiceCard {...cooking} className="lg:col-span-7" />
 
-          <div className="grid gap-5 xl:col-span-5">
+          <div className="grid gap-5 lg:col-span-5">
             <CompactServiceCard {...orto} />
             <CompactServiceCard {...cucito} />
           </div>
 
-          <FeaturedServiceCard {...chef} className="xl:col-span-5" />
+          <FeaturedServiceCard {...chef} className="lg:col-span-5" />
 
-          <Card className="overflow-hidden border-white/50 bg-white/82 xl:col-span-7">
+          <Card className="overflow-hidden border-white/50 bg-white/82 lg:col-span-7">
             <div className="grid gap-0 lg:grid-cols-[0.62fr_0.38fr]">
               <div className="relative min-h-80">
                 <Image

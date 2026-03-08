@@ -34,7 +34,7 @@ function Field({
 
 export function ContactSection() {
   return (
-    <section id="contact" className="scroll-mt-24 px-6 lg:px-8">
+    <section id="contact" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-10">
         <SectionHeading
           eyebrow="Contatti"
@@ -42,7 +42,7 @@ export function ContactSection() {
           description="Se vuoi ospitare un laboratorio, costruire un percorso su misura o organizzare un'esperienza privata, raccontaci il contesto. Ti aiutiamo a capire quale forma puo prendere l'incontro."
         />
 
-        <div className="grid gap-5 lg:grid-cols-[0.82fr_1.18fr]">
+        <div className="grid gap-5 lg:grid-cols-[0.78fr_1.22fr]">
           <div className="space-y-5">
             <Card className="overflow-hidden border-white/50 bg-white/80">
               <div className="relative h-72">
@@ -118,7 +118,7 @@ export function ContactSection() {
 
           <Card className="overflow-hidden border-white/55 bg-white/84">
             <div className="grid gap-0 xl:grid-cols-[0.42fr_0.58fr]">
-              <div className="border-b border-black/6 bg-[linear-gradient(180deg,rgba(239,228,209,0.75),rgba(255,250,244,0.9))] p-8 xl:border-b-0 xl:border-r">
+              <div className="border-b border-black/6 bg-[linear-gradient(180deg,rgba(239,228,209,0.75),rgba(255,250,244,0.9))] p-6 sm:p-8 xl:border-b-0 xl:border-r">
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-(--olive)">
                   Prima di scriverci
                 </p>
@@ -143,19 +143,19 @@ export function ContactSection() {
                 </div>
               </div>
 
-              <div className="p-8">
-                <CardHeader className="p-0 pb-6">
-                  <CardTitle className="text-[2.2rem]">
+              <div className="p-6 sm:p-8 lg:p-10">
+                <CardHeader className="p-0 pb-8">
+                  <CardTitle className="text-[1.8rem]">
                     Modulo di primo contatto
                   </CardTitle>
-                  <CardDescription className="text-base leading-8">
+                  <CardDescription className="text-sm leading-7">
                     Raccontaci chi sei, che tipo di esperienza immagini e per
                     quale realta stai scrivendo.
                   </CardDescription>
                 </CardHeader>
 
-                <div className="space-y-5">
-                  <div className="grid gap-4 sm:grid-cols-2">
+                <div className="space-y-7">
+                  <div className="grid gap-5 sm:grid-cols-2">
                     <Field label="Nome e cognome">
                       <Input
                         placeholder="Nome e cognome"
@@ -201,14 +201,16 @@ export function ContactSection() {
                     </select>
                   </Field>
 
-                  <Field label="Messaggio">
-                    <Textarea
-                      placeholder="Raccontaci il pubblico coinvolto, il luogo, l'obiettivo del percorso e il periodo in cui vorresti realizzarlo."
-                      aria-label="Messaggio"
-                    />
-                  </Field>
+                  <div className="pt-2">
+                    <Field label="Messaggio">
+                      <Textarea
+                        placeholder="Raccontaci il pubblico coinvolto, il luogo, l'obiettivo del percorso e il periodo in cui vorresti realizzarlo."
+                        aria-label="Messaggio"
+                      />
+                    </Field>
+                  </div>
 
-                  <div className="flex flex-col gap-3 sm:flex-row">
+                  <div className="flex flex-col gap-3 pt-2 sm:flex-row">
                     <Button asChild size="lg" variant="earth">
                       <a href="tel:+393477930530">Chiama per prenotare</a>
                     </Button>

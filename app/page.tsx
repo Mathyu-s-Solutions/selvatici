@@ -18,7 +18,7 @@ export default function Home() {
       <SiteHeader />
       <HeroSection />
 
-      <main className="space-y-24 pb-16 lg:space-y-32 lg:pb-20">
+      <main className="space-y-16 pb-12 sm:space-y-24 sm:pb-16 lg:space-y-32 lg:pb-20">
         <AboutSection />
         <ServicesSection />
         <AudiencesSection />

@@ -28,8 +28,8 @@ function AudienceCard({
         <div className="mb-4 inline-flex size-12 items-center justify-center rounded-2xl bg-(--sun)/28 text-(--brown)">
           <Icon className="size-5" />
         </div>
-        <CardTitle className="text-[1.85rem] leading-tight">{title}</CardTitle>
-        <CardDescription className="text-base leading-8">
+        <CardTitle className="text-2xl leading-tight">{title}</CardTitle>
+        <CardDescription className="text-sm leading-7">
           {description}
         </CardDescription>
       </CardHeader>
@@ -44,8 +44,8 @@ function AudienceCard({
 
 export function AudiencesSection() {
   return (
-    <section id="audiences" className="scroll-mt-24 px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl rounded-[3rem] border border-white/55 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(239,228,209,0.56))] px-6 py-10 shadow-[0_24px_80px_-48px_rgba(51,51,51,0.4)] lg:px-10 lg:py-12">
+    <section id="audiences" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl rounded-2xl border border-white/55 bg-[linear-gradient(180deg,rgba(255,255,255,0.72),rgba(239,228,209,0.56))] px-4 py-8 shadow-[0_24px_80px_-48px_rgba(51,51,51,0.4)] sm:rounded-[3rem] sm:px-6 sm:py-10 lg:px-10 lg:py-12">
         <div className="grid gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:items-start">
           <div className="space-y-6">
             <SectionHeading
@@ -75,7 +75,7 @@ export function AudiencesSection() {
             </Card>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {audiences.map((audience) => (
               <AudienceCard key={audience.title} {...audience} />
             ))}
