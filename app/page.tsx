@@ -4,6 +4,7 @@ import {
   CamminoSection,
   ContactSection,
   HeroSection,
+  MerchSection,
   ServicesSection,
   SiteFooter,
   SiteHeader,
@@ -23,6 +24,7 @@ export default function Home() {
         <ServicesSection />
         <AudiencesSection />
         <CamminoSection />
+        <MerchSection />
         <ContactSection />
       </main>
 
