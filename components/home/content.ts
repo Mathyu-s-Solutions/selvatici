@@ -57,6 +57,7 @@ export const siteImages = {
   servicesTour: "/images/FOTO%20EDITATE/EH2A8487.jpg",
   audience: "/images/FOTO%20EDITATE/EH2A8439.jpg",
   camminoMain: "/images/FOTO%20EDITATE/EH2A8641.jpg",
+  camminoVision: "/images/FOTO%20EDITATE/EH2A8603.jpg",
   camminoDetail: "/images/FOTO%20EDITATE/EH2A8535.jpg",
   contactMain: "/images/FOTO%20EDITATE/EH2A8482.jpg",
   contactDetail: "/images/FOTO%20EDITATE/EH2A8397.jpg",
