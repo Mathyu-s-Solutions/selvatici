@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { PageLoader } from "@/components/ui/page-loader";
 import "./globals.css";
 
 const bodyFont = Montserrat({
@@ -54,6 +55,7 @@ export default function RootLayout({
       <body
         className={`${bodyFont.variable} ${displayFont.variable} bg-background text-foreground font-sans antialiased`}
       >
+        <PageLoader />
         {children}
       </body>
     </html>
