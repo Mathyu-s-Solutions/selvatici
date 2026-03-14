@@ -76,7 +76,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="scroll-mt-20 px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <FadeIn>
           <div className="overflow-hidden rounded-2xl border border-white/50 bg-[linear-gradient(145deg,rgba(239,228,209,0.5),rgba(255,250,244,0.75))] shadow-[0_8px_32px_-12px_rgba(51,51,51,0.12)] sm:rounded-3xl">

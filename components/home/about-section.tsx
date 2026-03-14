@@ -7,7 +7,7 @@ import { SectionHeading } from "./section-heading";
 
 export function AboutSection() {
   return (
-    <section id="about" className="scroll-mt-20 px-4 sm:px-6 lg:px-8">
+    <section id="about" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
           <div className="space-y-8">

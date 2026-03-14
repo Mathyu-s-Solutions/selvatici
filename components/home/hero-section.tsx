@@ -11,7 +11,7 @@ export function HeroSection() {
   return (
     <section
       id="home"
-      className="scroll-mt-16 px-4 pb-12 pt-4 sm:px-6 sm:pb-16 sm:pt-6 lg:px-8 lg:pb-20"
+      className="scroll-mt-24 px-4 pb-12 pt-4 sm:px-6 sm:pb-16 sm:pt-6 lg:px-8 lg:pb-20"
     >
       <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
         <div className="space-y-6 lg:space-y-8">

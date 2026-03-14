@@ -5,7 +5,7 @@ import { SectionHeading } from "./section-heading";
 
 export function AudiencesSection() {
   return (
-    <section id="audiences" className="scroll-mt-20 px-4 sm:px-6 lg:px-8">
+    <section id="audiences" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-10">
         <FadeIn>
           <SectionHeading

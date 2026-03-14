@@ -20,6 +20,21 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const handleNavClick = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    e.preventDefault();
+    setOpen(false);
+    // Wait for menu close animation (250ms) then scroll
+    setTimeout(() => {
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 300);
+  };
+
   return (
     <header className="sticky top-0 z-50 px-4 py-2.5 sm:px-6 lg:px-8">
       <div
@@ -92,7 +107,7 @@ export function SiteHeader() {
                     <a
                       key={href}
                       href={href}
-                      onClick={() => setOpen(false)}
+                      onClick={(e) => handleNavClick(e, href)}
                       className="rounded-xl px-4 py-3 text-base font-medium text-black/60 transition active:bg-white/70"
                     >
                       {label}
@@ -100,7 +115,7 @@ export function SiteHeader() {
                   ))}
                 </nav>
                 <Button asChild variant="earth" className="mt-3 h-12 w-full text-base">
-                  <a href="#contact" onClick={() => setOpen(false)}>
+                  <a href="#contact" onClick={(e) => handleNavClick(e, "#contact")}>
                     Prenota un contatto
                   </a>
                 </Button>

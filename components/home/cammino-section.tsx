@@ -27,7 +27,7 @@ export function CamminoSection() {
   const heroY = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
 
   return (
-    <section id="cammino" className="scroll-mt-20 px-4 sm:px-6 lg:px-8">
+    <section id="cammino" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
       <div className="relative mx-auto max-w-7xl overflow-hidden rounded-2xl bg-(--petrol) text-(--paper) shadow-[0_16px_48px_-20px_rgba(51,51,51,0.3)] sm:rounded-3xl">
         <CamminoParticles />
 
