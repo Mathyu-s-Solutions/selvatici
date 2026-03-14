@@ -1,24 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
 import { quickLinks, siteImages } from "./content";
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
-    <header className="sticky top-4 z-50 px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl rounded-2xl border border-white/60 bg-white/58 shadow-[0_24px_60px_-40px_rgba(51,51,51,0.5)] backdrop-blur-xl sm:rounded-4xl">
-        <div className="flex items-center justify-between gap-4 px-4 py-3 sm:px-5">
+    <header className="sticky top-0 z-50 px-4 py-2.5 sm:px-6 lg:px-8">
+      <div
+        className={`mx-auto max-w-7xl rounded-2xl border transition-all duration-300 sm:rounded-3xl ${
+          scrolled || open
+            ? "border-white/70 bg-white/82 shadow-[0_4px_24px_-8px_rgba(51,51,51,0.12)] backdrop-blur-xl"
+            : "border-white/40 bg-white/50 shadow-none backdrop-blur-md"
+        }`}
+      >
+        <div className="flex items-center justify-between gap-4 px-4 py-2 sm:px-5">
           <a
             href="#home"
-            className="flex shrink-0 items-center"
+            className="flex shrink-0 items-center py-1"
             aria-label="Vai all'inizio"
           >
             <Image
@@ -27,23 +53,16 @@ export function SiteHeader() {
               width={160}
               height={44}
               priority
-              className="h-auto w-28 sm:w-32 lg:w-40"
+              className="h-auto w-24 sm:w-28 lg:w-36"
             />
           </a>
 
-          <Badge
-            variant="soft"
-            className="hidden bg-white/80 text-(--brown) md:inline-flex lg:hidden"
-          >
-            Esperienze itineranti
-          </Badge>
-
-          <nav className="hidden items-center gap-1.5 text-sm font-medium text-black/64 lg:flex">
+          <nav className="hidden items-center gap-0.5 text-sm font-medium text-black/60 lg:flex">
             {quickLinks.map(([label, href]) => (
               <a
                 key={href}
                 href={href}
-                className="rounded-full px-3 py-2 transition hover:bg-white/78 hover:text-foreground"
+                className="rounded-full px-3.5 py-2 transition hover:bg-white/70 hover:text-foreground"
               >
                 {label}
               </a>
@@ -53,44 +72,54 @@ export function SiteHeader() {
           <div className="flex items-center gap-3">
             <Button
               asChild
-              size="lg"
               variant="earth"
-              className="hidden h-10 px-5 lg:inline-flex"
+              className="hidden h-9 px-4 text-sm lg:inline-flex"
             >
-              <a href="#contact">Prenota un contatto</a>
+              <a href="#contact">Prenota</a>
             </Button>
             <button
               type="button"
               onClick={() => setOpen(!open)}
-              className="inline-flex size-10 items-center justify-center rounded-full text-foreground/70 transition hover:bg-white/60 lg:hidden"
+              className="inline-flex size-11 items-center justify-center rounded-full text-foreground/70 transition-colors active:bg-white/60 lg:hidden"
               aria-label={open ? "Chiudi menu" : "Apri menu"}
+              aria-expanded={open}
             >
               {open ? <X className="size-5" /> : <Menu className="size-5" />}
             </button>
           </div>
         </div>
 
-        {open && (
-          <div className="border-t border-black/6 px-4 pb-4 pt-3 lg:hidden">
-            <nav className="flex flex-col gap-1">
-              {quickLinks.map(([label, href]) => (
-                <a
-                  key={href}
-                  href={href}
-                  onClick={() => setOpen(false)}
-                  className="rounded-2xl px-4 py-2.5 text-sm font-medium text-black/64 transition hover:bg-white/78 hover:text-foreground"
-                >
-                  {label}
-                </a>
-              ))}
-            </nav>
-            <Button asChild size="lg" variant="earth" className="mt-3 w-full">
-              <a href="#contact" onClick={() => setOpen(false)}>
-                Prenota un contatto
-              </a>
-            </Button>
-          </div>
-        )}
+        <AnimatePresence>
+          {open && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: "auto", opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="overflow-hidden lg:hidden"
+            >
+              <div className="border-t border-black/6 px-4 pb-4 pt-2">
+                <nav className="flex flex-col gap-0.5">
+                  {quickLinks.map(([label, href]) => (
+                    <a
+                      key={href}
+                      href={href}
+                      onClick={() => setOpen(false)}
+                      className="rounded-xl px-4 py-3 text-base font-medium text-black/60 transition active:bg-white/70"
+                    >
+                      {label}
+                    </a>
+                  ))}
+                </nav>
+                <Button asChild variant="earth" className="mt-3 h-12 w-full text-base">
+                  <a href="#contact" onClick={() => setOpen(false)}>
+                    Prenota un contatto
+                  </a>
+                </Button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </header>
   );

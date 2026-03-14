@@ -62,10 +62,8 @@ export function MerchSection() {
     if (setW === 0) return;
 
     if (el.scrollLeft < setW * 0.15) {
-      // Scrolled into the first clone zone — jump forward to middle set
       el.scrollLeft += setW;
     } else if (el.scrollLeft > setW * 1.85) {
-      // Scrolled into the last clone zone — jump back to middle set
       el.scrollLeft -= setW;
     }
   }, [getSetWidth]);
@@ -74,7 +72,6 @@ export function MerchSection() {
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
-    // Wait a frame for layout
     requestAnimationFrame(() => {
       el.scrollLeft = getSetWidth();
     });
@@ -98,15 +95,18 @@ export function MerchSection() {
     };
   }, [clampScroll]);
 
-  // Auto-scroll
+  // Auto-scroll — slower on mobile for a gentler feel
   const startAutoplay = useCallback(() => {
     if (autoplayRef.current) return;
+    const isSmall = window.matchMedia("(max-width: 639px)").matches;
+    const interval = isSmall ? 50 : 35;
+
     autoplayRef.current = setInterval(() => {
       if (userInteracting.current) return;
       const el = trackRef.current;
       if (!el) return;
       el.scrollBy({ left: 1, behavior: "instant" });
-    }, 20);
+    }, interval);
   }, []);
 
   const stopAutoplay = useCallback(() => {
@@ -118,7 +118,17 @@ export function MerchSection() {
 
   useEffect(() => {
     startAutoplay();
-    return stopAutoplay;
+
+    // Re-evaluate on resize (e.g. orientation change)
+    const onResize = () => {
+      stopAutoplay();
+      startAutoplay();
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      stopAutoplay();
+      window.removeEventListener("resize", onResize);
+    };
   }, [startAutoplay, stopAutoplay]);
 
   // Pause autoplay while user is interacting
@@ -126,7 +136,6 @@ export function MerchSection() {
     userInteracting.current = true;
   };
   const onInteractEnd = () => {
-    // Resume after a brief delay so clamp can settle
     setTimeout(() => {
       userInteracting.current = false;
     }, 2000);
@@ -148,7 +157,7 @@ export function MerchSection() {
   };
 
   return (
-    <section className="scroll-mt-24">
+    <section className="scroll-mt-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeading
           eyebrow="Merchandising"
@@ -169,7 +178,7 @@ export function MerchSection() {
           type="button"
           onClick={() => scrollBy("left")}
           aria-label="Scorri a sinistra"
-          className="absolute left-2 top-1/2 z-10 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/85 text-foreground/70 shadow-lg backdrop-blur-sm transition hover:bg-white sm:inline-flex lg:left-4"
+          className="absolute left-2 top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/85 text-foreground/70 shadow-lg backdrop-blur-sm transition hover:bg-white sm:inline-flex lg:left-4"
         >
           <ChevronLeft className="size-5" />
         </button>
@@ -179,7 +188,7 @@ export function MerchSection() {
           type="button"
           onClick={() => scrollBy("right")}
           aria-label="Scorri a destra"
-          className="absolute right-2 top-1/2 z-10 hidden size-10 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/85 text-foreground/70 shadow-lg backdrop-blur-sm transition hover:bg-white sm:inline-flex lg:right-4"
+          className="absolute right-2 top-1/2 z-10 hidden size-11 -translate-y-1/2 items-center justify-center rounded-full border border-black/10 bg-white/85 text-foreground/70 shadow-lg backdrop-blur-sm transition hover:bg-white sm:inline-flex lg:right-4"
         >
           <ChevronRight className="size-5" />
         </button>
@@ -194,19 +203,19 @@ export function MerchSection() {
             <div
               key={`${item.label}-${i}`}
               data-card
-              className="w-[70vw] shrink-0 sm:w-[42vw] md:w-[32vw] lg:w-[26vw] xl:w-[20vw]"
+              className="w-[72vw] shrink-0 sm:w-[42vw] md:w-[32vw] lg:w-[26vw] xl:w-[20vw]"
             >
-              <div className="overflow-hidden rounded-2xl border border-white/55 bg-white/78 shadow-[0_8px_30px_-16px_rgba(51,51,51,0.25)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_16px_44px_-20px_rgba(51,51,51,0.35)] sm:rounded-3xl">
-                <div className="relative aspect-[4/3]">
+              <div className="overflow-hidden rounded-2xl border border-white/50 bg-white/70 shadow-[0_4px_20px_-10px_rgba(51,51,51,0.15)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_8px_28px_-12px_rgba(51,51,51,0.2)]">
+                <div className="relative aspect-4/3">
                   <Image
                     src={item.src}
                     alt={item.alt}
                     fill
                     className="object-cover"
-                    sizes="(max-width: 640px) 70vw, (max-width: 768px) 42vw, (max-width: 1024px) 32vw, 20vw"
+                    sizes="(max-width: 640px) 72vw, (max-width: 768px) 42vw, (max-width: 1024px) 32vw, 20vw"
                   />
                 </div>
-                <div className="px-5 py-4">
+                <div className="px-4 py-3 sm:px-5 sm:py-4">
                   <p className="text-sm font-semibold uppercase tracking-[0.16em] text-(--brown)">
                     {item.label}
                   </p>

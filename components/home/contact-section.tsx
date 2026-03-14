@@ -1,19 +1,45 @@
+"use client";
+
+import { useState } from "react";
 import Image from "next/image";
-import { MapPin, Phone } from "lucide-react";
+import { ArrowRight, MapPin, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { FadeIn } from "@/components/ui/fade-in";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
 import { contactDetails, contactInterests, siteImages } from "./content";
-import { SectionHeading } from "./section-heading";
+
+function InterestChips({
+  selected,
+  onToggle,
+}: {
+  selected: Set<string>;
+  onToggle: (interest: string) => void;
+}) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {contactInterests.map((interest) => {
+        const active = selected.has(interest);
+        return (
+          <button
+            key={interest}
+            type="button"
+            onClick={() => onToggle(interest)}
+            className={`rounded-full px-3.5 py-2 text-sm font-medium transition-all duration-200 ${
+              active
+                ? "bg-(--peach) text-foreground shadow-sm ring-1 ring-(--peach)"
+                : "bg-white/60 text-black/50 hover:bg-white/80 hover:text-black/68 active:bg-white/90"
+            }`}
+          >
+            {interest}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
 
 function Field({
   label,
@@ -23,8 +49,8 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <label className="space-y-2">
-      <span className="block text-xs font-semibold uppercase tracking-[0.18em] text-black/52">
+    <label className="space-y-1.5">
+      <span className="block text-xs font-semibold uppercase tracking-[0.16em] text-black/45">
         {label}
       </span>
       {children}
@@ -33,207 +59,144 @@ function Field({
 }
 
 export function ContactSection() {
-  return (
-    <section id="contact" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl space-y-10">
-        <SectionHeading
-          eyebrow="Contatti"
-          title="Portiamo I Selvatici dove serve cura, relazione e manualita."
-          description="Se vuoi ospitare un laboratorio, costruire un percorso su misura o organizzare un'esperienza privata, raccontaci il contesto. Ti aiutiamo a capire quale forma puo prendere l'incontro."
-        />
+  const [selectedInterests, setSelectedInterests] = useState<Set<string>>(
+    new Set(),
+  );
 
-        <div className="grid gap-5 lg:grid-cols-[0.78fr_1.22fr]">
-          <div className="space-y-5">
-            <Card className="overflow-hidden border-white/50 bg-white/80">
-              <div className="relative h-72">
+  const toggleInterest = (interest: string) => {
+    setSelectedInterests((prev) => {
+      const next = new Set(prev);
+      if (next.has(interest)) {
+        next.delete(interest);
+      } else {
+        next.add(interest);
+      }
+      return next;
+    });
+  };
+
+  return (
+    <section id="contact" className="scroll-mt-20 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl">
+        <FadeIn>
+          <div className="overflow-hidden rounded-2xl border border-white/50 bg-[linear-gradient(145deg,rgba(239,228,209,0.5),rgba(255,250,244,0.75))] shadow-[0_8px_32px_-12px_rgba(51,51,51,0.12)] sm:rounded-3xl">
+            <div className="grid lg:grid-cols-[0.42fr_0.58fr]">
+              {/* Left — Image + contact info */}
+              <div className="relative min-h-56 sm:min-h-72 lg:min-h-0">
                 <Image
                   src={siteImages.contactMain}
-                  alt="Contesto di laboratorio pronto ad accogliere nuove esperienze"
+                  alt="Laboratorio pronto ad accogliere nuove esperienze"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 28vw"
+                  sizes="(max-width: 1024px) 100vw, 42vw"
                 />
-              </div>
-              <CardContent className="grid gap-4 pt-6 sm:grid-cols-2">
-                <div className="rounded-3xl bg-(--paper) px-4 py-4">
-                  <div className="flex items-center gap-2 text-(--olive)">
-                    <MapPin className="size-4" />
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em]">
-                      Dove siamo
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/25 to-black/5 lg:bg-linear-to-r lg:from-black/5 lg:via-black/25 lg:to-black/65" />
+
+                {/* Contact overlay */}
+                <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end p-5 sm:p-7 lg:p-8">
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-white/85">
+                      <MapPin className="size-4 shrink-0" />
+                      <span className="text-sm font-medium">
+                        {contactDetails.location}
+                      </span>
+                    </div>
+                    <p className="text-sm leading-relaxed text-white/55">
+                      {contactDetails.coverage}
                     </p>
+                    <div className="flex flex-wrap gap-2">
+                      {contactDetails.phones.map((phone) => (
+                        <a
+                          key={phone}
+                          href={`tel:${phone.replace(/\s+/g, "")}`}
+                          className="inline-flex items-center gap-2 rounded-full bg-white/15 px-4 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition active:bg-white/30 hover:bg-white/25"
+                        >
+                          <Phone className="size-3.5" />
+                          {phone}
+                        </a>
+                      ))}
+                    </div>
                   </div>
-                  <p className="mt-3 text-sm leading-7 text-black/72">
-                    {contactDetails.location}
-                  </p>
-                </div>
-                <div className="rounded-3xl bg-(--paper) px-4 py-4">
-                  <div className="flex items-center gap-2 text-(--brown)">
-                    <Phone className="size-4" />
-                    <p className="text-xs font-semibold uppercase tracking-[0.2em]">
-                      Copertura
-                    </p>
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-black/72">
-                    {contactDetails.coverage}
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="overflow-hidden border-white/50 bg-white/78">
-              <div className="grid gap-0 sm:grid-cols-[0.9fr_1.1fr]">
-                <div className="relative min-h-52">
-                  <Image
-                    src={siteImages.contactDetail}
-                    alt="Dettaglio di una giornata condivisa"
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 640px) 100vw, 18vw"
-                  />
-                </div>
-                <div className="p-6">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-(--brown)">
-                    Contatto diretto
-                  </p>
-                  <div className="mt-4 space-y-3 text-base text-black/74">
-                    {contactDetails.phones.map((phone) => (
-                      <a
-                        key={phone}
-                        className="block rounded-[1.35rem] bg-(--paper) px-4 py-4 transition hover:bg-white"
-                        href={`tel:${phone.replace(/\s+/g, "")}`}
-                      >
-                        {phone}
-                      </a>
-                    ))}
-                  </div>
-                  <p className="mt-4 text-sm leading-7 text-black/66">
-                    Email in aggiornamento. Intanto puoi contattarci
-                    telefonicamente oppure usare il modulo per prepararci il
-                    contesto.
-                  </p>
-                </div>
-              </div>
-            </Card>
-          </div>
-
-          <Card className="overflow-hidden border-white/55 bg-white/84">
-            <div className="grid gap-0 xl:grid-cols-[0.42fr_0.58fr]">
-              <div className="border-b border-black/6 bg-[linear-gradient(180deg,rgba(239,228,209,0.75),rgba(255,250,244,0.9))] p-6 sm:p-8 xl:border-b-0 xl:border-r">
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-(--olive)">
-                  Prima di scriverci
-                </p>
-                <p className="mt-4 font-display text-3xl leading-tight text-foreground">
-                  Più ci racconti il contesto, piu possiamo proporti una forma
-                  giusta.
-                </p>
-                <p className="mt-4 text-sm leading-7 text-black/70">
-                  Puoi partire da uno dei temi qui sotto oppure raccontarci
-                  liberamente cosa vuoi attivare.
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {contactInterests.map((interest) => (
-                    <span
-                      key={interest}
-                      className="rounded-full bg-white/86 px-3 py-2 text-xs font-medium uppercase tracking-[0.14em] text-black/66"
-                    >
-                      {interest}
-                    </span>
-                  ))}
                 </div>
               </div>
 
-              <div className="p-6 sm:p-8 lg:p-10">
-                <CardHeader className="p-0 pb-8">
-                  <CardTitle className="text-[1.8rem]">
-                    Modulo di primo contatto
-                  </CardTitle>
-                  <CardDescription className="text-sm leading-7">
-                    Raccontaci chi sei, che tipo di esperienza immagini e per
-                    quale realta stai scrivendo.
-                  </CardDescription>
-                </CardHeader>
+              {/* Right — Form */}
+              <div className="p-5 sm:p-8 lg:p-10">
+                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-(--olive)">
+                  Contatti
+                </p>
+                <h2 className="mt-2 font-display text-2xl leading-tight text-foreground sm:text-3xl lg:text-4xl">
+                  Raccontaci il tuo progetto
+                </h2>
+                <p className="mt-2 max-w-md text-sm leading-6 text-black/52">
+                  Descrivi il contesto e ti aiutiamo a trovare la forma giusta.
+                </p>
 
-                <div className="space-y-7">
-                  <div className="grid gap-5 sm:grid-cols-2">
+                <div className="mt-6 space-y-5 sm:mt-8 sm:space-y-6">
+                  <div className="grid gap-4 sm:grid-cols-2">
                     <Field label="Nome e cognome">
                       <Input
-                        placeholder="Nome e cognome"
+                        placeholder="Il tuo nome"
                         aria-label="Nome e cognome"
                       />
                     </Field>
                     <Field label="Email">
                       <Input
-                        placeholder="Email"
+                        placeholder="email@esempio.it"
                         aria-label="Email"
                         type="email"
                       />
                     </Field>
                     <Field label="Telefono">
                       <Input
-                        placeholder="Telefono"
+                        placeholder="+39 ..."
                         aria-label="Telefono"
                         type="tel"
                       />
                     </Field>
-                    <Field label="Organizzazione o contesto">
+                    <Field label="Organizzazione">
                       <Input
-                        placeholder="Scuola, gruppo, struttura, famiglia..."
-                        aria-label="Organizzazione o contesto"
+                        placeholder="Scuola, gruppo, struttura..."
+                        aria-label="Organizzazione"
                       />
                     </Field>
                   </div>
 
-                  <Field label="Interesse principale">
-                    <select
-                      aria-label="Interesse"
-                      className="flex h-12 w-full rounded-full border border-black/10 bg-white/80 px-4 text-sm text-foreground outline-none transition focus-visible:border-(--petrol) focus-visible:ring-2 focus-visible:ring-(--petrol)/20"
-                      defaultValue=""
-                    >
-                      <option value="" disabled>
-                        Interesse principale
-                      </option>
-                      {contactInterests.map((interest) => (
-                        <option key={interest} value={interest}>
-                          {interest}
-                        </option>
-                      ))}
-                    </select>
+                  <div className="space-y-2">
+                    <span className="block text-xs font-semibold uppercase tracking-[0.16em] text-black/45">
+                      Cosa ti interessa?
+                    </span>
+                    <InterestChips
+                      selected={selectedInterests}
+                      onToggle={toggleInterest}
+                    />
+                  </div>
+
+                  <Field label="Messaggio">
+                    <Textarea
+                      placeholder="Descrivi il pubblico, il luogo e il periodo desiderato..."
+                      aria-label="Messaggio"
+                    />
                   </Field>
 
-                  <div className="pt-2">
-                    <Field label="Messaggio">
-                      <Textarea
-                        placeholder="Raccontaci il pubblico coinvolto, il luogo, l'obiettivo del percorso e il periodo in cui vorresti realizzarlo."
-                        aria-label="Messaggio"
-                      />
-                    </Field>
-                  </div>
-
-                  <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-                    <Button asChild size="lg" variant="earth">
-                      <a href="tel:+393477930530">Chiama per prenotare</a>
-                    </Button>
+                  <div className="flex flex-col gap-4 pt-1 sm:flex-row sm:items-center">
                     <Button
-                      asChild
                       size="lg"
-                      variant="outline"
-                      className="bg-white/70"
+                      variant="earth"
+                      className="w-full sm:w-auto"
                     >
-                      <a href="tel:+393471551887">Parla con il team</a>
+                      Invia richiesta
+                      <ArrowRight className="size-4" />
                     </Button>
+                    <span className="text-center text-xs text-black/38 sm:text-left">
+                      oppure chiamaci direttamente
+                    </span>
                   </div>
-
-                  <p className="text-sm leading-7 text-black/60">
-                    Questa prima versione raccoglie gia la struttura del
-                    contatto. L&apos;invio via email verra collegato appena il
-                    canale definitivo sara attivo.
-                  </p>
                 </div>
               </div>
             </div>
-          </Card>
-        </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

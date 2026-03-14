@@ -1,208 +1,68 @@
 import Image from "next/image";
 
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
+import { Card, CardContent } from "@/components/ui/card";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/fade-in";
 
 import { services } from "./content";
 import { SectionHeading } from "./section-heading";
 
-function FeaturedServiceCard({
-  title,
-  description,
-  points,
-  context,
-  icon: Icon,
-  image,
-  className,
-}: {
-  title: string;
-  description: string;
-  points: string[];
-  context: string;
-  icon: React.ComponentType<{ className?: string }>;
-  image?: string;
-  className?: string;
-}) {
-  return (
-    <Card
-      className={cn(
-        "relative overflow-hidden border-white/50 bg-white/82",
-        className,
-      )}
-    >
-      {image ? (
-        <>
-          <div className="absolute inset-0">
-            <Image
-              src={image}
-              alt={title}
-              fill
-              className="object-cover opacity-28"
-              sizes="(max-width: 1024px) 100vw, 36vw"
-            />
-            <div className="absolute inset-0 bg-[linear-gradient(125deg,rgba(255,250,244,0.95),rgba(255,250,244,0.82)_46%,rgba(255,250,244,0.42))]" />
-          </div>
-          <div className="relative p-5 sm:p-8 lg:p-10">
-            <div className="mb-6 inline-flex size-12 items-center justify-center rounded-2xl bg-(--peach)/18 text-(--olive)">
-              <Icon className="size-5" />
-            </div>
-            <h3 className="font-display text-4xl leading-tight text-foreground">
-              {title}
-            </h3>
-            <p className="mt-4 max-w-2xl text-base leading-8 text-black/72">
-              {description}
-            </p>
-            <div className="mt-8 flex flex-wrap gap-2">
-              {points.map((point) => (
-                <Badge
-                  key={point}
-                  variant="soft"
-                  className="bg-white/72 text-black/68"
-                >
-                  {point}
-                </Badge>
-              ))}
-            </div>
-            <p className="mt-8 text-sm font-medium text-(--brown)">{context}</p>
-          </div>
-        </>
-      ) : null}
-    </Card>
-  );
-}
-
-function CompactServiceCard({
-  title,
-  description,
-  points,
-  context,
-  icon: Icon,
-}: {
-  title: string;
-  description: string;
-  points: string[];
-  context: string;
-  icon: React.ComponentType<{ className?: string }>;
-}) {
-  return (
-    <Card className="relative overflow-hidden border-white/45 bg-white/78">
-      <div className="absolute -right-5 -top-5 text-(--petrol)/10">
-        <Icon className="size-28" />
-      </div>
-      <CardHeader>
-        <div className="mb-4 inline-flex size-11 items-center justify-center rounded-2xl bg-(--petrol)/12 text-(--olive)">
-          <Icon className="size-5" />
-        </div>
-        <CardTitle className="text-2xl leading-tight">{title}</CardTitle>
-        <CardDescription className="text-sm leading-7">
-          {description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <ul className="space-y-3 text-sm leading-7 text-black/72">
-          {points.map((point) => (
-            <li key={point} className="flex gap-3">
-              <span className="mt-2 size-1.5 rounded-full bg-(--peach)" />
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-6 text-sm font-medium text-(--brown)">{context}</p>
-      </CardContent>
-    </Card>
-  );
-}
-
 export function ServicesSection() {
-  const [cooking, orto, cucito, chef, tour] = services;
-
   return (
-    <section id="services" className="scroll-mt-24 px-4 sm:px-6 lg:px-8">
+    <section id="services" className="scroll-mt-20 px-4 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-10">
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+        <FadeIn>
           <SectionHeading
             eyebrow="Servizi"
-            title="Esperienze che si impastano, si coltivano, si cuciono e si raccontano."
-            description="Ogni proposta nasce per mettere in relazione benessere, manualita, territorio e comunita. Cambia il formato, ma resta la stessa intenzione: lasciare qualcosa di vivo nelle persone e nei luoghi che lo ospitano."
+            title="Esperienze che si impastano, si coltivano e si raccontano."
+            description="Ogni proposta nasce per mettere in relazione benessere, manualita, territorio e comunita."
           />
+        </FadeIn>
 
-          <Card className="max-w-md border-white/50 bg-white/80">
-            <CardContent className="pt-6">
-              <p className="text-sm leading-7 text-black/70">
-                Ogni laboratorio o esperienza puo essere adattato per durata,
-                numero di partecipanti, spazio disponibile e obiettivo
-                educativo, sociale o turistico.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
+        <StaggerContainer className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => {
+            const Icon = service.icon;
+            return (
+              <StaggerItem key={service.title}>
+                <Card className="group h-full border-white/40 bg-white/55 shadow-[0_4px_20px_-10px_rgba(51,51,51,0.12)] transition-all duration-300 hover:-translate-y-1 hover:bg-white/75 hover:shadow-[0_12px_36px_-16px_rgba(51,51,51,0.2)]">
+                  {service.image && (
+                    <div className="relative h-44 overflow-hidden rounded-t-2xl">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                    </div>
+                  )}
+                  <CardContent className={service.image ? "pt-5" : "pt-8"}>
+                    <div className="mb-3 inline-flex size-10 items-center justify-center rounded-xl bg-(--petrol)/12 text-(--olive)">
+                      <Icon className="size-5" />
+                    </div>
+                    <h3 className="font-display text-xl leading-tight text-foreground">
+                      {service.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-6 text-black/58">
+                      {service.description}
+                    </p>
+                    <p className="mt-4 text-xs font-medium text-(--brown)">
+                      {service.context}
+                    </p>
+                  </CardContent>
+                </Card>
+              </StaggerItem>
+            );
+          })}
+        </StaggerContainer>
 
-        <div className="grid gap-5 lg:grid-cols-12">
-          <FeaturedServiceCard {...cooking} className="lg:col-span-7" />
-
-          <div className="grid gap-5 lg:col-span-5">
-            <CompactServiceCard {...orto} />
-            <CompactServiceCard {...cucito} />
+        <FadeIn>
+          <div className="flex justify-center">
+            <Button asChild size="lg" variant="outline" className="bg-white/70">
+              <a href="#contact">Richiedi un progetto su misura</a>
+            </Button>
           </div>
-
-          <FeaturedServiceCard {...chef} className="lg:col-span-5" />
-
-          <Card className="overflow-hidden border-white/50 bg-white/82 lg:col-span-7">
-            <div className="grid gap-0 lg:grid-cols-[0.62fr_0.38fr]">
-              <div className="relative min-h-80">
-                <Image
-                  src={
-                    tour.image ??
-                    cooking.image ??
-                    "/images/FOTO%20EDITATE/EH2A8408.jpg"
-                  }
-                  alt={tour.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 34vw"
-                />
-                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(51,51,51,0.05),rgba(51,51,51,0.28))]" />
-              </div>
-
-              <div className="p-8 lg:p-10">
-                <div className="mb-6 inline-flex size-12 items-center justify-center rounded-2xl bg-(--sun)/26 text-(--brown)">
-                  <tour.icon className="size-5" />
-                </div>
-                <h3 className="font-display text-4xl leading-tight text-foreground">
-                  {tour.title}
-                </h3>
-                <p className="mt-4 text-base leading-8 text-black/72">
-                  {tour.description}
-                </p>
-                <ul className="mt-6 space-y-3 text-sm leading-7 text-black/72">
-                  {tour.points.map((point) => (
-                    <li key={point} className="flex gap-3">
-                      <span className="mt-2 size-1.5 rounded-full bg-(--olive)" />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="mt-6 text-sm font-medium text-(--brown)">
-                  {tour.context}
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
-
-        <div className="flex justify-start">
-          <Button asChild size="lg" variant="outline" className="bg-white/70">
-            <a href="#contact">Richiedi un progetto su misura</a>
-          </Button>
-        </div>
+        </FadeIn>
       </div>
     </section>
   );
