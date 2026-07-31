@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>I Selvatici — esperienze di comunità</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+@font-face{font-family:"Seatren";src:url("assets/Seatren.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Seatren";src:url("assets/Seatren-Italic.woff2") format("woff2");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"Montserrat";src:url("assets/Montserrat.ttf") format("truetype");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Montserrat";src:url("assets/Montserrat-Italic.ttf") format("truetype");font-weight:100 900;font-style:italic;font-display:swap}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#FBF6EC;color:#333333;font-family:"Montserrat",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#a56900;text-decoration:none}
+a:hover{color:#83883e}
+img{display:block;max-width:100%}
+button{font-family:inherit}
+input{font-family:inherit}
+::selection{background:#ffb067;color:#333333}
+@keyframes selvMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@keyframes selvMarqueeRev{from{transform:translate3d(-50%,0,0)}to{transform:translate3d(0,0,0)}}
+@keyframes selvBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+</style>
+</helmet>
+
+<div ref="{{ root }}" style="background:#FBF6EC;overflow-x:hidden">
+
+<nav data-nav="1" style="position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px clamp(18px,3vw,40px);background:rgba(251,246,236,0);border-bottom:1px solid rgba(51,51,51,0);transition:background .4s ease,border-color .4s ease,padding .4s ease">
+  <a href="#top" style="display:flex;align-items:center;flex:0 0 auto">
+    <img data-nav-logo="1" src="assets/logo-bianco-trim.png" alt="I Selvatici" style="width:clamp(118px,13vw,158px);height:auto;transition:width .4s ease" />
+  </a>
+  <div data-navlinks="1" style="display:flex;align-items:center;gap:clamp(16px,2.2vw,30px);font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#FBF6EC">
+    <a href="#progetto" style="color:inherit">Il Progetto</a>
+    <a href="#laboratori" style="color:inherit">Laboratori</a>
+    <a href="#chef" style="color:inherit">Personal Chef</a>
+    <a href="#cammino" style="color:inherit">Il Cammino</a>
+    <a href="#agenda" style="color:inherit">Appuntamenti</a>
+  </div>
+  <div style="display:flex;align-items:center;gap:clamp(10px,1.4vw,18px);flex:0 0 auto">
+    <div data-langbox="1" style="display:flex;align-items:center;gap:2px;font-size:12px;font-weight:600;letter-spacing:.06em;color:#FBF6EC">
+      <button data-lang-it="1" onClick="{{ setIt }}" style="background:none;border:none;padding:4px 6px;cursor:pointer;color:inherit;font-size:12px;font-weight:700;letter-spacing:.06em;opacity:1">IT</button>
+      <span style="opacity:.4">/</span>
+      <button data-lang-en="1" onClick="{{ setEn }}" style="background:none;border:none;padding:4px 6px;cursor:pointer;color:inherit;font-size:12px;font-weight:700;letter-spacing:.06em;opacity:.45">EN</button>
+    </div>
+    <a data-navcta="1" href="#contatti" style="display:inline-block;padding:11px 22px;border-radius:999px;background:var(--selv-accent, #ffb067);color:#333333;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Prenota</a>
+    <button data-burger="1" aria-label="Menu" style="display:none;flex-direction:column;justify-content:center;gap:5px;width:46px;height:46px;padding:0;border:none;border-radius:999px;background:rgba(251,246,236,.14);cursor:pointer;align-items:center">
+      <span data-burger-line="1" style="display:block;width:20px;height:2px;border-radius:2px;background:#FBF6EC;transition:background .4s ease"></span>
+      <span data-burger-line="1" style="display:block;width:20px;height:2px;border-radius:2px;background:#FBF6EC;transition:background .4s ease"></span>
+    </button>
+  </div>
+</nav>
+
+<div data-drawer="1" style="position:fixed;inset:0;z-index:80;display:none;flex-direction:column;justify-content:space-between;gap:clamp(20px,4vh,36px);padding:20px clamp(18px,5vw,40px) 28px;background:#FBF6EC;max-height:100dvh;overflow-y:auto;-webkit-overflow-scrolling:touch">
+  <div style="display:flex;align-items:center;justify-content:space-between;gap:20px">
+    <img src="assets/logo-completo-trim.png" alt="I Selvatici" style="width:clamp(120px,32vw,168px);height:auto" />
+    <button data-drawer-close="1" aria-label="Chiudi" style="width:46px;height:46px;border:1px solid rgba(51,51,51,.2);border-radius:999px;background:none;color:#333333;font-size:22px;line-height:1;cursor:pointer">×</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:2px;font-family:'Seatren',serif;font-size:clamp(26px,5.4vh,46px);line-height:1.2;color:#333333">
+    <a href="#progetto" data-drawer-link="1" style="color:inherit">Il Progetto</a>
+    <a href="#laboratori" data-drawer-link="1" style="color:inherit">Laboratori</a>
+    <a href="#chef" data-drawer-link="1" style="color:inherit">Personal Chef</a>
+    <a href="#cammino" data-drawer-link="1" style="color:inherit">Il Cammino</a>
+    <a href="#agenda" data-drawer-link="1" style="color:inherit">Appuntamenti</a>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <a href="#contatti" data-drawer-link="1" style="display:block;padding:16px 24px;border-radius:999px;background:var(--selv-accent, #ffb067);color:#333333;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center">Prenota</a>
+    <div style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:700;letter-spacing:.06em;color:#333333">
+      <button data-lang-it="1" onClick="{{ setIt }}" style="background:none;border:none;padding:4px 6px;cursor:pointer;color:inherit;font-size:13px;font-weight:700;letter-spacing:.06em;opacity:1">IT</button>
+      <span style="opacity:.4">/</span>
+      <button data-lang-en="1" onClick="{{ setEn }}" style="background:none;border:none;padding:4px 6px;cursor:pointer;color:inherit;font-size:13px;font-weight:700;letter-spacing:.06em;opacity:.45">EN</button>
+      <span style="flex:1;height:1px;background:rgba(51,51,51,.16)"></span>
+      <span style="font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(51,51,51,.6)">Castelgrande (PZ)</span>
+    </div>
+  </div>
+</div>
+
+<header id="top" style="position:relative;min-height:100svh;overflow:hidden;background:#333333;display:flex;flex-direction:column">
+  <div data-parallax="0.18" style="position:absolute;inset:-12% 0 -12% 0;will-change:transform">
+    <img src="img/8393.jpg" alt="Laboratorio di cucina per bambini a Castelgrande" style="width:100%;height:100%;object-fit:cover;object-position:60% 42%" />
+  </div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(51,51,51,.74) 0%,rgba(51,51,51,.34) 34%,rgba(51,51,51,.52) 62%,rgba(51,51,51,.9) 100%)"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(120% 70% at 8% 88%,rgba(51,51,51,.6) 0%,rgba(51,51,51,0) 62%)"></div>
+
+  <div style="position:relative;flex:1;display:flex;flex-direction:column;justify-content:flex-end;width:100%;max-width:1280px;margin:0 auto;padding:clamp(110px,16vh,190px) clamp(18px,4vw,40px) clamp(26px,4vh,44px)">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:clamp(20px,3vh,34px)">
+      <span style="width:8px;height:8px;border-radius:999px;background:var(--selv-accent, #ffb067)"></span>
+      <p style="margin:0;font-size:clamp(10px,1.1vw,12px);font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:rgba(251,246,236,.9)">Castelgrande — Basilicata — dal 2026</p>
+    </div>
+    <h1 style="margin:0;font-family:'Seatren',serif;font-weight:700;font-size:clamp(46px,10.5vw,158px);line-height:.94;letter-spacing:-.01em;color:#FBF6EC;text-wrap:balance">Esperienze<br />di comunità</h1>
+    <p style="margin:clamp(18px,2.6vh,30px) 0 0;max-width:640px;font-size:clamp(17px,1.7vw,24px);line-height:1.5;color:rgba(251,246,236,.92);text-wrap:pretty">Laboratori di cucina, orto terapia e cucito, e un servizio di personal chef. <em style="font-style:italic;color:var(--selv-accent, #ffb067)">Un invito a rallentare.</em></p>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(24px,3.4vh,40px)">
+      <a href="#laboratori" style="display:inline-block;padding:16px 30px;border-radius:999px;background:var(--selv-accent, #ffb067);color:#333333;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Scopri i laboratori</a>
+      <a href="#chef" style="display:inline-block;padding:16px 30px;border-radius:999px;border:1px solid rgba(251,246,236,.55);color:#FBF6EC;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Personal chef</a>
+    </div>
+  </div>
+
+  <div style="position:relative;width:100%;max-width:1280px;margin:0 auto;padding:0 clamp(18px,4vw,40px) clamp(24px,4vh,40px)">
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;padding-top:22px;border-top:1px solid rgba(251,246,236,.28)">
+      <div style="display:flex;flex-wrap:wrap;gap:clamp(16px,3vw,44px);font-size:clamp(10px,1vw,12px);font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,246,236,.78)">
+        <span>Laboratori per tutte le età</span>
+        <span>Personal chef in tutta Italia</span>
+        <span>Il Cammino dei Selvatici</span>
+      </div>
+      <a href="#progetto" style="display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(251,246,236,.85)">
+        <span>Scorri</span>
+        <span data-bob="1" style="display:inline-block;width:1px;height:26px;background:var(--selv-accent, #ffb067);animation:selvBob 2.4s ease-in-out infinite"></span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<section style="padding:clamp(90px,11vw,170px) 32px">
+  <div style="max-width:1180px;margin:0 auto">
+    <p data-reveal="1" style="margin:0 0 40px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a56900">Il nostro perché</p>
+    <h2 data-reveal="1" style="margin:0;font-family:'Seatren',serif;font-weight:700;font-size:clamp(38px,5.6vw,96px);line-height:1.02;letter-spacing:-.005em;color:#333333;text-wrap:pretty">Ricostruire il legame tra <span style="color:#83883e">persone, terra e cibo.</span></h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:40px;margin-top:56px">
+      <p data-reveal="1" style="margin:0;font-size:18px;line-height:1.75;color:rgba(51,51,51,.82);text-wrap:pretty">Promuoviamo consapevolezza, benessere e scelte alimentari sane attraverso esperienze concrete e condivise: mani nella farina, mani nella terra, mani nel filo.</p>
+      <p data-reveal="1" style="margin:0;font-size:18px;line-height:1.75;color:rgba(51,51,51,.82);text-wrap:pretty">Nasciamo nel 2026 in Basilicata, dall’incontro tra radici lucane e toscane e da una visione comune fondata sull’amore per la terra, la cucina e le tradizioni locali.</p>
+      <p data-reveal="1" style="margin:0;font-size:18px;line-height:1.75;color:rgba(51,51,51,.82);text-wrap:pretty">Valorizziamo i saperi manuali, la stagionalità e le culture territoriali, per creare esperienze che uniscano benessere personale e crescita comunitaria.</p>
+    </div>
+  </div>
+</section>
+
+<section id="progetto" style="padding:clamp(70px,9vw,130px) 32px;background:rgba(142,159,147,.16)">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(40px,6vw,90px);align-items:start">
+    <div>
+      <p data-reveal="1" style="margin:0 0 24px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a56900">Il Progetto</p>
+      <h2 data-reveal="1" style="margin:0 0 32px;font-family:'Seatren',serif;font-weight:700;font-size:clamp(34px,4.4vw,72px);line-height:1.05;color:#333333">Saperi manuali, stagionalità, comunità</h2>
+      <p data-reveal="1" style="margin:0 0 22px;font-size:18px;line-height:1.75;color:rgba(51,51,51,.85);text-wrap:pretty">Con sede operativa a Castelgrande, I Selvatici promuovono laboratori ludico-ricreativi rivolti a tutte le fasce d’età, dedicati alla cucina, all’orto terapia e al cucito.</p>
+      <p data-reveal="1" style="margin:0 0 22px;font-size:18px;line-height:1.75;color:rgba(51,51,51,.85);text-wrap:pretty">Ogni attività è pensata per favorire la socialità, la trasmissione delle tradizioni e il recupero di pratiche sostenibili legate al territorio.</p>
+      <div data-reveal="1" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:20px;margin-top:44px;padding-top:36px;border-top:1px solid rgba(51,51,51,.14)">
+        <div>
+          <p style="margin:0;font-family:'Seatren',serif;font-size:34px;color:#83883e">2026</p>
+          <p style="margin:6px 0 0;font-size:13px;line-height:1.5;color:rgba(51,51,51,.66)">Anno di nascita, in Basilicata</p>
+        </div>
+        <div>
+          <p style="margin:0;font-family:'Seatren',serif;font-size:34px;color:#83883e">3</p>
+          <p style="margin:6px 0 0;font-size:13px;line-height:1.5;color:rgba(51,51,51,.66)">Laboratori: cucina, orto, cucito</p>
+        </div>
+        <div>
+          <p style="margin:0;font-family:'Seatren',serif;font-size:34px;color:#83883e">Tutta Italia</p>
+          <p style="margin:6px 0 0;font-size:13px;line-height:1.5;color:rgba(51,51,51,.66)">Disponibili su tutto il territorio</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <div data-parallax="0.07" style="overflow:hidden;border-radius:4px;will-change:transform">
+        <img src="img/8501.jpg" loading="lazy" alt="Mani che impastano" style="width:100%;height:auto" />
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+        <div data-parallax="0.13" style="overflow:hidden;border-radius:4px;will-change:transform">
+          <img src="img/8420.jpg" loading="lazy" alt="Farina sul tavolo" style="width:100%;height:auto" />
+        </div>
+        <p style="margin:0;font-size:15px;line-height:1.7;font-style:italic;color:rgba(51,51,51,.7)">Ogni gesto è una trasmissione: chi impara oggi racconterà domani.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="chisiamo" style="padding:clamp(80px,10vw,150px) 32px">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(330px,1fr));gap:clamp(40px,6vw,80px);align-items:center">
+    <div data-parallax="0.06" style="overflow:hidden;border-radius:4px;will-change:transform">
+      <img src="img/8289.jpg" loading="lazy" alt="I fondatori de I Selvatici nella cucina di Castelgrande" style="width:100%;height:auto" />
+    </div>
+    <div>
+      <p data-reveal="1" style="margin:0 0 24px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a56900">Chi siamo</p>
+      <h2 data-reveal="1" style="margin:0 0 30px;font-family:'Seatren',serif;font-weight:700;font-size:clamp(34px,4.2vw,68px);line-height:1.05;color:#333333">Due radici, una cucina</h2>
+      <p data-reveal="1" style="margin:0 0 26px;font-size:18px;line-height:1.75;color:rgba(51,51,51,.85);text-wrap:pretty">Radici lucane e toscane che si incontrano attorno a un tavolo di legno. Portiamo in cucina i viaggi, gli incontri e la memoria delle nonne, e lo restituiamo a chi partecipa come esperienza da vivere insieme.</p>
+      <div data-reveal="1" style="display:flex;flex-wrap:wrap;gap:32px;padding-top:28px;border-top:1px solid rgba(51,51,51,.14)">
+        <div>
+          <p style="margin:0;font-family:'Seatren',serif;font-size:26px;color:#333333">Valentina Di Carlo</p>
+          <p style="margin:4px 0 0;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(51,51,51,.6)">Fondatrice</p>
+        </div>
+        <div>
+          <p style="margin:0;font-family:'Seatren',serif;font-size:26px;color:#333333">Lorenzo Staderini</p>
+          <p style="margin:4px 0 0;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(51,51,51,.6)">Fondatore &amp; chef</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="laboratori" style="padding:clamp(80px,10vw,150px) 32px;background:#333333;color:#FBF6EC">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:60px">
+      <div>
+        <p data-reveal="1" style="margin:0 0 22px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--selv-accent, #ffb067)">I Laboratori</p>
+        <h2 data-reveal="1" style="margin:0;font-family:'Seatren',serif;font-weight:700;font-size:clamp(36px,5vw,84px);line-height:1.03;color:#FBF6EC">Ludico-ricreativi, per tutte le età</h2>
+      </div>
+      <p data-reveal="1" style="margin:0;max-width:360px;font-size:16px;line-height:1.7;color:rgba(251,246,236,.72)">Famiglie, gruppi di amici, scuole e associazioni, aziende. Ogni percorso si adatta al gruppo e alla stagione.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:28px">
+      <article data-reveal="1" style="display:flex;flex-direction:column;overflow:hidden;border-radius:4px;background:#FBF6EC;color:#333333">
+        <img src="img/8358.jpg" loading="lazy" alt="Laboratorio di cucina" style="width:100%;height:230px;object-fit:cover" />
+        <div style="display:flex;flex-direction:column;gap:14px;padding:30px 28px 34px">
+          <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#a56900">01 — Cucina</p>
+          <h3 style="margin:0;font-family:'Seatren',serif;font-weight:700;font-size:32px;line-height:1.1">Impastare insieme</h3>
+          <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(51,51,51,.78)">Pane, pasta fresca, pizza e ricette di casa. Si impara con le mani, si mangia tutti insieme.</p>
+          <a href="#contatti" style="margin-top:6px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase">Iscriviti →</a>
+        </div>
+      </article>
+      <article data-reveal="1" style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-radius:4px;background:#83883e;color:#FBF6EC;min-height:420px;padding:30px 28px 34px">
+        <img src="assets/icona-bianca.png" alt="" style="position:absolute;top:-40px;right:-70px;width:300px;opacity:.13" />
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#f8ce79">02 — Orto terapia</p>
+          <h3 style="margin:0;font-family:'Seatren',serif;font-weight:700;font-size:32px;line-height:1.1">Le mani nella terra</h3>
+          <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(251,246,236,.86)">Semina, cura e raccolta come pratica di benessere. Il ritmo dell’orto detta il ritmo della giornata.</p>
+          <a href="#contatti" style="margin-top:6px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#f8ce79">Iscriviti →</a>
+        </div>
+      </article>
+      <article data-reveal="1" style="position:relative;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;border-radius:4px;background:var(--selv-accent, #ffb067);color:#333333;min-height:420px;padding:30px 28px 34px">
+        <img src="assets/icona.png" alt="" style="position:absolute;top:-40px;right:-70px;width:300px;opacity:.28" />
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <p style="margin:0;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#a56900">03 — Cucito</p>
+          <h3 style="margin:0;font-family:'Seatren',serif;font-weight:700;font-size:32px;line-height:1.1">Filo e pazienza</h3>
+          <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(51,51,51,.82)">Rammendo, ricamo e piccoli oggetti: gesti lenti che tornano utili e insegnano a riparare invece di sostituire.</p>
+          <a href="#contatti" style="margin-top:6px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#333333">Iscriviti →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="chef" style="position:relative;padding:clamp(90px,11vw,160px) 32px;background:#FBF6EC">
+  <div style="max-width:1280px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:clamp(40px,6vw,80px);align-items:center">
+    <div>
+      <p data-reveal="1" style="margin:0 0 22px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a56900">Personal Chef</p>
+      <h2 data-reveal="1" style="margin:0 0 30px;font-family:'Seatren',serif;font-weight:700;font-size:clamp(36px,4.8vw,80px);line-height:1.03;color:#333333">La vostra tavola, <em style="font-style:italic;color:#83883e">il nostro racconto</em></h2>
+      <p data-reveal="1" style="margin:0 0 24px;font-size:18px;line-height:1.75;color:rgba(51,51,51,.85);text-wrap:pretty">Esperienze gastronomiche che uniscono influenze apprese attraverso viaggi e incontri culturali a una forte valorizzazione della tradizione culinaria italiana.</p>
+      <p data-reveal="1" style="margin:0 0 40px;font-size:18px;line-height:1.75;color:rgba(51,51,51,.85);text-wrap:pretty">Prodotti stagionali, identità locali e convivialità: ogni degustazione diventa un momento di racconto e condivisione. In Basilicata e su tutto il territorio nazionale.</p>
+      <div data-reveal="1" style="display:flex;flex-wrap:wrap;gap:12px">
+        <a href="#contatti" style="display:inline-block;padding:16px 30px;border-radius:999px;background:#333333;color:#FBF6EC;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Richiedi un preventivo</a>
+        <a href="https://wa.me/393477930530" style="display:inline-block;padding:16px 30px;border-radius:999px;border:1px solid rgba(51,51,51,.28);color:#333333;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase">Scrivici su WhatsApp</a>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:end">
+      <div data-parallax="0.1" style="overflow:hidden;border-radius:4px;will-change:transform">
+        <img src="img/8614.jpg" loading="lazy" alt="Pasta fresca tirata a mano" style="width:100%;height:auto" />
+      </div>
+      <div data-parallax="0.17" style="overflow:hidden;border-radius:4px;will-change:transform">
+        <img src="img/8487.jpg" loading="lazy" alt="Lo chef al lavoro" style="width:100%;height:auto" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cammino" style="position:relative;overflow:hidden;background:#333333;color:#FBF6EC">
+  <div data-parallax="0.16" style="position:absolute;inset:-14% 0 -14% 0;will-change:transform">
+    <img src="img/8670.jpg" loading="lazy" alt="La comunità dei Selvatici" style="width:100%;height:100%;object-fit:cover" />
+  </div>
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(51,51,51,.86) 0%,rgba(51,51,51,.72) 50%,rgba(51,51,51,.9) 100%)"></div>
+  <div style="position:relative;max-width:1180px;margin:0 auto;padding:clamp(100px,13vw,190px) 32px">
+    <p data-reveal="1" style="margin:0 0 24px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--selv-accent, #ffb067)">Il Cammino dei Selvatici</p>
+    <h2 data-reveal="1" style="margin:0 0 40px;max-width:900px;font-family:'Seatren',serif;font-weight:700;font-size:clamp(38px,6vw,104px);line-height:1.02;color:#FBF6EC;text-wrap:pretty">Una rete di orti, cucine e comunità</h2>
+    <p data-reveal="1" style="margin:0 0 70px;max-width:640px;font-size:19px;line-height:1.7;color:rgba(251,246,236,.8);text-wrap:pretty">Vogliamo connettere territori diversi, promuovendo tradizioni, relazioni autentiche e percorsi di benessere condiviso. Un cammino che si costruisce una tappa alla volta.</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:36px;padding-top:40px;border-top:1px solid rgba(251,246,236,.28)">
+      <div data-reveal="1">
+        <p style="margin:0 0 12px;font-family:'Seatren',serif;font-size:44px;color:var(--selv-accent, #ffb067)">Orti</p>
+        <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(251,246,236,.78)">Terre coltivate che diventano aule a cielo aperto.</p>
+      </div>
+      <div data-reveal="1">
+        <p style="margin:0 0 12px;font-family:'Seatren',serif;font-size:44px;color:var(--selv-accent, #ffb067)">Cucine</p>
+        <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(251,246,236,.78)">Tavoli dove si impara facendo, e si mangia insieme.</p>
+      </div>
+      <div data-reveal="1">
+        <p style="margin:0 0 12px;font-family:'Seatren',serif;font-size:44px;color:var(--selv-accent, #ffb067)">Comunità</p>
+        <p style="margin:0;font-size:16px;line-height:1.7;color:rgba(251,246,236,.78)">Persone che si riconoscono e tornano, stagione dopo stagione.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="agenda" style="padding:clamp(80px,10vw,150px) 32px">
+  <div style="max-width:1180px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:50px">
+      <h2 data-reveal="1" style="margin:0;font-family:'Seatren',serif;font-weight:700;font-size:clamp(34px,4.6vw,76px);line-height:1.03;color:#333333">Prossimi appuntamenti</h2>
+      <p data-reveal="1" style="margin:0;font-size:14px;line-height:1.6;color:rgba(51,51,51,.6)">Posti limitati — si conferma per telefono o WhatsApp.</p>
+    </div>
+    <div style="display:flex;flex-direction:column;border-top:1px solid rgba(51,51,51,.16)">
+      <div data-reveal="1" data-row="1" style="display:grid;grid-template-columns:minmax(150px,220px) 1fr auto;gap:24px;align-items:center;padding:26px 4px;border-bottom:1px solid rgba(51,51,51,.16);transition:padding-left .3s ease">
+        <p style="margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#a56900">Dom 22 febbraio 2026</p>
+        <div>
+          <p style="margin:0;font-family:'Seatren',serif;font-size:clamp(22px,2.4vw,34px);line-height:1.15;color:#333333">Corso di cucina</p>
+          <p style="margin:6px 0 0;font-size:15px;color:rgba(51,51,51,.66)">Castelgrande (PZ) — pasta fresca, tutte le età</p>
+        </div>
+        <a href="#contatti" style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Iscriviti →</a>
+      </div>
+      <div data-reveal="1" data-row="1" style="display:grid;grid-template-columns:minmax(150px,220px) 1fr auto;gap:24px;align-items:center;padding:26px 4px;border-bottom:1px solid rgba(51,51,51,.16);transition:padding-left .3s ease">
+        <p style="margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#a56900">Data da definire</p>
+        <div>
+          <p style="margin:0;font-family:'Seatren',serif;font-size:clamp(22px,2.4vw,34px);line-height:1.15;color:#333333">Orto terapia — primavera</p>
+          <p style="margin:6px 0 0;font-size:15px;color:rgba(51,51,51,.66)">Semina e cura dell’orto, per famiglie e gruppi</p>
+        </div>
+        <a href="#contatti" style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Lista d’attesa →</a>
+      </div>
+      <div data-reveal="1" data-row="1" style="display:grid;grid-template-columns:minmax(150px,220px) 1fr auto;gap:24px;align-items:center;padding:26px 4px;border-bottom:1px solid rgba(51,51,51,.16);transition:padding-left .3s ease">
+        <p style="margin:0;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#a56900">Su richiesta</p>
+        <div>
+          <p style="margin:0;font-family:'Seatren',serif;font-size:clamp(22px,2.4vw,34px);line-height:1.15;color:#333333">Cena a domicilio — personal chef</p>
+          <p style="margin:6px 0 0;font-size:15px;color:rgba(51,51,51,.66)">In Basilicata e su tutto il territorio nazionale</p>
+        </div>
+        <a href="#contatti" style="font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap">Preventivo →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(60px,8vw,110px) 0;background:rgba(248,206,121,.28);overflow:hidden">
+  <p data-reveal="1" style="margin:0 0 46px;padding:0 32px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a56900">Galleria</p>
+  <div style="display:flex;flex-direction:column;gap:18px">
+    <div data-marquee="1" style="display:flex;gap:18px;width:max-content;animation:selvMarquee 70s linear infinite">
+      <img src="img/8562.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8572.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8592.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8544.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8506.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8663.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8485.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8641.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8562.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8572.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8592.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8544.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8506.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8663.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8485.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+      <img src="img/8641.jpg" loading="lazy" alt="" style="height:clamp(180px,22vw,300px);width:auto;border-radius:3px" />
+    </div>
+    <div data-marquee="1" style="display:flex;gap:18px;width:max-content;animation:selvMarqueeRev 85s linear infinite">
+      <img src="img/8347.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8368.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8435.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8439.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8516.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8580.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8603.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8321.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8347.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8368.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8435.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8439.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8516.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8580.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8603.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+      <img src="img/8321.jpg" loading="lazy" alt="" style="height:clamp(140px,17vw,230px);width:auto;border-radius:3px" />
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(80px,10vw,150px) 32px">
+  <div style="max-width:1180px;margin:0 auto">
+    <p data-reveal="1" style="margin:0 0 24px;font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a56900">Dicono di noi</p>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:28px">
+      <blockquote data-reveal="1" style="margin:0;padding:34px 30px;background:rgba(142,159,147,.18);border-radius:4px">
+        <p style="margin:0 0 20px;font-family:'Seatren',serif;font-size:23px;line-height:1.3;color:#333333">Mia figlia ha impastato per tre ore e non si è mai annoiata.</p>
+        <footer style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(51,51,51,.6)">Nome, Castelgrande</footer>
+      </blockquote>
+      <blockquote data-reveal="1" style="margin:0;padding:34px 30px;background:rgba(142,159,147,.18);border-radius:4px">
+        <p style="margin:0 0 20px;font-family:'Seatren',serif;font-size:23px;line-height:1.3;color:#333333">Una cena che sembrava un racconto: ogni piatto aveva una storia.</p>
+        <footer style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(51,51,51,.6)">Nome, Potenza</footer>
+      </blockquote>
+      <blockquote data-reveal="1" style="margin:0;padding:34px 30px;background:rgba(142,159,147,.18);border-radius:4px">
+        <p style="margin:0 0 20px;font-family:'Seatren',serif;font-size:23px;line-height:1.3;color:#333333">Abbiamo portato la classe e sono tornati a casa a parlare di stagionalità.</p>
+        <footer style="font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:rgba(51,51,51,.6)">Nome, insegnante</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section style="padding:clamp(70px,9vw,130px) 32px;background:rgba(142,159,147,.2)">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:48px">
+      <h2 data-reveal="1" style="margin:0;font-family:'Seatren',serif;font-weight:700;font-size:clamp(32px,4.2vw,68px);line-height:1.03;color:#333333">Porta a casa i Selvatici</h2>
+      <p data-reveal="1" style="margin:0;max-width:380px;font-size:16px;line-height:1.7;color:rgba(51,51,51,.7)">Grembiuli, borse e packaging: la nostra identità viaggia con chi partecipa.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px">
+      <div data-reveal="1" style="overflow:hidden;border-radius:4px;background:#FBF6EC">
+        <img src="assets/mock-tote.jpg" loading="lazy" alt="Tote bag I Selvatici" style="width:100%;height:300px;object-fit:cover" />
+        <p style="margin:0;padding:22px 24px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:rgba(51,51,51,.7)">Tote bag in cotone</p>
+      </div>
+      <div data-reveal="1" style="overflow:hidden;border-radius:4px;background:#FBF6EC">
+        <img src="assets/mock-jacket.png" loading="lazy" alt="Giacca da chef I Selvatici" style="width:100%;height:300px;object-fit:cover" />
+        <p style="margin:0;padding:22px 24px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:rgba(51,51,51,.7)">Giacca da chef</p>
+      </div>
+      <div data-reveal="1" style="overflow:hidden;border-radius:4px;background:#FBF6EC">
+        <img src="assets/mock-bag.jpg" loading="lazy" alt="Packaging takeaway I Selvatici" style="width:100%;height:300px;object-fit:cover" />
+        <p style="margin:0;padding:22px 24px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:rgba(51,51,51,.7)">Packaging takeaway</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contatti" style="padding:clamp(90px,11vw,160px) 32px 0;background:#83883e;color:#FBF6EC">
+  <div style="max-width:1280px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:clamp(40px,6vw,90px)">
+      <div>
+        <h2 data-reveal="1" style="margin:0 0 28px;font-family:'Seatren',serif;font-weight:700;font-size:clamp(38px,5.4vw,92px);line-height:1.02;color:#FBF6EC">Scriviamoci</h2>
+        <p data-reveal="1" style="margin:0 0 40px;max-width:480px;font-size:18px;line-height:1.7;color:rgba(251,246,236,.84);text-wrap:pretty">Raccontaci chi siete e cosa vi piacerebbe fare: laboratorio, cena, team building o una tappa del Cammino. Rispondiamo su WhatsApp o al telefono.</p>
+        <div style="display:flex;flex-direction:column;gap:14px;max-width:520px">
+          <a data-card="1" href="https://wa.me/393477930530" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 26px;border-radius:4px;background:var(--selv-accent, #ffb067);color:#333333;transition:transform .3s ease">
+            <span style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(51,51,51,.62)">Scrivici su WhatsApp</span>
+              <span style="font-family:'Seatren',serif;font-size:clamp(22px,2.4vw,30px);line-height:1.1">+39 347 793 0530</span>
+            </span>
+            <span style="font-size:26px;line-height:1">→</span>
+          </a>
+          <a data-card="outline" href="tel:+393471551887" style="display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px 26px;border-radius:4px;border:1px solid rgba(251,246,236,.45);color:#FBF6EC;transition:transform .3s ease,background .3s ease">
+            <span style="display:flex;flex-direction:column;gap:6px">
+              <span style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#f8ce79">Chiamaci</span>
+              <span style="font-family:'Seatren',serif;font-size:clamp(22px,2.4vw,30px);line-height:1.1">+39 347 155 1887</span>
+            </span>
+            <span style="font-size:26px;line-height:1">→</span>
+          </a>
+        </div>
+        <p data-reveal="1" style="margin:22px 0 0;font-size:14px;line-height:1.7;color:rgba(251,246,236,.66)">Lun—Sab, 9:00—19:00. Per gruppi e scuole meglio il telefono.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:36px;align-content:start">
+        <div data-reveal="1">
+          <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#f8ce79">Sede operativa</p>
+          <p style="margin:0;font-size:16px;line-height:1.8;color:rgba(251,246,236,.9)">Via Marconi, 21<br />85050 Castelgrande (PZ)<br />Basilicata, Italia</p>
+        </div>
+        <div data-reveal="1">
+          <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#f8ce79">Dove operiamo</p>
+          <p style="margin:0;font-size:16px;line-height:1.8;color:rgba(251,246,236,.9)">Basilicata e tutto il territorio nazionale, su richiesta.</p>
+        </div>
+        <div data-reveal="1">
+          <p style="margin:0 0 12px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#f8ce79">Amministrazione</p>
+          <p style="margin:0;font-size:16px;line-height:1.8;color:rgba(251,246,236,.9)">P.IVA 02208410767</p>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;margin-top:clamp(60px,8vw,110px);padding:34px 0;border-top:1px solid rgba(251,246,236,.3)">
+      <img src="assets/logo-bianco-trim.png" alt="I Selvatici" style="width:210px;height:auto" />
+      <p style="margin:0;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:rgba(251,246,236,.7)">esperienze di comunità — © 2026 I Selvatici</p>
+    </div>
+  </div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accentColor&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#ffb067&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#ffb067&quot;,&quot;#f8ce79&quot;,&quot;#83883e&quot;,&quot;#a56900&quot;],&quot;section&quot;:&quot;Brand&quot;},&quot;language&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;it&quot;,&quot;options&quot;:[&quot;it&quot;,&quot;en&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Contenuto&quot;},&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Movimento&quot;}}">
+class Component extends DCLogic {
+  root = React.createRef();
+
+  dict = {
+    "Il Progetto": "The Project",
+    "Laboratori": "Workshops",
+    "Personal Chef": "Personal Chef",
+    "Il Cammino": "The Path",
+    "Appuntamenti": "Calendar",
+    "Prenota": "Book now",
+    "I Selvatici sono un’esperienza di comunità, un invito a rallentare.": "I Selvatici are a community experience, an invitation to slow down.",
+    "un invito a rallentare.": "an invitation to slow down.",
+    "I Selvatici sono un’esperienza di comunità,": "I Selvatici are a community experience,",
+    "Scopri i laboratori": "Discover the workshops",
+    "Castelgrande — Basilicata — dal 2026": "Castelgrande — Basilicata — since 2026",
+    "Esperienze": "Community",
+    "di comunità": "experiences",
+    "Laboratori di cucina, orto terapia e cucito, e un servizio di personal chef.": "Cooking, garden-therapy and sewing workshops, plus a personal chef service.",
+    "Un invito a rallentare.": "An invitation to slow down.",
+    "Laboratori per tutte le età": "Workshops for every age",
+    "Personal chef in tutta Italia": "Personal chef across Italy",
+    "Scorri": "Scroll",
+    "Castelgrande (PZ)": "Castelgrande (PZ)",
+    "Castelgrande — Basilicata": "Castelgrande — Basilicata",
+    "dal 2026": "since 2026",
+    "Il nostro perché": "Our why",
+    "Ricostruire il legame tra": "Rebuilding the bond between",
+    "persone, terra e cibo.": "people, land and food.",
+    "Promuoviamo consapevolezza, benessere e scelte alimentari sane attraverso esperienze concrete e condivise: mani nella farina, mani nella terra, mani nel filo.": "We promote awareness, wellbeing and healthy food choices through concrete, shared experiences: hands in the flour, hands in the soil, hands on the thread.",
+    "Nasciamo nel 2026 in Basilicata, dall’incontro tra radici lucane e toscane e da una visione comune fondata sull’amore per la terra, la cucina e le tradizioni locali.": "We were born in 2026 in Basilicata, from the meeting of Lucanian and Tuscan roots and a shared vision founded on love for the land, cooking and local traditions.",
+    "Valorizziamo i saperi manuali, la stagionalità e le culture territoriali, per creare esperienze che uniscano benessere personale e crescita comunitaria.": "We champion manual know-how, seasonality and local cultures, creating experiences that join personal wellbeing with community growth.",
+    "Saperi manuali, stagionalità, comunità": "Manual know-how, seasonality, community",
+    "Con sede operativa a Castelgrande, I Selvatici promuovono laboratori ludico-ricreativi rivolti a tutte le fasce d’età, dedicati alla cucina, all’orto terapia e al cucito.": "Based in Castelgrande, I Selvatici run playful, recreational workshops for every age group, dedicated to cooking, garden therapy and sewing.",
+    "Ogni attività è pensata per favorire la socialità, la trasmissione delle tradizioni e il recupero di pratiche sostenibili legate al territorio.": "Every activity is designed to foster togetherness, pass on traditions and recover sustainable practices rooted in the territory.",
+    "Anno di nascita, in Basilicata": "Founded, in Basilicata",
+    "Laboratori: cucina, orto, cucito": "Workshops: cooking, garden, sewing",
+    "Tutta Italia": "All Italy",
+    "Disponibili su tutto il territorio": "Available nationwide",
+    "Ogni gesto è una trasmissione: chi impara oggi racconterà domani.": "Every gesture is a handover: whoever learns today will tell the story tomorrow.",
+    "Chi siamo": "About us",
+    "Due radici, una cucina": "Two roots, one kitchen",
+    "Radici lucane e toscane che si incontrano attorno a un tavolo di legno. Portiamo in cucina i viaggi, gli incontri e la memoria delle nonne, e lo restituiamo a chi partecipa come esperienza da vivere insieme.": "Lucanian and Tuscan roots meeting around a wooden table. We bring our travels, our encounters and our grandmothers’ memory into the kitchen, and give it back as an experience to live together.",
+    "Fondatrice": "Founder",
+    "Fondatore & chef": "Founder & chef",
+    "I Laboratori": "The Workshops",
+    "Ludico-ricreativi, per tutte le età": "Playful and recreational, for every age",
+    "Famiglie, gruppi di amici, scuole e associazioni, aziende. Ogni percorso si adatta al gruppo e alla stagione.": "Families, groups of friends, schools and associations, companies. Every path adapts to the group and the season.",
+    "01 — Cucina": "01 — Cooking",
+    "Impastare insieme": "Kneading together",
+    "Pane, pasta fresca, pizza e ricette di casa. Si impara con le mani, si mangia tutti insieme.": "Bread, fresh pasta, pizza and home recipes. You learn with your hands and eat all together.",
+    "Iscriviti →": "Sign up →",
+    "02 — Orto terapia": "02 — Garden therapy",
+    "Le mani nella terra": "Hands in the soil",
+    "Semina, cura e raccolta come pratica di benessere. Il ritmo dell’orto detta il ritmo della giornata.": "Sowing, tending and harvesting as a wellbeing practice. The garden’s rhythm sets the rhythm of the day.",
+    "03 — Cucito": "03 — Sewing",
+    "Filo e pazienza": "Thread and patience",
+    "Rammendo, ricamo e piccoli oggetti: gesti lenti che tornano utili e insegnano a riparare invece di sostituire.": "Mending, embroidery and small objects: slow gestures that come in handy and teach repairing instead of replacing.",
+    "La vostra tavola, il nostro racconto": "Your table, our story",
+    "La vostra tavola,": "Your table,",
+    "il nostro racconto": "our story",
+    "Esperienze gastronomiche che uniscono influenze apprese attraverso viaggi e incontri culturali a una forte valorizzazione della tradizione culinaria italiana.": "Gastronomic experiences that blend influences gathered through travel and cultural encounters with a deep respect for Italian culinary tradition.",
+    "Prodotti stagionali, identità locali e convivialità: ogni degustazione diventa un momento di racconto e condivisione. In Basilicata e su tutto il territorio nazionale.": "Seasonal produce, local identities and conviviality: every tasting becomes a moment of storytelling and sharing. In Basilicata and nationwide.",
+    "Richiedi un preventivo": "Request a quote",
+    "Scrivici su WhatsApp": "Message us on WhatsApp",
+    "Il Cammino dei Selvatici": "The Path of the Selvatici",
+    "Una rete di orti, cucine e comunità": "A network of gardens, kitchens and communities",
+    "Vogliamo connettere territori diversi, promuovendo tradizioni, relazioni autentiche e percorsi di benessere condiviso. Un cammino che si costruisce una tappa alla volta.": "We want to connect different territories, promoting traditions, authentic relationships and shared wellbeing. A path built one stop at a time.",
+    "Orti": "Gardens",
+    "Terre coltivate che diventano aule a cielo aperto.": "Cultivated land that becomes an open-air classroom.",
+    "Cucine": "Kitchens",
+    "Tavoli dove si impara facendo, e si mangia insieme.": "Tables where you learn by doing, and eat together.",
+    "Comunità": "Community",
+    "Persone che si riconoscono e tornano, stagione dopo stagione.": "People who recognise each other and come back, season after season.",
+    "Prossimi appuntamenti": "Upcoming dates",
+    "Posti limitati — si conferma per telefono o WhatsApp.": "Limited places — confirmed by phone or WhatsApp.",
+    "Dom 22 febbraio 2026": "Sun 22 February 2026",
+    "Corso di cucina": "Cooking class",
+    "Castelgrande (PZ) — pasta fresca, tutte le età": "Castelgrande (PZ) — fresh pasta, all ages",
+    "Data da definire": "Date to be set",
+    "Orto terapia — primavera": "Garden therapy — spring",
+    "Semina e cura dell’orto, per famiglie e gruppi": "Sowing and tending the garden, for families and groups",
+    "Lista d’attesa →": "Waiting list →",
+    "Su richiesta": "On request",
+    "Cena a domicilio — personal chef": "Dinner at home — personal chef",
+    "In Basilicata e su tutto il territorio nazionale": "In Basilicata and nationwide",
+    "Preventivo →": "Get a quote →",
+    "Galleria": "Gallery",
+    "Dicono di noi": "What people say",
+    "Mia figlia ha impastato per tre ore e non si è mai annoiata.": "My daughter kneaded for three hours and never got bored.",
+    "Nome, Castelgrande": "Name, Castelgrande",
+    "Una cena che sembrava un racconto: ogni piatto aveva una storia.": "A dinner that felt like a story: every dish had one.",
+    "Nome, Potenza": "Name, Potenza",
+    "Abbiamo portato la classe e sono tornati a casa a parlare di stagionalità.": "We brought the class and they went home talking about seasonality.",
+    "Nome, insegnante": "Name, teacher",
+    "Porta a casa i Selvatici": "Take I Selvatici home",
+    "Grembiuli, borse e packaging: la nostra identità viaggia con chi partecipa.": "Aprons, bags and packaging: our identity travels with those who join us.",
+    "Tote bag in cotone": "Cotton tote bag",
+    "Giacca da chef": "Chef jacket",
+    "Packaging takeaway": "Takeaway packaging",
+    "Scriviamoci": "Get in touch",
+    "Raccontaci chi siete e cosa vi piacerebbe fare: laboratorio, cena, team building o una tappa del Cammino. Rispondiamo su WhatsApp o al telefono.": "Tell us who you are and what you would like to do: a workshop, a dinner, team building or a stop on the Path. We reply on WhatsApp or by phone.",
+    "Lun—Sab, 9:00—19:00. Per gruppi e scuole meglio il telefono.": "Mon—Sat, 9:00—19:00. For groups and schools, a call works best.",
+    "Chiamaci": "Call us",
+    "Sede operativa": "Operating base",
+    "Telefono": "Phone",
+    "Dove operiamo": "Where we work",
+    "Basilicata e tutto il territorio nazionale, su richiesta.": "Basilicata and the whole country, on request.",
+    "Amministrazione": "Administration",
+    "esperienze di comunità — © 2026 I Selvatici": "community experiences — © 2026 I Selvatici"
+  };
+
+  phDict = { "La tua email": "Your email" };
+
+  norm(s) { return s.replace(/\s+/g, " ").trim(); }
+
+  componentDidMount() {
+    const accent = this.props.accentColor;
+    if (accent) document.documentElement.style.setProperty("--selv-accent", accent);
+    this.lang = "it";
+    this.originals = new Map();
+    this.reduce = this.props.reduceMotion === true ||
+      (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    this.setupNav();
+    this.setupResponsive();
+    this.setupDrawer();
+    this.setupReveals();
+    this.setupParallax();
+    this.setupRows();
+    if (this.props.language === "en") this.setLang("en");
+  }
+
+  componentWillUnmount() {
+    if (this._onScroll) { window.removeEventListener("scroll", this._onScroll); window.removeEventListener("resize", this._onScroll); }
+    if (this._respApply) window.removeEventListener("resize", this._respApply);
+    if (this._io) this._io.disconnect();
+    document.body.style.overflow = "";
+  }
+
+  setupNav() {
+    const root = this.root.current; if (!root) return;
+    const nav = root.querySelector("[data-nav]"); if (!nav) return;
+    const logo = root.querySelector("[data-nav-logo]");
+    const links = root.querySelector("[data-navlinks]");
+    const langbox = root.querySelector("[data-langbox]");
+    const burger = root.querySelector("[data-burger]");
+    const burgerLines = Array.from(root.querySelectorAll("[data-burger-line]"));
+    let solid = null;
+    const apply = () => {
+      const on = window.scrollY > 80;
+      if (on === solid) return;
+      solid = on;
+      nav.style.background = on ? "rgba(251,246,236,.94)" : "rgba(251,246,236,0)";
+      nav.style.borderBottomColor = on ? "rgba(51,51,51,.12)" : "rgba(51,51,51,0)";
+      nav.style.backdropFilter = on ? "blur(14px)" : "none";
+      nav.style.paddingTop = on ? "10px" : "16px";
+      nav.style.paddingBottom = on ? "10px" : "16px";
+      const c = on ? "#333333" : "#FBF6EC";
+      if (links) links.style.color = c;
+      if (langbox) langbox.style.color = c;
+      if (logo) logo.src = on ? "assets/logo-completo-trim.png" : "assets/logo-bianco-trim.png";
+      if (burger) burger.style.background = on ? "rgba(51,51,51,.08)" : "rgba(251,246,236,.14)";
+      burgerLines.forEach((l) => { l.style.background = c; });
+    };
+    apply();
+    this._navApply = apply;
+  }
+
+  setupResponsive() {
+    const root = this.root.current; if (!root) return;
+    const links = root.querySelector("[data-navlinks]");
+    const burger = root.querySelector("[data-burger]");
+    const cta = root.querySelector("[data-navcta]");
+    const langbox = root.querySelector("[data-langbox]");
+    const apply = () => {
+      const w = window.innerWidth;
+      const compact = w < 1000;
+      if (links) links.style.display = compact ? "none" : "flex";
+      if (burger) burger.style.display = compact ? "flex" : "none";
+      if (cta) cta.style.display = w < 560 ? "none" : "inline-block";
+      if (langbox) langbox.style.display = compact ? "none" : "flex";
+      if (!compact) this.closeDrawer();
+    };
+    apply();
+    this._respApply = apply;
+    window.addEventListener("resize", apply, { passive: true });
+  }
+
+  openDrawer() {
+    const root = this.root.current; if (!root) return;
+    const d = root.querySelector("[data-drawer]"); if (!d) return;
+    d.style.display = "flex";
+    document.body.style.overflow = "hidden";
+  }
+
+  closeDrawer() {
+    const root = this.root.current; if (!root) return;
+    const d = root.querySelector("[data-drawer]"); if (!d) return;
+    d.style.display = "none";
+    document.body.style.overflow = "";
+  }
+
+  setupDrawer() {
+    const root = this.root.current; if (!root) return;
+    const burger = root.querySelector("[data-burger]");
+    const close = root.querySelector("[data-drawer-close]");
+    if (burger) burger.addEventListener("click", () => this.openDrawer());
+    if (close) close.addEventListener("click", () => this.closeDrawer());
+    Array.from(root.querySelectorAll("[data-drawer-link]")).forEach((a) => {
+      a.addEventListener("click", () => this.closeDrawer());
+    });
+  }
+
+  setupReveals() {
+    const root = this.root.current; if (!root) return;
+    const els = Array.from(root.querySelectorAll("[data-reveal]"));
+    if (this.reduce || !("IntersectionObserver" in window)) return;
+    els.forEach((el, i) => {
+      el.style.opacity = "0";
+      el.style.transform = "translateY(26px)";
+      el.style.transition = "opacity .9s cubic-bezier(.22,.61,.36,1) " + ((i % 4) * 70) + "ms, transform .9s cubic-bezier(.22,.61,.36,1) " + ((i % 4) * 70) + "ms";
+    });
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = "1";
+          e.target.style.transform = "none";
+          this._io.unobserve(e.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    els.forEach((el) => this._io.observe(el));
+  }
+
+  setupParallax() {
+    const root = this.root.current; if (!root) return;
+    const items = Array.from(root.querySelectorAll("[data-parallax]")).map((el) => ({
+      el: el, k: parseFloat(el.getAttribute("data-parallax")) || 0.1
+    }));
+    let raf = null;
+    const frame = () => {
+      raf = null;
+      const vh = window.innerHeight;
+      items.forEach((it) => {
+        const r = it.el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > vh + 200) return;
+        const mid = r.top + r.height / 2 - vh / 2;
+        it.el.style.transform = "translate3d(0," + (-mid * it.k).toFixed(2) + "px,0)";
+      });
+    };
+    this._onScroll = () => {
+      if (this._navApply) this._navApply();
+      if (!this.reduce && raf === null) raf = requestAnimationFrame(frame);
+    };
+    window.addEventListener("scroll", this._onScroll, { passive: true });
+    window.addEventListener("resize", this._onScroll, { passive: true });
+    if (!this.reduce) frame();
+    if (this.reduce) {
+      Array.from(root.querySelectorAll("[data-marquee]")).forEach((m) => { m.style.animation = "none"; });
+    }
+  }
+
+  setupRows() {
+    const root = this.root.current; if (!root) return;
+    Array.from(root.querySelectorAll("[data-card]")).forEach((card) => {
+      const outline = card.getAttribute("data-card") === "outline";
+      card.addEventListener("mouseenter", () => { card.style.transform = "translateX(6px)"; if (outline) card.style.background = "rgba(251,246,236,.1)"; });
+      card.addEventListener("mouseleave", () => { card.style.transform = "none"; if (outline) card.style.background = "transparent"; });
+    });
+    Array.from(root.querySelectorAll("[data-row]")).forEach((row) => {
+      row.addEventListener("mouseenter", () => { row.style.paddingLeft = "16px"; row.style.background = "rgba(248,206,121,.22)"; });
+      row.addEventListener("mouseleave", () => { row.style.paddingLeft = "4px"; row.style.background = "transparent"; });
+    });
+  }
+
+  setLang(lang) {
+    const root = this.root.current; if (!root) return;
+    if (lang === this.lang) return;
+    this.lang = lang;
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    const nodes = [];
+    let n; while ((n = walker.nextNode())) nodes.push(n);
+    nodes.forEach((node) => {
+      if (!node.nodeValue || !node.nodeValue.trim()) return;
+      if (lang === "en") {
+        const key = this.norm(node.nodeValue);
+        const en = this.dict[key];
+        if (en) { if (!this.originals.has(node)) this.originals.set(node, node.nodeValue); node.nodeValue = en; }
+      } else {
+        if (this.originals.has(node)) node.nodeValue = this.originals.get(node);
+      }
+    });
+    Array.from(root.querySelectorAll("[data-ph]")).forEach((el) => {
+      const cur = el.getAttribute("placeholder");
+      if (lang === "en") { const en = this.phDict[this.norm(cur)]; if (en) { el.setAttribute("data-ph-it", cur); el.setAttribute("placeholder", en); } }
+      else { const it = el.getAttribute("data-ph-it"); if (it) el.setAttribute("placeholder", it); }
+    });
+    Array.from(root.querySelectorAll("[data-lang-it]")).forEach((b) => { b.style.opacity = lang === "it" ? "1" : "0.45"; });
+    Array.from(root.querySelectorAll("[data-lang-en]")).forEach((b) => { b.style.opacity = lang === "en" ? "1" : "0.45"; });
+  }
+
+  renderVals() {
+    return {
+      root: this.root,
+      setIt: () => this.setLang("it"),
+      setEn: () => this.setLang("en")
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,74 +1,285 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f7f0e6;
-  --foreground: #333333;
-  --paper: #fffaf4;
-  --sand: #efe4d1;
-  --peach: #ffb067;
-  --petrol: #8e9f93;
-  --olive: #83883e;
-  --sun: #f8ce79;
-  --brown: #a56900;
+/* ---------------------------------------------------------------- tokens ---
+   Palette from Brand_Selvatici_2026.pdf. `accent` keeps the --selv-accent
+   indirection so the brand colour stays a single theming hook.
+   -------------------------------------------------------------------------- */
+@theme {
+  --color-ink: #333333;
+  --color-paper: #fbf6ec;
+  --color-accent: var(--selv-accent, #ffb067);
+  --color-sage: #8e9f93;
+  --color-olive: #83883e;
+  --color-yellow: #f8ce79;
+  --color-brown: #a56900;
+
+  --font-display: var(--font-seatren), Georgia, serif;
+  --font-sans: var(--font-montserrat), system-ui, sans-serif;
+
+  --radius-card: 4px;
+  --ease-reveal: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-body);
-  --font-display: var(--font-heading);
+@layer base {
+  :root {
+    --selv-accent: #ffb067;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* Zero-specificity so any colour utility or component class wins — including
+     on hover, which is what the flat design wants for pills and nav links. */
+  :where(a) {
+    color: var(--color-brown);
+    text-decoration: none;
+  }
+
+  :where(a:hover) {
+    color: var(--color-olive);
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  /* Keep anchor targets clear of the fixed nav (≈62px when solid). */
+  :target,
+  [id] {
+    scroll-margin-top: 80px;
+  }
 }
 
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
+/* ------------------------------------------------------------ components --- */
+@layer components {
+  /* Horizontal page padding. Caps at the prototype's 32px on desktop and
+     relaxes to 18px on small screens, per the spacing token. */
+  .page-px {
+    padding-inline: clamp(18px, 4vw, 32px);
+  }
+
+  /* Type roles ----------------------------------------------------------- */
+  .eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .kicker {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .link-cta {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* Pills ---------------------------------------------------------------- */
+  .pill {
+    display: inline-block;
+    padding: 16px 30px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .pill-accent {
+    background: var(--color-accent);
+    color: var(--color-ink);
+  }
+
+  .pill-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+
+  .pill-outline-paper {
+    border: 1px solid rgb(251 246 236 / 0.55);
+    color: var(--color-paper);
+  }
+
+  .pill-outline-ink {
+    border: 1px solid rgb(51 51 51 / 0.28);
+    color: var(--color-ink);
+  }
+
+  /* Mobile drawer -------------------------------------------------------- */
+  /* Kept mounted and hidden with `visibility` so both directions animate and
+     the links stay out of the tab order and the a11y tree while closed. */
+  .drawer {
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 -14px;
+    transition:
+      opacity 0.38s var(--ease-reveal),
+      translate 0.38s var(--ease-reveal),
+      visibility 0.38s;
+  }
+
+  .drawer[data-open] {
+    visibility: visible;
+    opacity: 1;
+    translate: none;
+  }
+
+  /* The three rows enter one after the other, on the reveal's 70ms stagger. */
+  .drawer-item {
+    opacity: 0;
+    translate: 0 12px;
+    transition:
+      opacity 0.42s var(--ease-reveal),
+      translate 0.42s var(--ease-reveal);
+  }
+
+  .drawer[data-open] .drawer-item {
+    opacity: 1;
+    translate: none;
+    transition-delay: calc(var(--i, 0) * 70ms + 60ms);
+  }
+
+  /* The hover colour lives on the element as `hover:text-olive`: a component
+     rule would lose to the `text-inherit` utility, since Tailwind's utilities
+     layer beats this one regardless of specificity. */
+  .drawer-link {
+    transition:
+      color 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .drawer-link:hover {
+    transform: translateX(6px);
+  }
+
+  .burger-bar {
+    transition:
+      translate 0.3s ease,
+      rotate 0.3s ease,
+      transform 0.3s ease,
+      background-color 0.4s ease;
+  }
+
+  /* Agenda rows ---------------------------------------------------------- */
+  .agenda-row {
+    padding-left: 4px;
+    transition:
+      padding-left 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .agenda-row:hover {
+    padding-left: 16px;
+    background-color: rgb(248 206 121 / 0.22);
+  }
+
+  /* Contact cards -------------------------------------------------------- */
+  .contact-card {
+    transition:
+      transform 0.3s ease,
+      background-color 0.3s ease;
+  }
+
+  .contact-card:hover {
+    transform: translateX(6px);
+  }
+
+  .contact-card-outline:hover {
+    background-color: rgb(251 246 236 / 0.1);
+  }
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+/* ---------------------------------------------------------------- motion --- */
+@keyframes selvMarquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
-body {
-  min-height: 100vh;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgb(255 176 103 / 0.18),
-      transparent 34%
-    ),
-    radial-gradient(
-      circle at 84% 10%,
-      rgb(142 159 147 / 0.18),
-      transparent 26%
-    ),
-    linear-gradient(180deg, #faf4eb 0%, #f6efe4 46%, #f3ecdf 100%);
-  color: var(--foreground);
-  font-family: var(--font-body), sans-serif;
+@keyframes selvMarqueeRev {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.22;
-  background-image:
-    linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: radial-gradient(circle at center, black 10%, transparent 88%);
+@keyframes selvBob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.marquee-row {
+  display: flex;
+  gap: 18px;
+  width: max-content;
+  animation: selvMarquee 70s linear infinite;
 }
 
-::selection {
-  background: rgb(255 176 103 / 0.35);
-  color: var(--foreground);
+.marquee-row-reverse {
+  animation-name: selvMarqueeRev;
+  animation-duration: 85s;
+}
+
+.bob {
+  animation: selvBob 2.4s ease-in-out infinite;
+}
+
+.parallax {
+  will-change: transform;
+}
+
+/* Reveal on scroll. The `js` class is set by an inline script before paint so
+   the initial hidden state never flashes for visitors without JS. */
+.js:not(.reduce-motion) [data-reveal] {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 0.9s var(--ease-reveal),
+    transform 0.9s var(--ease-reveal);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js:not(.reduce-motion) [data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+.reduce-motion .marquee-row,
+.reduce-motion .bob {
+  animation: none;
+}
+
+.reduce-motion .drawer,
+.reduce-motion .drawer-item,
+.reduce-motion .burger-bar {
+  transition: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -76,12 +287,20 @@ a {
     scroll-behavior: auto;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+  .marquee-row,
+  .bob {
+    animation: none;
+  }
+
+  .js [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .drawer,
+  .drawer-item,
+  .burger-bar {
+    transition: none;
   }
 }
