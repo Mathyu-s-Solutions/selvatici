@@ -10,7 +10,7 @@ import type { Content } from "@/content";
 import type { Locale } from "@/lib/i18n";
 
 const SOLID_AFTER = 80;
-const COMPACT_BELOW = 1000;
+const COMPACT_BELOW = 1100;
 
 type SiteHeaderProps = {
   content: Content["nav"];
@@ -99,16 +99,16 @@ export function SiteHeader({ content, locale }: SiteHeaderProps) {
           />
         </a>
 
-        <div className="hidden items-center gap-[clamp(16px,2.2vw,30px)] text-[12px] font-semibold tracking-[.1em] uppercase min-[1000px]:flex">
+        <div className="hidden items-center gap-[clamp(16px,2.2vw,30px)] text-[12px] font-semibold tracking-[.1em] uppercase min-[1100px]:flex">
           {content.links.map((link) => (
-            <a key={link.href} href={link.href} className="text-inherit">
+            <a key={link.href} href={link.href} className="text-inherit whitespace-nowrap">
               {link.label}
             </a>
           ))}
         </div>
 
         <div className="flex shrink-0 items-center gap-[clamp(10px,1.4vw,18px)]">
-          <div className="hidden min-[1000px]:flex">
+          <div className="hidden min-[1100px]:flex">
             <LanguageToggle locale={locale} />
           </div>
 
@@ -124,7 +124,7 @@ export function SiteHeader({ content, locale }: SiteHeaderProps) {
             aria-label={drawerOpen ? content.closeMenu : content.openMenu}
             aria-expanded={drawerOpen}
             onClick={() => setDrawerOpen((open) => !open)}
-            className={`flex h-[46px] w-[46px] flex-col items-center justify-center gap-[5px] rounded-full transition-colors duration-400 ease-[ease] min-[1000px]:hidden ${
+            className={`flex h-[46px] w-[46px] flex-col items-center justify-center gap-[5px] rounded-full transition-colors duration-400 ease-[ease] min-[1100px]:hidden ${
               solid ? "bg-ink/8 hover:bg-ink/14" : "bg-paper/14 hover:bg-paper/24"
             }`}
           >

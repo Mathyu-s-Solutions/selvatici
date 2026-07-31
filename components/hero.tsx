@@ -24,6 +24,8 @@ export function Hero({ content }: { content: Content["hero"] }) {
           fill
           priority
           sizes="100vw"
+          // The loader waits for this one before lifting.
+          data-hero=""
           className="object-cover object-[60%_42%]"
         />
       </div>

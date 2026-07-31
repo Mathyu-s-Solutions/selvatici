@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 
 import "@/app/globals.css";
 import { MotionRuntime } from "@/components/motion-runtime";
+import { PageLoader } from "@/components/page-loader";
 import { getContent } from "@/content";
 import { montserrat, seatren } from "@/lib/fonts";
 import { isLocale, locales } from "@/lib/i18n";
@@ -51,18 +52,15 @@ export async function generateMetadata({
 }
 
 /** Adds the `js` hook before the body paints, so reveals never flash. */
-const JS_HOOK = 'document.documentElement.classList.add("js")';
-
 export default async function RootLayout({ children, params }: LayoutProps) {
   const { lang } = await params;
   if (!isLocale(lang)) notFound();
 
+  const content = getContent(lang);
+
   return (
     <html
       lang={lang}
-      // JS_HOOK adds `js` to this element before React hydrates, so the class
-      // list legitimately differs from the server's. Scoped to <html> only.
-      suppressHydrationWarning
       className={[
         seatren.variable,
         montserrat.variable,
@@ -73,7 +71,10 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       style={{ "--selv-accent": siteConfig.accentColor } as CSSProperties}
     >
       <body>
-        <script dangerouslySetInnerHTML={{ __html: JS_HOOK }} />
+        <PageLoader
+          eyebrow={content.hero.eyebrow}
+          reduceMotion={siteConfig.reduceMotion}
+        />
         {children}
         <MotionRuntime reduceMotion={siteConfig.reduceMotion} />
       </body>

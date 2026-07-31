@@ -122,6 +122,54 @@
     color: var(--color-ink);
   }
 
+  /* Page loader ---------------------------------------------------------- */
+  /* Hidden unless scripting is on, so a visitor without JS never meets a veil
+     that would have no way of lifting. */
+  .loader {
+    display: none;
+  }
+
+  @media (scripting: enabled) {
+    .loader {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-paper);
+      /* Failsafe: the veil cannot lift before its own JS arrives, so CSS lifts
+         it after 5s regardless. Runs from first paint, independent of the
+         bundle; during the delay it applies no value, so it never fights the
+         GSAP exit. */
+      animation: selvLoaderFailsafe 0.5s ease 5s forwards;
+    }
+  }
+
+  /* Set once dismissed. Declared after the query so it wins on source order. */
+  .loader[data-done] {
+    display: none;
+  }
+
+  .loader-track {
+    display: block;
+    width: clamp(120px, 28vw, 180px);
+    height: 1px;
+    overflow: hidden;
+    background: rgb(51 51 51 / 0.14);
+  }
+
+  /* Initial state in CSS, not a Tailwind `scale-*` utility: that sets the
+     `scale` property, which would multiply with the `transform` GSAP animates. */
+  .loader-fill {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: var(--color-accent);
+  }
+
   /* Mobile drawer -------------------------------------------------------- */
   /* Kept mounted and hidden with `visibility` so both directions animate and
      the links stay out of the tab order and the a11y tree while closed. */
@@ -225,6 +273,13 @@
   }
 }
 
+@keyframes selvLoaderFailsafe {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 @keyframes selvBob {
   0%,
   100% {
@@ -255,20 +310,23 @@
   will-change: transform;
 }
 
-/* Reveal on scroll. The `js` class is set by an inline script before paint so
-   the initial hidden state never flashes for visitors without JS. */
-.js:not(.reduce-motion) [data-reveal] {
-  opacity: 0;
-  transform: translateY(26px);
-  transition:
-    opacity 0.9s var(--ease-reveal),
-    transform 0.9s var(--ease-reveal);
-  transition-delay: var(--reveal-delay, 0ms);
-}
+/* Reveal on scroll. Gated on `scripting: enabled` rather than a class added by
+   a script: React owns the class list on <html> and rewrites it when the IT/EN
+   toggle remounts the layout, which used to leave every reveal stuck visible. */
+@media (scripting: enabled) {
+  html:not(.reduce-motion) [data-reveal] {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.9s var(--ease-reveal),
+      transform 0.9s var(--ease-reveal);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
 
-.js:not(.reduce-motion) [data-reveal][data-revealed] {
-  opacity: 1;
-  transform: none;
+  html:not(.reduce-motion) [data-reveal][data-revealed] {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .reduce-motion .marquee-row,
@@ -292,7 +350,7 @@
     animation: none;
   }
 
-  .js [data-reveal] {
+  [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;

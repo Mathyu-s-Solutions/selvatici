@@ -5,7 +5,7 @@
 ## Delivery (implemented)
 
 The site in this repo is the build of the spec below — Next.js 16.2 (App Router,
-Turbopack), React 19, TypeScript, Tailwind CSS v4, pnpm. Both locales prerender
+Turbopack), React 19, TypeScript, Tailwind CSS v4, GSAP, pnpm. Both locales prerender
 as static HTML.
 
 ```bash
@@ -22,11 +22,12 @@ pnpm typecheck
 | `app/[lang]/layout.tsx` | root layout: `<html lang>`, fonts, metadata, `generateStaticParams` for `it`/`en` |
 | `app/[lang]/page.tsx` | the landing page, composing the sections in order |
 | `app/globals.css` | Tailwind v4 `@theme` tokens (palette, fonts, radii) + component classes (`.eyebrow`, `.pill*`, `.agenda-row`, marquee, reveal) |
-| `components/*.tsx` | one file per section; only `site-header.tsx` and `motion-runtime.tsx` are client components |
+| `components/*.tsx` | one file per section; only `site-header.tsx`, `page-loader.tsx` and `motion-runtime.tsx` are client components |
 | `content/{it,en}.ts` | typed content dictionaries (`content/types.ts`), including agenda events |
 | `lib/site-config.ts` | the prototype's props: `accentColor` (writes `--selv-accent`), `reduceMotion`, phone numbers, site URL |
 | `lib/{fonts,photos}.ts` | `next/font/local` faces and the static `next/image` imports |
-| `lib/use-{reveal,parallax,prefers-reduced-motion}.ts` | the three motion behaviours |
+| `lib/use-{reveal,parallax,media-query,prefers-reduced-motion}.ts` | the motion behaviours |
+| `components/page-loader.tsx` | the opening veil (GSAP timeline) |
 | `assets/` | fonts, logos, monogram, merch mockups and the 24 referenced photographs, copied from `design/` |
 
 `design/` is kept untouched as the reference. The `it → en` toggle is a link to
@@ -34,7 +35,7 @@ the same page in the other locale — the prototype's text-node swapping is gone
 
 ### Responsive behaviour
 Verified with no horizontal overflow and no clipped text at 320 · 360 · 390 · 414
-· 480 · 560 · 640 · 768 · 834 · 900 · 999 · 1000 · 1024 · 1280 · 1440 · 1920 ·
+· 480 · 560 · 640 · 768 · 834 · 900 · 1024 · 1099 · 1100 · 1280 · 1440 · 1920 ·
 2560 px plus landscape phone (844×390).
 
 | Breakpoint | What changes |
@@ -42,8 +43,8 @@ Verified with no horizontal overflow and no clipped text at 320 · 360 · 390 ·
 | `< 560px` | the `Prenota` pill moves into the drawer |
 | `< 640px` | agenda rows stack; the *Il Progetto* image/pull-quote pair stacks |
 | `< 700px` | parallax is off (see below) |
-| `< 1000px` | centre nav links + IT/EN collapse into the hamburger drawer |
-| `≥ 1000px` | full nav; card grids reflow 1 → 2 → 3 columns via `auto-fit` |
+| `< 1100px` | centre nav links + IT/EN collapse into the hamburger drawer |
+| `≥ 1100px` | full nav; card grids reflow 1 → 2 → 3 columns via `auto-fit` |
 
 Everything else is fluid by construction: `clamp()` type, `auto-fit` grids and
 `clamp()` section rhythm, so there are no other hard breakpoints to maintain.
@@ -70,8 +71,24 @@ Everything else is fluid by construction: `clamp()` type, `auto-fit` grids and
   hover feedback stays on, as it does for the agenda rows and contact cards.
 - **Nav logo** crossfades between the white and full-colour wordmarks instead of
   swapping `src`, so there is no mid-scroll fetch or reflow.
-- **Reveals** start hidden from CSS gated on a `js` class set by a tiny inline
-  script, so nothing flashes in and the page stays readable without JS.
+- **Reveals** start hidden from CSS gated on `@media (scripting: enabled)`, so
+  nothing flashes in and the page stays readable without JS. This replaced a
+  class added by an inline script: React owns the class list on <html> and
+  rewrote it when the IT/EN toggle remounted the layout, which left every reveal
+  stuck visible for the rest of the session.
+- **The nav collapses at 1100px, not the specified 1000px.** Between 1000 and
+  1079px the five Italian labels need ~40px more than the bar has, so
+  "Personal Chef" broke onto a second line. Below 1100px you get the drawer,
+  which is a designed state; the labels also carry `white-space: nowrap`.
+- **An opening loader** covers the first paint: the wordmark, a hairline with a
+  peach fill, and the localised eyebrow, on paper so it dissolves into the page.
+  Not in the handoff — requested separately. Its markup is server-rendered and
+  shown by CSS, so it appears without waiting for any bundle; GSAP only drives
+  the fill and the exit. It holds for at least 450ms, waits for
+  `document.fonts.ready` and the hero image, and gives up after 2s. A CSS
+  keyframe lifts it at 5s even if the JS never arrives, and
+  `prefers-reduced-motion` skips it entirely. Note it does delay LCP by design;
+  converting the 1.4MB of Montserrat TTF to woff2 would shorten the wait most.
 - **Montserrat** is still shipped as TTF; convert to woff2 when convenient.
 - `app/icon.png` / `app/apple-icon.png` are generated from the monogram.
 
