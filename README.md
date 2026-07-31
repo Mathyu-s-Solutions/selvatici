@@ -66,11 +66,30 @@ Everything else is fluid by construction: `clamp()` type, `auto-fit` grids and
 | `sitemap.xml` with per-URL alternates, `robots.txt` | `app/sitemap.ts`, `app/robots.ts` |
 | `theme-color`, icons, `apple-icon` | `viewport`, `app/icon.png` |
 
-Two things worth knowing:
+#### The canonical origin follows the domain by itself
+`siteConfig.url` decides every canonical tag, OG URL, sitemap entry and JSON-LD
+id. It resolves at **build** time, in this order:
 
-- **`siteConfig.url` decides every canonical, OG and sitemap URL.** It defaults to
-  `https://iselvatici.it`; set `NEXT_PUBLIC_SITE_URL` if the real domain differs,
-  or those tags will all point at the wrong host.
+1. `NEXT_PUBLIC_SITE_URL`, if set — the manual override.
+2. `VERCEL_PROJECT_PRODUCTION_URL`. Vercel sets this to "the shortest production
+   custom domain, or vercel.app domain if no custom domain is available", even on
+   previews. So it is `selvatici.vercel.app` today and **becomes the real domain
+   on the first build after one is attached — no code change.**
+3. `VERCEL_URL` if system env vars are switched off in the project (logs a
+   warning: that URL is per-deployment, so fix the setting).
+4. `http://localhost:3000` for local builds.
+
+Not the request host, for two reasons: the pages are prerendered, so there is no
+request to read; and every preview deployment would declare itself canonical and
+compete with production. Instead previews are shut out — `VERCEL_ENV=preview`
+emits `noindex, nofollow` and a `Disallow: /` robots.txt, while their canonical
+still points at production.
+
+Verified by building each case: local, production today, preview, a future custom
+domain, and the manual override.
+
+Two more things worth knowing:
+
 - **The search titles are not the design's `<title>`.** The prototype used the
   brand line, but nobody searches for a brand that launched this year, so the
   service and the place come first and the name goes last. Both brand lines are

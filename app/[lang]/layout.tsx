@@ -10,7 +10,7 @@ import { PageLoader } from "@/components/page-loader";
 import { getContent } from "@/content";
 import { montserrat, seatren } from "@/lib/fonts";
 import { defaultLocale, isLocale, locales } from "@/lib/i18n";
-import { siteConfig } from "@/lib/site-config";
+import { isIndexable, siteConfig } from "@/lib/site-config";
 
 type LayoutProps = {
   children: ReactNode;
@@ -66,22 +66,24 @@ export async function generateMetadata({
       description: meta.description,
       images: [image],
     },
-    robots: {
-      index: true,
-      follow: true,
-      // Full-size photo and untruncated snippet. Repeated under googleBot
-      // because Next emits two tags: the generic one is what Bing reads.
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
-      googleBot: {
-        index: true,
-        follow: true,
-        "max-image-preview": "large",
-        "max-snippet": -1,
-        "max-video-preview": -1,
-      },
-    },
+    robots: isIndexable
+      ? {
+          index: true,
+          follow: true,
+          // Full-size photo and untruncated snippet. Repeated under googleBot
+          // because Next emits two tags: the generic one is what Bing reads.
+          "max-image-preview": "large",
+          "max-snippet": -1,
+          "max-video-preview": -1,
+          googleBot: {
+            index: true,
+            follow: true,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+            "max-video-preview": -1,
+          },
+        }
+      : { index: false, follow: false },
   };
 }
 
