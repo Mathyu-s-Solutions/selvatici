@@ -2,9 +2,10 @@ import type { Content } from "./types";
 
 export const en: Content = {
   meta: {
-    title: "I Selvatici — community experiences",
+    title: "Cooking workshops & personal chef in Basilicata | I Selvatici",
     description:
-      "Cooking, garden-therapy and sewing workshops, plus a personal chef service in Castelgrande, Basilicata. An invitation to slow down.",
+      "Cooking, garden-therapy and sewing workshops for all ages in Castelgrande (PZ), plus a personal chef service across Italy. Book on WhatsApp.",
+    brand: "I Selvatici — community experiences",
   },
 
   nav: {
@@ -146,6 +147,8 @@ export const en: Content = {
         ctaLabel: "Sign up →",
         href: "#contatti",
         status: "open",
+        startDate: "2026-02-22T10:00:00+01:00",
+        endDate: "2026-02-22T14:00:00+01:00",
       },
       {
         id: "orto-terapia-primavera",

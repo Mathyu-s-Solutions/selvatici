@@ -5,7 +5,8 @@
 ## Delivery (implemented)
 
 The site in this repo is the build of the spec below — Next.js 16.2 (App Router,
-Turbopack), React 19, TypeScript, Tailwind CSS v4, GSAP, pnpm. Both locales prerender
+Turbopack), React 19, TypeScript, Tailwind CSS v4, GSAP, Vercel Analytics, pnpm.
+Both locales prerender
 as static HTML.
 
 ```bash
@@ -30,6 +31,9 @@ pnpm typecheck
 | `components/page-loader.tsx` | the opening veil (GSAP timeline) |
 | `assets/` | fonts, logos, monogram, merch mockups and the 24 referenced photographs, copied from `design/` |
 | `scripts/build-fonts.py` | regenerates the woff2 subsets from the handoff TTFs |
+| `scripts/build-og-image.mjs` | regenerates `public/og.jpg`, the social share card |
+| `components/structured-data.tsx` | JSON-LD: LocalBusiness, WebSite, confirmed Events |
+| `app/{sitemap,robots}.ts` | sitemap with hreflang alternates, robots.txt |
 
 `design/` is kept untouched as the reference. The `it → en` toggle is a link to
 the same page in the other locale — the prototype's text-node swapping is gone.
@@ -49,6 +53,35 @@ Verified with no horizontal overflow and no clipped text at 320 · 360 · 390 ·
 
 Everything else is fluid by construction: `clamp()` type, `auto-fit` grids and
 `clamp()` section rhythm, so there are no other hard breakpoints to maintain.
+
+### SEO
+| What | Where |
+|---|---|
+| Search titles and descriptions, service and place first | `content/{it,en}.ts` → `meta` |
+| Canonical + `hreflang` it / en / x-default | `generateMetadata` |
+| Open Graph and Twitter large card, 1200×630 | `public/og.jpg` |
+| `max-image-preview:large`, `max-snippet:-1` (robots and googlebot) | `generateMetadata` |
+| `LocalBusiness` with address, phone, VAT, founders, hours, 4 services | `components/structured-data.tsx` |
+| `Event` for the confirmed date only | same |
+| `sitemap.xml` with per-URL alternates, `robots.txt` | `app/sitemap.ts`, `app/robots.ts` |
+| `theme-color`, icons, `apple-icon` | `viewport`, `app/icon.png` |
+
+Two things worth knowing:
+
+- **`siteConfig.url` decides every canonical, OG and sitemap URL.** It defaults to
+  `https://iselvatici.it`; set `NEXT_PUBLIC_SITE_URL` if the real domain differs,
+  or those tags will all point at the wrong host.
+- **The search titles are not the design's `<title>`.** The prototype used the
+  brand line, but nobody searches for a brand that launched this year, so the
+  service and the place come first and the name goes last. Both brand lines are
+  kept as `meta.brand`. Revert by swapping them if the client prefers.
+- Placeholder agenda dates and testimonials stay out of the structured data:
+  Google expects Event markup to be true, and inventing a date to win a rich
+  result is how structured data gets ignored sitewide. Fill in `startDate` in the
+  dictionaries as dates get confirmed and the markup follows.
+- LCP: the opening veil delays it by design, which is a ranking signal. If
+  Core Web Vitals matter more than the brand beat, cut `MIN_MS` in
+  `components/page-loader.tsx` or drop the veil.
 
 ### Deliberate deviations from the prototype
 - **Grid minimums** are `minmax(min(<n>px,100%),1fr)`: identical layout at every

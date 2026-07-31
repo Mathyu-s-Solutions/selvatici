@@ -34,6 +34,14 @@ export type AgendaEvent = {
   ctaLabel: string;
   href: string;
   status: "open" | "waitlist" | "onRequest";
+  /**
+   * ISO 8601 start, set only when the date is actually confirmed. Drives the
+   * Event structured data: Google requires real dates, so a placeholder must
+   * stay out of the markup rather than be invented.
+   */
+  startDate?: string;
+  /** ISO 8601 end, optional even when the start is known. */
+  endDate?: string;
 };
 
 export type Testimonial = {
@@ -53,8 +61,11 @@ export type InfoBlock = {
 
 export type Content = {
   meta: {
+    /** Search-facing title: service and place first, brand last. */
     title: string;
     description: string;
+    /** The brand line on its own, for Open Graph and structured data. */
+    brand: string;
   };
   nav: {
     logoAlt: string;

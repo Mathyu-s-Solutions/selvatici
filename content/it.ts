@@ -2,9 +2,13 @@ import type { Content } from "./types";
 
 export const it: Content = {
   meta: {
-    title: "I Selvatici — esperienze di comunità",
+    // Servizio e luogo prima del nome: nessuno cerca ancora "I Selvatici".
+    // Il titolo di marca del prototipo era "I Selvatici — esperienze di comunità".
+    title: "Laboratori di cucina e personal chef in Basilicata | I Selvatici",
     description:
-      "Laboratori di cucina, orto terapia e cucito, e un servizio di personal chef a Castelgrande, in Basilicata. Un invito a rallentare.",
+      "Laboratori di cucina, orto terapia e cucito per tutte le età a Castelgrande (PZ), e servizio di personal chef in tutta Italia. Prenota su WhatsApp.",
+    /** Nome del brand da solo, per Open Graph e dati strutturati. */
+    brand: "I Selvatici — esperienze di comunità",
   },
 
   nav: {
@@ -146,6 +150,8 @@ export const it: Content = {
         ctaLabel: "Iscriviti →",
         href: "#contatti",
         status: "open",
+        startDate: "2026-02-22T10:00:00+01:00",
+        endDate: "2026-02-22T14:00:00+01:00",
       },
       {
         id: "orto-terapia-primavera",
