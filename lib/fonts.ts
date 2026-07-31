@@ -14,11 +14,15 @@ export const seatren = localFont({
   fallback: ["Georgia", "serif"],
 });
 
-/** Text face, variable 100–900. */
+/**
+ * Text face, variable 100–900. Converted from the handoff's TTFs to woff2 and
+ * subset to Latin plus the punctuation, arrows and symbols the site uses —
+ * 1357KB → 247KB. See the fonts note in the README before editing the ranges.
+ */
 export const montserrat = localFont({
   src: [
-    { path: "../assets/fonts/Montserrat.ttf", weight: "100 900", style: "normal" },
-    { path: "../assets/fonts/Montserrat-Italic.ttf", weight: "100 900", style: "italic" },
+    { path: "../assets/fonts/Montserrat.woff2", weight: "100 900", style: "normal" },
+    { path: "../assets/fonts/Montserrat-Italic.woff2", weight: "100 900", style: "italic" },
   ],
   variable: "--font-montserrat",
   display: "swap",

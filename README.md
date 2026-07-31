@@ -29,6 +29,7 @@ pnpm typecheck
 | `lib/use-{reveal,parallax,media-query,prefers-reduced-motion}.ts` | the motion behaviours |
 | `components/page-loader.tsx` | the opening veil (GSAP timeline) |
 | `assets/` | fonts, logos, monogram, merch mockups and the 24 referenced photographs, copied from `design/` |
+| `scripts/build-fonts.py` | regenerates the woff2 subsets from the handoff TTFs |
 
 `design/` is kept untouched as the reference. The `it → en` toggle is a link to
 the same page in the other locale — the prototype's text-node swapping is gone.
@@ -86,10 +87,20 @@ Everything else is fluid by construction: `clamp()` type, `auto-fit` grids and
   shown by CSS, so it appears without waiting for any bundle; GSAP only drives
   the fill and the exit. It holds for at least 450ms, waits for
   `document.fonts.ready` and the hero image, and gives up after 2s. A CSS
-  keyframe lifts it at 5s even if the JS never arrives, and
-  `prefers-reduced-motion` skips it entirely. Note it does delay LCP by design;
-  converting the 1.4MB of Montserrat TTF to woff2 would shorten the wait most.
-- **Montserrat** is still shipped as TTF; convert to woff2 when convenient.
+  keyframe lifts it at 2.5s even if the JS never arrives — that is the real
+  ceiling, since the veil cannot lift before its own bundle lands.
+  `prefers-reduced-motion` skips it entirely. Measured, cache cold: gone at
+  ~1.5s unthrottled, ~3.7s on 1.6Mbps, ~4.0s on 700kbps (the extra is
+  time-to-first-paint, which no loader controls). It does delay LCP by design.
+- **Montserrat ships as subset woff2, not the handoff's TTFs.** 1357KB → 247KB
+  (a 5.5× cut) by converting to woff2 and dropping Cyrillic, Vietnamese and IPA,
+  which an Italian/English site never renders. The `wght` 100–900 axis is intact
+  — verified in the browser: weights 100/400/700/900 still measure four distinct
+  widths. Ranges are whole Unicode blocks, not just today's glyphs, so the copy
+  can be edited freely; all 90 characters the built pages paint were checked
+  against the result, including → × — ’ … © €. Rerun `scripts/build-fonts.py`
+  after changing the ranges. This is what makes the loader viable on slow
+  connections: 1.4MB of fonts alone is ~16s of a 700kbps link.
 - `app/icon.png` / `app/apple-icon.png` are generated from the monogram.
 
 ---

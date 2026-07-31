@@ -138,11 +138,12 @@
       align-items: center;
       justify-content: center;
       background: var(--color-paper);
-      /* Failsafe: the veil cannot lift before its own JS arrives, so CSS lifts
-         it after 5s regardless. Runs from first paint, independent of the
-         bundle; during the delay it applies no value, so it never fights the
-         GSAP exit. */
-      animation: selvLoaderFailsafe 0.5s ease 5s forwards;
+      /* The real ceiling: the veil cannot lift before its own JS arrives, so CSS
+         lifts it at 2.5s regardless — measured, a 700kbps connection would
+         otherwise sit behind it for 8s. Runs from first paint, independent of
+         the bundle; during the delay it applies no value, so it never fights
+         the GSAP exit, which finishes well inside 2.5s when JS is there. */
+      animation: selvLoaderFailsafe 0.5s ease 2.5s forwards;
     }
   }
 
