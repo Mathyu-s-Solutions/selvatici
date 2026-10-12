@@ -1,16 +1,25 @@
 import Image from "next/image";
+import Link from "next/link";
 
 import iconaBianca from "@/assets/brand/icona-bianca.png";
 import icona from "@/assets/brand/icona.png";
 import type { Content } from "@/content";
+import type { Locale } from "@/lib/i18n";
 import { photos } from "@/lib/photos";
+import { workshopPath } from "@/lib/workshops";
+
+type LaboratoriProps = {
+  content: Content["laboratori"];
+  locale: Locale;
+};
 
 /**
  * Cards 2 and 3 are colour panels with the monogram as a watermark: no garden
- * or sewing photography exists yet. Swap in photos when the client supplies them.
+ * or corporate photography exists yet. Swap in photos when the client supplies
+ * them. Each card opens the workshop's own page, which carries the description.
  */
-export function Laboratori({ content }: { content: Content["laboratori"] }) {
-  const [cucina, orto, cucito] = content.cards;
+export function Laboratori({ content, locale }: LaboratoriProps) {
+  const { cucina, orticoltura: orto, aziende } = content.cards;
 
   return (
     <section
@@ -57,9 +66,12 @@ export function Laboratori({ content }: { content: Content["laboratori"] }) {
               <p className="text-[16px] leading-[1.7] text-ink/78">
                 {cucina.body}
               </p>
-              <a href="#contatti" className="link-cta mt-1.5">
+              <Link
+                href={`/${locale}${workshopPath("cucina")}`}
+                className="link-cta mt-1.5"
+              >
                 {cucina.cta}
-              </a>
+              </Link>
             </div>
           </article>
 
@@ -82,9 +94,12 @@ export function Laboratori({ content }: { content: Content["laboratori"] }) {
               <p className="text-[16px] leading-[1.7] text-paper/86">
                 {orto.body}
               </p>
-              <a href="#contatti" className="link-cta mt-1.5 text-yellow">
+              <Link
+                href={`/${locale}${workshopPath("orticoltura")}`}
+                className="link-cta mt-1.5 text-yellow"
+              >
                 {orto.cta}
-              </a>
+              </Link>
             </div>
           </article>
 
@@ -100,16 +115,19 @@ export function Laboratori({ content }: { content: Content["laboratori"] }) {
               className="absolute top-[-40px] right-[-70px] h-auto w-[300px] opacity-[0.28]"
             />
             <div className="flex flex-col gap-3.5">
-              <p className="kicker text-brown">{cucito.kicker}</p>
+              <p className="kicker text-brown">{aziende.kicker}</p>
               <h3 className="font-display text-[32px] leading-[1.1]">
-                {cucito.title}
+                {aziende.title}
               </h3>
               <p className="text-[16px] leading-[1.7] text-ink/82">
-                {cucito.body}
+                {aziende.body}
               </p>
-              <a href="#contatti" className="link-cta mt-1.5 text-ink">
-                {cucito.cta}
-              </a>
+              <Link
+                href={`/${locale}${workshopPath("aziende")}`}
+                className="link-cta mt-1.5 text-ink"
+              >
+                {aziende.cta}
+              </Link>
             </div>
           </article>
         </div>

@@ -7,7 +7,7 @@
 The site in this repo is the build of the spec below — Next.js 16.2 (App Router,
 Turbopack), React 19, TypeScript, Tailwind CSS v4, GSAP, Vercel Analytics, pnpm.
 Both locales prerender
-as static HTML.
+as static HTML: the landing plus one page per workshop.
 
 ```bash
 pnpm install
@@ -22,6 +22,9 @@ pnpm typecheck
 |---|---|
 | `app/[lang]/layout.tsx` | root layout: `<html lang>`, fonts, metadata, `generateStaticParams` for `it`/`en` |
 | `app/[lang]/page.tsx` | the landing page, composing the sections in order |
+| `app/[lang]/laboratori/[slug]/page.tsx` | one page per workshop (`cucina`, `orticoltura`, `aziende`): `components/laboratorio-detail.tsx` followed by the contact block |
+| `lib/workshops.ts` | the workshop slugs — add one here and TypeScript asks for its card and page copy in both dictionaries |
+| `lib/metadata.ts` | per-page title, canonical, hreflang and Open Graph, shared by the landing and the workshop pages |
 | `app/globals.css` | Tailwind v4 `@theme` tokens (palette, fonts, radii) + component classes (`.eyebrow`, `.pill*`, `.agenda-row`, marquee, reveal) |
 | `components/*.tsx` | one file per section; only `site-header.tsx`, `page-loader.tsx` and `motion-runtime.tsx` are client components |
 | `content/{it,en}.ts` | typed content dictionaries (`content/types.ts`), including agenda events |
@@ -58,7 +61,7 @@ Everything else is fluid by construction: `clamp()` type, `auto-fit` grids and
 | What | Where |
 |---|---|
 | Search titles and descriptions, service and place first | `content/{it,en}.ts` → `meta` |
-| Canonical + `hreflang` it / en / x-default | `generateMetadata` |
+| Canonical + `hreflang` it / en / x-default, per page | `lib/metadata.ts` via `generateMetadata` |
 | Open Graph and Twitter large card, 1200×630 | `public/og.jpg` |
 | `max-image-preview:large`, `max-snippet:-1` (robots and googlebot) | `generateMetadata` |
 | `LocalBusiness` with address, phone, VAT, founders, hours, 4 services | `components/structured-data.tsx` |
@@ -154,6 +157,20 @@ Two more things worth knowing:
   after changing the ranges. This is what makes the loader viable on slow
   connections: 1.4MB of fonts alone is ~16s of a 700kbps link.
 - `app/icon.png` / `app/apple-icon.png` are generated from the monogram.
+- **The third workshop is *Aziende* (team cooking), not *Cucito*, and every card
+  opens a page of its own** instead of jumping to `#contatti` — both asked for
+  by the founders after the handoff, who also supplied the page copy. The pages
+  reuse the landing's header and contact block; on them the nav links route
+  back to the landing's sections and the IT / EN toggle keeps the page. Still
+  no photography for *orticoltura* or *aziende*: their pages show the card's
+  colour panel with the monogram, hidden once the columns stack. The same round
+  of feedback dropped sewing from the copy, renamed *orto terapia* to
+  *orticoltura* and rewrote the Personal Chef text.
+- **`MotionRuntime` rescans on every route change.** It lives in the layout,
+  which stays mounted between the landing and a workshop page, so without the
+  pathname as a dependency the next page's `[data-reveal]` elements would stay
+  hidden. `<html data-scroll-behavior="smooth">` is there for the same
+  navigation: Next 16 no longer suspends smooth scrolling while it routes.
 
 ---
 

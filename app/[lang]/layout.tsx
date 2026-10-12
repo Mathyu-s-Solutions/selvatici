@@ -9,7 +9,8 @@ import { StructuredData } from "@/components/structured-data";
 import { PageLoader } from "@/components/page-loader";
 import { getContent } from "@/content";
 import { montserrat, seatren } from "@/lib/fonts";
-import { defaultLocale, isLocale, locales } from "@/lib/i18n";
+import { isLocale, locales } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/metadata";
 import { isIndexable, siteConfig } from "@/lib/site-config";
 
 type LayoutProps = {
@@ -33,39 +34,17 @@ export async function generateMetadata({
   if (!isLocale(lang)) return {};
 
   const { meta, hero } = getContent(lang);
-  const image = {
-    url: "/og.jpg",
-    width: 1200,
-    height: 630,
-    alt: hero.imageAlt,
-  };
 
   return {
     metadataBase: new URL(siteConfig.url),
-    title: meta.title,
-    description: meta.description,
     applicationName: "I Selvatici",
-    alternates: {
-      canonical: `/${lang}`,
-      // x-default points search engines at Italian when no locale matches.
-      languages: { it: "/it", en: "/en", "x-default": `/${defaultLocale}` },
-    },
-    openGraph: {
-      type: "website",
-      locale: lang === "it" ? "it_IT" : "en_GB",
-      alternateLocale: lang === "it" ? "en_GB" : "it_IT",
-      url: `/${lang}`,
-      siteName: "I Selvatici",
+    ...pageMetadata({
+      locale: lang,
+      path: "",
       title: meta.title,
       description: meta.description,
-      images: [image],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: meta.title,
-      description: meta.description,
-      images: [image],
-    },
+      imageAlt: hero.imageAlt,
+    }),
     robots: isIndexable
       ? {
           index: true,
@@ -104,6 +83,9 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   return (
     <html
       lang={lang}
+      // Next 16 no longer suspends `scroll-behavior: smooth` while it routes;
+      // without this, opening a workshop page glides up from the cards.
+      data-scroll-behavior="smooth"
       className={[
         seatren.variable,
         montserrat.variable,

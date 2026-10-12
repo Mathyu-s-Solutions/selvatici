@@ -1,5 +1,7 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+
 import { useMediaQuery } from "@/lib/use-media-query";
 import { usePrefersReducedMotion } from "@/lib/use-prefers-reduced-motion";
 import { useParallax } from "@/lib/use-parallax";
@@ -17,11 +19,15 @@ export function MotionRuntime({ reduceMotion }: { reduceMotion: boolean }) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const isTwoColumn = useMediaQuery(TWO_COLUMN);
   const enabled = !reduceMotion && !prefersReducedMotion;
+  // This lives in the layout, which stays mounted between the landing and the
+  // workshop pages: the route is what tells the hooks the DOM they scanned is
+  // gone. Without it the next page's reveals would never be observed.
+  const pathname = usePathname();
 
-  useReveal(enabled);
+  useReveal(enabled, pathname);
   // The per-element coefficients are tuned for the two-column composition;
   // stacked on a phone they only push neighbouring images into each other.
-  useParallax(enabled && isTwoColumn);
+  useParallax(enabled && isTwoColumn, pathname);
 
   return null;
 }

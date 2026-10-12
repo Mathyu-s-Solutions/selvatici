@@ -34,7 +34,7 @@ export default async function LandingPage({
         <Manifesto content={content.manifesto} />
         <Progetto content={content.progetto} />
         <ChiSiamo content={content.chiSiamo} />
-        <Laboratori content={content.laboratori} />
+        <Laboratori content={content.laboratori} locale={lang} />
         <PersonalChef content={content.chef} />
         <Cammino content={content.cammino} />
         <Agenda content={content.agenda} />

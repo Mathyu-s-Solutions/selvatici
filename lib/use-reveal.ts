@@ -9,9 +9,9 @@ const STAGGER_GROUP = 4;
  * Reveals every `[data-reveal]` element on the page as it scrolls into view:
  * opacity 0→1 and translateY(26px)→0, staggered in groups of four.
  * The transition itself lives in globals.css; this only sets the delay and
- * flips `data-revealed`.
+ * flips `data-revealed`. `route` rescans after a client-side navigation.
  */
-export function useReveal(enabled: boolean) {
+export function useReveal(enabled: boolean, route: string) {
   useEffect(() => {
     if (!enabled) return;
 
@@ -46,5 +46,5 @@ export function useReveal(enabled: boolean) {
     elements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
-  }, [enabled]);
+  }, [enabled, route]);
 }

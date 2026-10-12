@@ -8,8 +8,9 @@ const OFFSCREEN_MARGIN = 200;
  * Translates every `[data-parallax]` wrapper against the scroll: the value of
  * the attribute is the coefficient `k`, applied to the element's distance from
  * the middle of the viewport. rAF-throttled, skipped while off screen.
+ * `route` rescans after a client-side navigation.
  */
-export function useParallax(enabled: boolean) {
+export function useParallax(enabled: boolean, route: string) {
   useEffect(() => {
     if (!enabled) return;
 
@@ -53,5 +54,5 @@ export function useParallax(enabled: boolean) {
       window.removeEventListener("resize", schedule);
       for (const { el } of items) el.style.transform = "";
     };
-  }, [enabled]);
+  }, [enabled, route]);
 }

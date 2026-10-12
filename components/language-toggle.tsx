@@ -4,11 +4,17 @@ import { locales, type Locale } from "@/lib/i18n";
 
 type LanguageToggleProps = {
   locale: Locale;
+  /** The current page's path below the locale, kept across the switch. */
+  path?: string;
   /** Font size of the labels — 12px in the nav, 13px in the drawer. */
   size?: 12 | 13;
 };
 
-export function LanguageToggle({ locale, size = 12 }: LanguageToggleProps) {
+export function LanguageToggle({
+  locale,
+  path = "",
+  size = 12,
+}: LanguageToggleProps) {
   return (
     <div
       className="flex items-center gap-[2px] font-bold tracking-[.06em]"
@@ -18,7 +24,7 @@ export function LanguageToggle({ locale, size = 12 }: LanguageToggleProps) {
         <span key={code} className="flex items-center">
           {index > 0 && <span className="opacity-40">/</span>}
           <Link
-            href={`/${code}`}
+            href={`/${code}${path}`}
             hrefLang={code}
             aria-current={code === locale ? "true" : undefined}
             className={`px-1.5 py-1 text-inherit ${

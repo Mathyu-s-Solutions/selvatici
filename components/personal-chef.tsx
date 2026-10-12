@@ -22,18 +22,15 @@ export function PersonalChef({ content }: { content: Content["chef"] }) {
             {content.titleLead}{" "}
             <em className="text-olive italic">{content.titleEmphasis}</em>
           </h2>
-          <p
-            data-reveal
-            className="mb-6 text-[18px] leading-[1.75] text-pretty text-ink/85"
-          >
-            {content.paragraphs[0]}
-          </p>
-          <p
-            data-reveal
-            className="mb-10 text-[18px] leading-[1.75] text-pretty text-ink/85"
-          >
-            {content.paragraphs[1]}
-          </p>
+          {content.paragraphs.map((paragraph) => (
+            <p
+              key={paragraph}
+              data-reveal
+              className="mb-6 text-[18px] leading-[1.75] text-pretty text-ink/85 last-of-type:mb-10"
+            >
+              {paragraph}
+            </p>
+          ))}
           <div data-reveal className="flex flex-wrap gap-3">
             <a href="#contatti" className="pill pill-ink">
               {content.ctaQuote}

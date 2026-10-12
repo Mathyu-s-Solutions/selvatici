@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState, type CSSProperties } from "react";
 
 import logoBianco from "@/assets/brand/logo-bianco-trim.png";
@@ -15,11 +16,19 @@ const COMPACT_BELOW = 1100;
 type SiteHeaderProps = {
   content: Content["nav"];
   locale: Locale;
+  /** Path below the locale on a sub-page, e.g. `/laboratori/cucina`. */
+  path?: string;
 };
 
-export function SiteHeader({ content, locale }: SiteHeaderProps) {
+export function SiteHeader({ content, locale, path }: SiteHeaderProps) {
   const [solid, setSolid] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  // The nav targets are sections of the landing. There they stay native
+  // anchors, so the browser's smooth scroll applies; from a sub-page they route
+  // back to it. `#contatti` is left alone: every page ends with that block.
+  const SectionLink = path ? Link : "a";
+  const sectionHref = (hash: string) => (path ? `/${locale}${hash}` : hash);
 
   // Nav background/colour state, rAF-throttled.
   useEffect(() => {
@@ -73,8 +82,8 @@ export function SiteHeader({ content, locale }: SiteHeaderProps) {
             : "border-transparent bg-transparent py-4 text-paper"
         }`}
       >
-        <a
-          href="#top"
+        <SectionLink
+          href={path ? `/${locale}` : "#top"}
           className="relative block w-[clamp(118px,13vw,158px)] shrink-0"
           aria-label={content.logoAlt}
         >
@@ -97,19 +106,23 @@ export function SiteHeader({ content, locale }: SiteHeaderProps) {
               solid ? "opacity-100" : "opacity-0"
             }`}
           />
-        </a>
+        </SectionLink>
 
         <div className="hidden items-center gap-[clamp(16px,2.2vw,30px)] text-[12px] font-semibold tracking-[.1em] uppercase min-[1100px]:flex">
           {content.links.map((link) => (
-            <a key={link.href} href={link.href} className="text-inherit whitespace-nowrap">
+            <SectionLink
+              key={link.href}
+              href={sectionHref(link.href)}
+              className="text-inherit whitespace-nowrap"
+            >
               {link.label}
-            </a>
+            </SectionLink>
           ))}
         </div>
 
         <div className="flex shrink-0 items-center gap-[clamp(10px,1.4vw,18px)]">
           <div className="hidden min-[1100px]:flex">
-            <LanguageToggle locale={locale} />
+            <LanguageToggle locale={locale} path={path} />
           </div>
 
           <a
@@ -171,14 +184,14 @@ export function SiteHeader({ content, locale }: SiteHeaderProps) {
           style={{ "--i": 1 } as CSSProperties}
         >
           {content.links.map((link) => (
-            <a
+            <SectionLink
               key={link.href}
-              href={link.href}
+              href={sectionHref(link.href)}
               onClick={() => setDrawerOpen(false)}
               className="drawer-link w-fit text-inherit hover:text-olive"
             >
               {link.label}
-            </a>
+            </SectionLink>
           ))}
         </div>
 
@@ -194,7 +207,7 @@ export function SiteHeader({ content, locale }: SiteHeaderProps) {
             {content.cta}
           </a>
           <div className="flex items-center gap-1.5 text-ink">
-            <LanguageToggle locale={locale} size={13} />
+            <LanguageToggle locale={locale} path={path} size={13} />
             <span className="h-px flex-1 bg-ink/16" />
             <span className="text-[13px] font-medium tracking-[.12em] uppercase text-ink/60">
               {content.location}

@@ -1,3 +1,5 @@
+import type { WorkshopSlug } from "@/lib/workshops";
+
 export type NavLink = {
   href: string;
   label: string;
@@ -18,6 +20,18 @@ export type WorkshopCard = {
   title: string;
   body: string;
   cta: string;
+};
+
+/** The page behind a workshop card: `/<lang>/laboratori/<slug>`. */
+export type WorkshopDetail = {
+  /** Search-facing, same convention as `meta`: service and place first. */
+  metaTitle: string;
+  metaDescription: string;
+  /** Sits under the card's title in the page header. */
+  lead: string;
+  /** Optional heading above the body copy. */
+  heading?: string;
+  paragraphs: string[];
 };
 
 export type Pillar = {
@@ -112,13 +126,16 @@ export type Content = {
     title: string;
     note: string;
     imageAlt: string;
-    cards: [WorkshopCard, WorkshopCard, WorkshopCard];
+    /** Link from a workshop page back to the cards on the landing. */
+    back: string;
+    cards: Record<WorkshopSlug, WorkshopCard>;
+    details: Record<WorkshopSlug, WorkshopDetail>;
   };
   chef: {
     eyebrow: string;
     titleLead: string;
     titleEmphasis: string;
-    paragraphs: [string, string];
+    paragraphs: string[];
     ctaQuote: string;
     ctaWhatsapp: string;
     imageAlts: [string, string];

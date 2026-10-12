@@ -4,7 +4,7 @@ export const en: Content = {
   meta: {
     title: "Cooking workshops & personal chef in Basilicata | I Selvatici",
     description:
-      "Cooking, garden-therapy and sewing workshops for all ages in Castelgrande (PZ), plus a personal chef service across Italy. Book on WhatsApp.",
+      "Cooking and vegetable gardening workshops for all ages in Castelgrande (PZ), plus a personal chef service across Italy. Book on WhatsApp.",
     brand: "I Selvatici — community experiences",
   },
 
@@ -26,7 +26,7 @@ export const en: Content = {
   hero: {
     eyebrow: "Castelgrande — Basilicata — since 2026",
     titleLines: ["Community", "experiences"],
-    lead: "Cooking, garden-therapy and sewing workshops, plus a personal chef service.",
+    lead: "Cooking and vegetable gardening workshops, plus a personal chef service.",
     leadEmphasis: "An invitation to slow down.",
     ctaWorkshops: "Discover the workshops",
     ctaChef: "Personal chef",
@@ -44,7 +44,7 @@ export const en: Content = {
     titleLead: "Rebuilding the bond between",
     titleAccent: "people, land and food.",
     paragraphs: [
-      "We promote awareness, wellbeing and healthy food choices through concrete, shared experiences: hands in the flour, hands in the soil, hands on the thread.",
+      "We promote awareness, wellbeing and healthy food choices through concrete, shared experiences: hands in the flour, hands in the soil.",
       "We were born in 2026 in Basilicata, from the meeting of Lucanian and Tuscan roots and a shared vision founded on love for the land, cooking and local traditions.",
       "We champion manual know-how, seasonality and local cultures, creating experiences that join personal wellbeing with community growth.",
     ],
@@ -54,12 +54,12 @@ export const en: Content = {
     eyebrow: "The Project",
     title: "Manual know-how, seasonality, community",
     paragraphs: [
-      "Based in Castelgrande, I Selvatici run playful, recreational workshops for every age group, dedicated to cooking, garden therapy and sewing.",
+      "Based in Castelgrande, I Selvatici run playful, recreational workshops for every age group, dedicated to cooking and vegetable gardening.",
       "Every activity is designed to foster togetherness, pass on traditions and recover sustainable practices rooted in the territory.",
     ],
     stats: [
       { value: "2026", label: "Founded, in Basilicata" },
-      { value: "3", label: "Workshops: cooking, garden, sewing" },
+      { value: "3", label: "Workshops: cooking, garden, companies" },
       { value: "All Italy", label: "Available nationwide" },
     ],
     quote: "Every gesture is a handover: whoever learns today will tell the story tomorrow.",
@@ -72,7 +72,7 @@ export const en: Content = {
     paragraph:
       "Lucanian and Tuscan roots meeting around a wooden table. We bring our travels, our encounters and our grandmothers’ memory into the kitchen, and give it back as an experience to live together.",
     founders: [
-      { name: "Valentina Di Carlo", role: "Founder" },
+      { name: "Valentina Di Carlo", role: "Founder & art gardener" },
       { name: "Lorenzo Staderini", role: "Founder & chef" },
     ],
     imageAlt: "The founders of I Selvatici in the Castelgrande kitchen",
@@ -83,26 +83,66 @@ export const en: Content = {
     title: "Playful and recreational, for every age",
     note: "Families, groups of friends, schools and associations, companies. Every path adapts to the group and the season.",
     imageAlt: "Cooking workshop",
-    cards: [
-      {
+    back: "← All workshops",
+    cards: {
+      cucina: {
         kicker: "01 — Cooking",
         title: "Kneading together",
         body: "Bread, fresh pasta, pizza and home recipes. You learn with your hands and eat all together.",
         cta: "Sign up →",
       },
-      {
-        kicker: "02 — Garden therapy",
+      orticoltura: {
+        kicker: "02 — Vegetable gardening",
         title: "Hands in the soil",
         body: "Sowing, tending and harvesting as a wellbeing practice. The garden’s rhythm sets the rhythm of the day.",
         cta: "Sign up →",
       },
-      {
-        kicker: "03 — Sewing",
-        title: "Thread and patience",
-        body: "Mending, embroidery and small objects: slow gestures that come in handy and teach repairing instead of replacing.",
-        cta: "Sign up →",
+      // TODO(client): the card's title and copy are a proposal, to be signed off.
+      aziende: {
+        kicker: "03 — Companies",
+        title: "Cooking as a team",
+        body: "Team cooking, working lunches and dinners where you do the cooking. Every event is shaped around what your company needs.",
+        cta: "Find out more →",
       },
-    ],
+    },
+    // Translated from the founders' Italian copy.
+    details: {
+      cucina: {
+        metaTitle: "Cooking classes in Castelgrande, Basilicata | I Selvatici",
+        metaDescription:
+          "Hands-on cooking classes for children, couples, families and groups in Castelgrande (PZ). Ingredients, printed recipes, certificate and tasting included.",
+        lead: "Bread, fresh pasta, pizza and home recipes. You learn with your hands and eat all together.",
+        paragraphs: [
+          "Our classes for children, couples, families or groups are a chance to get properly immersed in cooking, with an interactive method that has everyone preparing the dishes under the guidance of trained chefs.",
+          "Every class includes ingredients, printed recipes, a certificate of attendance and a tasting.",
+          "Each event can be tailored to what you want and need: from a fresh pasta menu to a gourmet one, from a three-hour class to courses of two days or more.",
+        ],
+      },
+      orticoltura: {
+        metaTitle: "Vegetable gardening course for all ages in Basilicata | I Selvatici",
+        metaDescription:
+          "A vegetable gardening course for adults and children in Castelgrande (PZ): grow vegetables, learn nature’s rhythms and cook what you harvest.",
+        lead: "A series of workshops dedicated to environmental sustainability, food education and active citizenship.",
+        heading: "A vegetable gardening course for all ages!",
+        paragraphs: [
+          "A learning experience open to adults and children alike, to discover the world of the vegetable garden, learn to grow vegetables and get to know the rhythms of nature. Through practical activities and shared moments, participants will enjoy the pleasure of contact with the soil, look after the plants and find out how to turn the harvest into wholesome, tasty dishes in the kitchen. A journey that brings together nature, sustainability, creativity and good food.",
+        ],
+      },
+      aziende: {
+        metaTitle: "Team cooking & corporate events in Basilicata | I Selvatici",
+        metaDescription:
+          "Team cooking, working lunches and dinners where your team does the cooking, guided by trained chefs. Tailor-made corporate events in Castelgrande (PZ).",
+        lead: "Want to put your team to the test? Or lift team spirit with something out of the ordinary? Or simply organise a different kind of working lunch or dinner, where you do the cooking?",
+        paragraphs: [
+          "Nothing fires people up like cooking: it draws everyone in and steers them towards a shared goal — sitting down together for lunch or dinner!",
+          "Team cooking becomes an enjoyable experience that involves participants in preparing the dishes, under the guidance of trained chefs.",
+          "Corporate events are fully customisable. The proposal is agreed around the needs of the company making the request.",
+          // TODO(client): "the school's spaces" — confirm which venue this means.
+          "The company can also use the school’s spaces to round off the time in the kitchen with related activities: presentations, internal briefings, meetings…",
+          "The programme is progressive and practical: we will work like a real kitchen brigade, encouraging collaboration, a sense of responsibility, organisation and team spirit.",
+        ],
+      },
+    },
   },
 
   chef: {
@@ -110,8 +150,11 @@ export const en: Content = {
     titleLead: "Your table,",
     titleEmphasis: "our story",
     paragraphs: [
-      "Gastronomic experiences that blend influences gathered through travel and cultural encounters with a deep respect for Italian culinary tradition.",
-      "Seasonal produce, local identities and conviviality: every tasting becomes a moment of storytelling and sharing. In Basilicata and nationwide.",
+      "Culinary skills that blend influences gathered through work experience and travel with a deep respect for Italian culinary tradition.",
+      "Seasonal produce, local identity and conviviality: every tasting becomes a moment of storytelling and sharing.",
+      "Want to surprise your friends with a different kind of experience in your own home?",
+      "We agree on a menu, bring whatever you are missing, serve your guests and leave the kitchen clean!",
+      "In Basilicata and nationwide.",
     ],
     ctaQuote: "Request a quote",
     ctaWhatsapp: "Message us on WhatsApp",
@@ -151,9 +194,9 @@ export const en: Content = {
         endDate: "2026-02-22T14:00:00+01:00",
       },
       {
-        id: "orto-terapia-primavera",
+        id: "orticoltura-primavera",
         dateLabel: "Date to be set",
-        title: "Garden therapy — spring",
+        title: "Vegetable gardening — spring",
         subtitle: "Sowing and tending the garden, for families and groups",
         ctaLabel: "Waiting list →",
         href: "#contatti",

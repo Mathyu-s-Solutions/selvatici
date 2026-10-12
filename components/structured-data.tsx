@@ -1,6 +1,7 @@
 import type { Content } from "@/content";
 import type { Locale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
+import { workshopPath, workshopSlugs } from "@/lib/workshops";
 
 type StructuredDataProps = {
   content: Content;
@@ -22,15 +23,19 @@ export function StructuredData({ content, locale }: StructuredDataProps) {
   const pageUrl = `${base}/${locale}`;
 
   const services = [
-    ...content.laboratori.cards.map((card) => ({
-      "@type": "Offer",
-      itemOffered: {
-        "@type": "Service",
-        name: `${content.laboratori.eyebrow}: ${card.title}`,
-        description: card.body,
-        areaServed: { "@type": "AdministrativeArea", name: "Basilicata" },
-      },
-    })),
+    ...workshopSlugs.map((slug) => {
+      const card = content.laboratori.cards[slug];
+      return {
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: `${content.laboratori.eyebrow}: ${card.title}`,
+          description: card.body,
+          url: `${pageUrl}${workshopPath(slug)}`,
+          areaServed: { "@type": "AdministrativeArea", name: "Basilicata" },
+        },
+      };
+    }),
     {
       "@type": "Offer",
       itemOffered: {
