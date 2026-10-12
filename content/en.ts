@@ -108,6 +108,7 @@ export const en: Content = {
     // Translated from the founders' Italian copy.
     details: {
       cucina: {
+        name: "Cooking classes",
         metaTitle: "Cooking classes in Castelgrande, Basilicata | I Selvatici",
         metaDescription:
           "Hands-on cooking classes for children, couples, families and groups in Castelgrande (PZ). Ingredients, printed recipes, certificate and tasting included.",
@@ -119,7 +120,8 @@ export const en: Content = {
         ],
       },
       orticoltura: {
-        metaTitle: "Vegetable gardening course for all ages in Basilicata | I Selvatici",
+        name: "Vegetable gardening course",
+        metaTitle: "Vegetable gardening course in Basilicata | I Selvatici",
         metaDescription:
           "A vegetable gardening course for adults and children in Castelgrande (PZ): grow vegetables, learn nature’s rhythms and cook what you harvest.",
         lead: "A series of workshops dedicated to environmental sustainability, food education and active citizenship.",
@@ -129,6 +131,7 @@ export const en: Content = {
         ],
       },
       aziende: {
+        name: "Team cooking for companies",
         metaTitle: "Team cooking & corporate events in Basilicata | I Selvatici",
         metaDescription:
           "Team cooking, working lunches and dinners where your team does the cooking, guided by trained chefs. Tailor-made corporate events in Castelgrande (PZ).",

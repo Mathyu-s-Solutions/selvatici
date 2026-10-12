@@ -53,9 +53,15 @@ export function LaboratorioDetail({
           >
             {content.back}
           </Link>
-          <p className="eyebrow mb-[22px] text-accent">{card.kicker}</p>
-          <h1 className="font-display text-[clamp(40px,7.4vw,112px)] leading-none text-balance text-paper">
-            {card.title}
+          {/* One heading for both lines: the plain name is what the page is
+              about, and a search engine weighs the h1 right after the title. */}
+          <h1>
+            <span className="eyebrow mb-[22px] block text-accent">
+              {detail.name}
+            </span>{" "}
+            <span className="block font-display text-[clamp(40px,7.4vw,112px)] leading-none text-balance text-paper">
+              {card.title}
+            </span>
           </h1>
           <p className="mt-[clamp(20px,2.8vh,32px)] max-w-[760px] text-[clamp(17px,1.7vw,22px)] leading-[1.6] text-pretty text-paper/88">
             {detail.lead}

@@ -8,7 +8,8 @@ type PageMetadataInput = {
   path: string;
   title: string;
   description: string;
-  /** Alt text of the shared social card, `public/og.jpg`. */
+  /** The page's 1200×630 share card, a path under `public/`, and its alt text. */
+  image: string;
   imageAlt: string;
 };
 
@@ -23,12 +24,14 @@ export function pageMetadata({
   path,
   title,
   description,
+  image: imageUrl,
   imageAlt,
 }: PageMetadataInput): Metadata {
   const image = {
-    url: "/og.jpg",
+    url: imageUrl,
     width: 1200,
     height: 630,
+    type: "image/jpeg",
     alt: imageAlt,
   };
 

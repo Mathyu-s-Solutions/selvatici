@@ -24,6 +24,12 @@ export type WorkshopCard = {
 
 /** The page behind a workshop card: `/<lang>/laboratori/<slug>`. */
 export type WorkshopDetail = {
+  /**
+   * What the workshop is called in plain words, where the card's title is the
+   * evocative one: the page's kicker, its breadcrumb, structured data and
+   * share card all use it.
+   */
+  name: string;
   /** Search-facing, same convention as `meta`: service and place first. */
   metaTitle: string;
   metaDescription: string;

@@ -111,6 +111,7 @@ export const it: Content = {
     // Testi forniti dai fondatori.
     details: {
       cucina: {
+        name: "Corsi di cucina",
         metaTitle: "Corsi di cucina a Castelgrande, Basilicata | I Selvatici",
         metaDescription:
           "Corsi di cucina per bambini, coppie, famiglie e gruppi a Castelgrande (PZ): ingredienti, ricette stampate, attestato e degustazione inclusi.",
@@ -122,7 +123,8 @@ export const it: Content = {
         ],
       },
       orticoltura: {
-        metaTitle: "Corso di orticoltura per tutte le età in Basilicata | I Selvatici",
+        name: "Corso di orticoltura",
+        metaTitle: "Corso di orticoltura a Castelgrande, Basilicata | I Selvatici",
         metaDescription:
           "Corso di orticoltura per grandi e piccoli a Castelgrande (PZ): coltivare ortaggi, conoscere i ritmi della natura e portare il raccolto in cucina.",
         lead: "Un percorso laboratoriale dedicato alla sostenibilità ambientale, all’educazione alimentare e alla cittadinanza attiva.",
@@ -132,6 +134,7 @@ export const it: Content = {
         ],
       },
       aziende: {
+        name: "Team cooking per aziende",
         metaTitle: "Team cooking ed eventi aziendali in Basilicata | I Selvatici",
         metaDescription:
           "Team cooking, pranzi e cene di lavoro in cui cucina il team, sotto la guida di chef preparati. Eventi aziendali su misura a Castelgrande (PZ).",

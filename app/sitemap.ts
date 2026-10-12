@@ -1,26 +1,38 @@
 import type { MetadataRoute } from "next";
 
-import { defaultLocale, locales } from "@/lib/i18n";
+import { defaultLocale, locales, type Locale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
-import { workshopPath, workshopSlugs } from "@/lib/workshops";
+import {
+  landingShareImage,
+  workshopPath,
+  workshopShareImage,
+  workshopSlugs,
+} from "@/lib/workshops";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
-  // Paths below the locale: the landing, then one page per workshop.
-  const paths = ["", ...workshopSlugs.map(workshopPath)];
+  // The landing, then one page per workshop. Default locale first, then the
+  // translation, in `priority`.
+  const pages = [
+    { path: "", priority: [1, 0.8], image: () => landingShareImage },
+    ...workshopSlugs.map((slug) => ({
+      path: workshopPath(slug),
+      priority: [0.7, 0.6],
+      image: (lang: Locale) => workshopShareImage(lang, slug),
+    })),
+  ];
 
-  return paths.flatMap((path) => {
+  return pages.flatMap(({ path, priority: [primary, secondary], image }) => {
     const languages = Object.fromEntries(
       locales.map((lang) => [lang, `${siteConfig.url}/${lang}${path}`]),
     );
-    // Default locale first, then the translation.
-    const [primary, secondary] = path === "" ? [1, 0.8] : [0.7, 0.6];
 
     return locales.map((lang) => ({
       url: `${siteConfig.url}/${lang}${path}`,
       lastModified,
       changeFrequency: "monthly" as const,
       priority: lang === defaultLocale ? primary : secondary,
+      images: [`${siteConfig.url}${image(lang)}`],
       alternates: {
         languages: {
           ...languages,

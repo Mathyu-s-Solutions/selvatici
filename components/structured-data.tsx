@@ -1,7 +1,17 @@
+import { JsonLd } from "@/components/json-ld";
 import type { Content } from "@/content";
 import type { Locale } from "@/lib/i18n";
 import { siteConfig } from "@/lib/site-config";
-import { workshopPath, workshopSlugs } from "@/lib/workshops";
+import {
+  workshopPath,
+  workshopShareImage,
+  workshopSlugs,
+  type WorkshopSlug,
+} from "@/lib/workshops";
+
+/** Stable ids, so the nodes of the two graphs below can point at each other. */
+const businessId = `${siteConfig.url}/#business`;
+const websiteId = `${siteConfig.url}/#website`;
 
 type StructuredDataProps = {
   content: Content;
@@ -19,23 +29,19 @@ type StructuredDataProps = {
  */
 export function StructuredData({ content, locale }: StructuredDataProps) {
   const base = siteConfig.url;
-  const businessId = `${base}/#business`;
   const pageUrl = `${base}/${locale}`;
 
   const services = [
-    ...workshopSlugs.map((slug) => {
-      const card = content.laboratori.cards[slug];
-      return {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: `${content.laboratori.eyebrow}: ${card.title}`,
-          description: card.body,
-          url: `${pageUrl}${workshopPath(slug)}`,
-          areaServed: { "@type": "AdministrativeArea", name: "Basilicata" },
-        },
-      };
-    }),
+    ...workshopSlugs.map((slug) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: content.laboratori.details[slug].name,
+        description: content.laboratori.cards[slug].body,
+        url: `${pageUrl}${workshopPath(slug)}`,
+        areaServed: { "@type": "AdministrativeArea", name: "Basilicata" },
+      },
+    })),
     {
       "@type": "Offer",
       itemOffered: {
@@ -125,31 +131,90 @@ export function StructuredData({ content, locale }: StructuredDataProps) {
       performer: { "@id": businessId },
     }));
 
-  const graph = {
-    "@context": "https://schema.org",
-    "@graph": [
-      business,
-      {
-        "@type": "WebSite",
-        "@id": `${base}/#website`,
-        url: pageUrl,
-        name: "I Selvatici",
-        description: content.meta.description,
-        inLanguage: locale,
-        publisher: { "@id": businessId },
-      },
-      ...events,
-    ],
-  };
+  return (
+    <JsonLd
+      graph={[
+        business,
+        {
+          "@type": "WebSite",
+          "@id": websiteId,
+          url: pageUrl,
+          name: "I Selvatici",
+          description: content.meta.description,
+          inLanguage: locale,
+          publisher: { "@id": businessId },
+        },
+        ...events,
+      ]}
+    />
+  );
+}
+
+type WorkshopStructuredDataProps = StructuredDataProps & {
+  slug: WorkshopSlug;
+};
+
+/**
+ * JSON-LD for a workshop page, on top of the site-wide graph the layout emits:
+ * the page itself, its breadcrumb — which Google shows in place of the raw URL
+ * — and the workshop as a Service provided by the business.
+ */
+export function WorkshopStructuredData({
+  content,
+  locale,
+  slug,
+}: WorkshopStructuredDataProps) {
+  const homeUrl = `${siteConfig.url}/${locale}`;
+  const url = `${homeUrl}${workshopPath(slug)}`;
+  const image = `${siteConfig.url}${workshopShareImage(locale, slug)}`;
+  const card = content.laboratori.cards[slug];
+  const detail = content.laboratori.details[slug];
 
   return (
-    <script
-      type="application/ld+json"
-      // Escaped so a future copy edit containing a tag cannot break out of the
-      // script element.
-      dangerouslySetInnerHTML={{
-        __html: JSON.stringify(graph).replace(/</g, "\\u003c"),
-      }}
+    <JsonLd
+      graph={[
+        {
+          "@type": "WebPage",
+          "@id": `${url}#webpage`,
+          url,
+          name: detail.metaTitle,
+          description: detail.metaDescription,
+          inLanguage: locale,
+          isPartOf: { "@id": websiteId },
+          about: { "@id": `${url}#service` },
+          breadcrumb: { "@id": `${url}#breadcrumb` },
+          primaryImageOfPage: {
+            "@type": "ImageObject",
+            url: image,
+            width: 1200,
+            height: 630,
+          },
+        },
+        {
+          "@type": "BreadcrumbList",
+          "@id": `${url}#breadcrumb`,
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "I Selvatici",
+              item: homeUrl,
+            },
+            { "@type": "ListItem", position: 2, name: detail.name, item: url },
+          ],
+        },
+        {
+          "@type": "Service",
+          "@id": `${url}#service`,
+          name: detail.name,
+          alternateName: card.title,
+          description: detail.metaDescription,
+          url,
+          image,
+          provider: { "@id": businessId },
+          areaServed: { "@type": "AdministrativeArea", name: "Basilicata" },
+        },
+      ]}
     />
   );
 }

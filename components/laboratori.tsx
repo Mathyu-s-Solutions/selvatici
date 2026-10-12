@@ -17,6 +17,10 @@ type LaboratoriProps = {
  * Cards 2 and 3 are colour panels with the monogram as a watermark: no garden
  * or corporate photography exists yet. Swap in photos when the client supplies
  * them. Each card opens the workshop's own page, which carries the description.
+ *
+ * The link is the title, stretched over the card with `after:inset-0`, so its
+ * text says where it goes — three "Iscriviti →" anchors tell a search engine
+ * and a screen reader nothing. The call to action stays as a visual cue.
  */
 export function Laboratori({ content, locale }: LaboratoriProps) {
   const { cucina, orticoltura: orto, aziende } = content.cards;
@@ -50,7 +54,7 @@ export function Laboratori({ content, locale }: LaboratoriProps) {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(min(290px,100%),1fr))] gap-7">
           <article
             data-reveal
-            className="flex flex-col overflow-hidden rounded-card bg-paper text-ink"
+            className="group relative flex flex-col overflow-hidden rounded-card bg-paper text-ink"
           >
             <Image
               src={photos.laboratorio}
@@ -61,17 +65,22 @@ export function Laboratori({ content, locale }: LaboratoriProps) {
             <div className="flex flex-col gap-3.5 px-7 pt-[30px] pb-[34px]">
               <p className="kicker text-brown">{cucina.kicker}</p>
               <h3 className="font-display text-[32px] leading-[1.1]">
-                {cucina.title}
+                <Link
+                  href={`/${locale}${workshopPath("cucina")}`}
+                  className="text-inherit after:absolute after:inset-0"
+                >
+                  {cucina.title}
+                </Link>
               </h3>
               <p className="text-[16px] leading-[1.7] text-ink/78">
                 {cucina.body}
               </p>
-              <Link
-                href={`/${locale}${workshopPath("cucina")}`}
-                className="link-cta mt-1.5"
+              <span
+                aria-hidden
+                className="link-cta mt-1.5 text-brown transition-colors group-hover:text-olive"
               >
                 {cucina.cta}
-              </Link>
+              </span>
             </div>
           </article>
 
@@ -89,17 +98,19 @@ export function Laboratori({ content, locale }: LaboratoriProps) {
             <div className="flex flex-col gap-3.5">
               <p className="kicker text-yellow">{orto.kicker}</p>
               <h3 className="font-display text-[32px] leading-[1.1]">
-                {orto.title}
+                <Link
+                  href={`/${locale}${workshopPath("orticoltura")}`}
+                  className="text-inherit after:absolute after:inset-0"
+                >
+                  {orto.title}
+                </Link>
               </h3>
               <p className="text-[16px] leading-[1.7] text-paper/86">
                 {orto.body}
               </p>
-              <Link
-                href={`/${locale}${workshopPath("orticoltura")}`}
-                className="link-cta mt-1.5 text-yellow"
-              >
+              <span aria-hidden className="link-cta mt-1.5 text-yellow">
                 {orto.cta}
-              </Link>
+              </span>
             </div>
           </article>
 
@@ -117,17 +128,19 @@ export function Laboratori({ content, locale }: LaboratoriProps) {
             <div className="flex flex-col gap-3.5">
               <p className="kicker text-brown">{aziende.kicker}</p>
               <h3 className="font-display text-[32px] leading-[1.1]">
-                {aziende.title}
+                <Link
+                  href={`/${locale}${workshopPath("aziende")}`}
+                  className="text-inherit after:absolute after:inset-0"
+                >
+                  {aziende.title}
+                </Link>
               </h3>
               <p className="text-[16px] leading-[1.7] text-ink/82">
                 {aziende.body}
               </p>
-              <Link
-                href={`/${locale}${workshopPath("aziende")}`}
-                className="link-cta mt-1.5 text-ink"
-              >
+              <span aria-hidden className="link-cta mt-1.5 text-ink">
                 {aziende.cta}
-              </Link>
+              </span>
             </div>
           </article>
         </div>

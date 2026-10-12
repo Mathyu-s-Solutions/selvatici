@@ -34,9 +34,9 @@ pnpm typecheck
 | `components/page-loader.tsx` | the opening veil (GSAP timeline) |
 | `assets/` | fonts, logos, monogram, merch mockups and the 24 referenced photographs, copied from `design/` |
 | `scripts/build-fonts.py` | regenerates the woff2 subsets from the handoff TTFs |
-| `scripts/build-og-image.mjs` | regenerates `public/og.jpg`, the social share card |
-| `components/structured-data.tsx` | JSON-LD: LocalBusiness, WebSite, confirmed Events |
-| `app/{sitemap,robots}.ts` | sitemap with hreflang alternates, robots.txt |
+| `scripts/build-og-image.mjs` | regenerates the share cards: `public/og.jpg` for the landing, `public/og/<lang>/<slug>.jpg` per workshop page — rerun and commit after editing a workshop's `name` or card title |
+| `components/structured-data.tsx` | JSON-LD: LocalBusiness, WebSite and confirmed Events site-wide; WebPage, BreadcrumbList and Service on each workshop page |
+| `app/{sitemap,robots}.ts` | sitemap with hreflang alternates and each page's share card, robots.txt |
 
 `design/` is kept untouched as the reference. The `it → en` toggle is a link to
 the same page in the other locale — the prototype's text-node swapping is gone.
@@ -62,10 +62,12 @@ Everything else is fluid by construction: `clamp()` type, `auto-fit` grids and
 |---|---|
 | Search titles and descriptions, service and place first | `content/{it,en}.ts` → `meta` |
 | Canonical + `hreflang` it / en / x-default, per page | `lib/metadata.ts` via `generateMetadata` |
-| Open Graph and Twitter large card, 1200×630 | `public/og.jpg` |
+| Open Graph and Twitter large card, 1200×630, one per page and language | `public/og.jpg`, `public/og/<lang>/<slug>.jpg` |
 | `max-image-preview:large`, `max-snippet:-1` (robots and googlebot) | `generateMetadata` |
 | `LocalBusiness` with address, phone, VAT, founders, hours, 4 services | `components/structured-data.tsx` |
 | `Event` for the confirmed date only | same |
+| `WebPage`, `BreadcrumbList` and `Service` on each workshop page | same |
+| Workshop pages: the plain name ("Corsi di cucina") is in the `h1`, and the card's title is the link to the page | `components/laboratorio-detail.tsx`, `components/laboratori.tsx` |
 | `sitemap.xml` with per-URL alternates, `robots.txt` | `app/sitemap.ts`, `app/robots.ts` |
 | `theme-color`, icons, `apple-icon` | `viewport`, `app/icon.png` |
 

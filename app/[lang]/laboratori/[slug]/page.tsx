@@ -4,10 +4,16 @@ import { notFound } from "next/navigation";
 import { Contatti } from "@/components/contatti";
 import { LaboratorioDetail } from "@/components/laboratorio-detail";
 import { SiteHeader } from "@/components/site-header";
+import { WorkshopStructuredData } from "@/components/structured-data";
 import { getContent } from "@/content";
 import { isLocale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/metadata";
-import { isWorkshopSlug, workshopPath, workshopSlugs } from "@/lib/workshops";
+import {
+  isWorkshopSlug,
+  workshopPath,
+  workshopShareImage,
+  workshopSlugs,
+} from "@/lib/workshops";
 
 type PageProps = {
   params: Promise<{ lang: string; slug: string }>;
@@ -26,7 +32,7 @@ export async function generateMetadata({
   const { lang, slug } = await params;
   if (!isLocale(lang) || !isWorkshopSlug(slug)) return {};
 
-  const { laboratori, hero } = getContent(lang);
+  const { laboratori } = getContent(lang);
   const detail = laboratori.details[slug];
 
   return pageMetadata({
@@ -34,7 +40,9 @@ export async function generateMetadata({
     path: workshopPath(slug),
     title: detail.metaTitle,
     description: detail.metaDescription,
-    imageAlt: hero.imageAlt,
+    image: workshopShareImage(lang, slug),
+    // The card spells out exactly these two lines over the wordmark.
+    imageAlt: `I Selvatici — ${detail.name}: ${laboratori.cards[slug].title}`,
   });
 }
 
@@ -59,6 +67,7 @@ export default async function WorkshopPage({ params }: PageProps) {
         />
         <Contatti content={content.contatti} logoAlt={content.nav.logoAlt} />
       </main>
+      <WorkshopStructuredData content={content} locale={lang} slug={slug} />
     </>
   );
 }

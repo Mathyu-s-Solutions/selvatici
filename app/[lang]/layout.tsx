@@ -12,6 +12,7 @@ import { montserrat, seatren } from "@/lib/fonts";
 import { isLocale, locales } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/metadata";
 import { isIndexable, siteConfig } from "@/lib/site-config";
+import { landingShareImage } from "@/lib/workshops";
 
 type LayoutProps = {
   children: ReactNode;
@@ -43,6 +44,7 @@ export async function generateMetadata({
       path: "",
       title: meta.title,
       description: meta.description,
+      image: landingShareImage,
       imageAlt: hero.imageAlt,
     }),
     robots: isIndexable
