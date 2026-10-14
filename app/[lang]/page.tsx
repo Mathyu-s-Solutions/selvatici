@@ -7,7 +7,6 @@ import { Contatti } from "@/components/contatti";
 import { GalleryMarquee } from "@/components/gallery-marquee";
 import { Hero } from "@/components/hero";
 import { Laboratori } from "@/components/laboratori";
-import { Manifesto } from "@/components/manifesto";
 import { Merch } from "@/components/merch";
 import { PersonalChef } from "@/components/personal-chef";
 import { Progetto } from "@/components/progetto";
@@ -31,7 +30,6 @@ export default async function LandingPage({
       <SiteHeader content={content.nav} locale={lang} />
       <main>
         <Hero content={content.hero} />
-        <Manifesto content={content.manifesto} />
         <Progetto content={content.progetto} />
         <ChiSiamo content={content.chiSiamo} />
         <Laboratori content={content.laboratori} locale={lang} />

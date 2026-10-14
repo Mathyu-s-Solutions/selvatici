@@ -42,17 +42,6 @@ export const it: Content = {
     imageAlt: "Laboratorio di cucina per bambini a Castelgrande",
   },
 
-  manifesto: {
-    eyebrow: "Il nostro perché",
-    titleLead: "Ricostruire il legame tra",
-    titleAccent: "persone, terra e cibo.",
-    paragraphs: [
-      "Promuoviamo consapevolezza, benessere e scelte alimentari sane attraverso esperienze concrete e condivise: mani nella farina, mani nella terra.",
-      "Nasciamo nel 2026 in Basilicata, dall’incontro tra radici lucane e toscane e da una visione comune fondata sull’amore per la terra, la cucina e le tradizioni locali.",
-      "Valorizziamo i saperi manuali, la stagionalità e le culture territoriali, per creare esperienze che uniscano benessere personale e crescita comunitaria.",
-    ],
-  },
-
   progetto: {
     eyebrow: "Il Progetto",
     title: "Saperi manuali, stagionalità, comunità",

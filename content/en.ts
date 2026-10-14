@@ -39,17 +39,6 @@ export const en: Content = {
     imageAlt: "Children’s cooking workshop in Castelgrande",
   },
 
-  manifesto: {
-    eyebrow: "Our why",
-    titleLead: "Rebuilding the bond between",
-    titleAccent: "people, land and food.",
-    paragraphs: [
-      "We promote awareness, wellbeing and healthy food choices through concrete, shared experiences: hands in the flour, hands in the soil.",
-      "We were born in 2026 in Basilicata, from the meeting of Lucanian and Tuscan roots and a shared vision founded on love for the land, cooking and local traditions.",
-      "We champion manual know-how, seasonality and local cultures, creating experiences that join personal wellbeing with community growth.",
-    ],
-  },
-
   progetto: {
     eyebrow: "The Project",
     title: "Manual know-how, seasonality, community",

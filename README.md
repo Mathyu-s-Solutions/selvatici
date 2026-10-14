@@ -169,6 +169,9 @@ Two more things worth knowing:
   replace the files, keep the names, and rerun `scripts/build-og-image.mjs`.
   The same round of feedback dropped sewing from the copy, renamed *orto
   terapia* to *orticoltura* and rewrote the Personal Chef text.
+- **No manifesto ("Il nostro perché", §3).** The client asked for the page to
+  go straight from the hero to *Il Progetto*. The section is in git history
+  (`components/manifesto.tsx`) if it comes back.
 - **`MotionRuntime` rescans on every route change.** It lives in the layout,
   which stays mounted between the landing and a workshop page, so without the
   pathname as a dependency the next page's `[data-reveal]` elements would stay

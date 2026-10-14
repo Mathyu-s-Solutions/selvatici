@@ -108,12 +108,6 @@ export type Content = {
     scroll: string;
     imageAlt: string;
   };
-  manifesto: {
-    eyebrow: string;
-    titleLead: string;
-    titleAccent: string;
-    paragraphs: [string, string, string];
-  };
   progetto: {
     eyebrow: string;
     title: string;
