@@ -32,7 +32,7 @@ pnpm typecheck
 | `lib/{fonts,photos}.ts` | `next/font/local` faces and the static `next/image` imports |
 | `lib/use-{reveal,parallax,media-query,prefers-reduced-motion}.ts` | the motion behaviours |
 | `components/page-loader.tsx` | the opening veil (GSAP timeline) |
-| `assets/` | fonts, logos, monogram, merch mockups and the 24 referenced photographs, copied from `design/` |
+| `assets/` | fonts, logos, monogram, merch mockups and the 24 referenced photographs, copied from `design/`, plus two stock stand-ins (`img/*-web.webp`) |
 | `scripts/build-fonts.py` | regenerates the woff2 subsets from the handoff TTFs |
 | `scripts/build-og-image.mjs` | regenerates the share cards: `public/og.jpg` for the landing, `public/og/<lang>/<slug>.jpg` per workshop page — rerun and commit after editing a workshop's `name` or card title |
 | `components/structured-data.tsx` | JSON-LD: LocalBusiness, WebSite and confirmed Events site-wide; WebPage, BreadcrumbList and Service on each workshop page |
@@ -163,11 +163,12 @@ Two more things worth knowing:
   opens a page of its own** instead of jumping to `#contatti` — both asked for
   by the founders after the handoff, who also supplied the page copy. The pages
   reuse the landing's header and contact block; on them the nav links route
-  back to the landing's sections and the IT / EN toggle keeps the page. Still
-  no photography for *orticoltura* or *aziende*: their pages show the card's
-  colour panel with the monogram, hidden once the columns stack. The same round
-  of feedback dropped sewing from the copy, renamed *orto terapia* to
-  *orticoltura* and rewrote the Personal Chef text.
+  back to the landing's sections and the IT / EN toggle keeps the page. The
+  *orticoltura* and *aziende* photos are CC0 stand-ins from rawpixel.com
+  (`assets/img/*-web.webp`) until the client's own shoot in November 2026:
+  replace the files, keep the names, and rerun `scripts/build-og-image.mjs`.
+  The same round of feedback dropped sewing from the copy, renamed *orto
+  terapia* to *orticoltura* and rewrote the Personal Chef text.
 - **`MotionRuntime` rescans on every route change.** It lives in the layout,
   which stays mounted between the landing and a workshop page, so without the
   pathname as a dependency the next page's `[data-reveal]` elements would stay

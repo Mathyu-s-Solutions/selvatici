@@ -1,30 +1,46 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import iconaBianca from "@/assets/brand/icona-bianca.png";
-import icona from "@/assets/brand/icona.png";
 import type { Content } from "@/content";
 import type { Locale } from "@/lib/i18n";
-import { photos } from "@/lib/photos";
-import { workshopPath } from "@/lib/workshops";
+import { workshopPhotos } from "@/lib/photos";
+import { workshopPath, workshopSlugs, type WorkshopSlug } from "@/lib/workshops";
 
 type LaboratoriProps = {
   content: Content["laboratori"];
   locale: Locale;
 };
 
+/** Each card keeps its own colour under the photo: paper, olive, peach. */
+const themes = {
+  cucina: {
+    card: "bg-paper text-ink",
+    kicker: "text-brown",
+    body: "text-ink/78",
+    cta: "text-brown group-hover:text-olive",
+  },
+  orticoltura: {
+    card: "bg-olive text-paper",
+    kicker: "text-yellow",
+    body: "text-paper/86",
+    cta: "text-yellow",
+  },
+  aziende: {
+    card: "bg-accent text-ink",
+    kicker: "text-brown",
+    body: "text-ink/82",
+    cta: "text-ink",
+  },
+} satisfies Record<WorkshopSlug, Record<string, string>>;
+
 /**
- * Cards 2 and 3 are colour panels with the monogram as a watermark: no garden
- * or corporate photography exists yet. Swap in photos when the client supplies
- * them. Each card opens the workshop's own page, which carries the description.
+ * Each card opens the workshop's own page, which carries the description.
  *
  * The link is the title, stretched over the card with `after:inset-0`, so its
  * text says where it goes — three "Iscriviti →" anchors tell a search engine
  * and a screen reader nothing. The call to action stays as a visual cue.
  */
 export function Laboratori({ content, locale }: LaboratoriProps) {
-  const { cucina, orticoltura: orto, aziende } = content.cards;
-
   return (
     <section
       id="laboratori"
@@ -52,97 +68,45 @@ export function Laboratori({ content, locale }: LaboratoriProps) {
         </div>
 
         <div className="grid grid-cols-[repeat(auto-fit,minmax(min(290px,100%),1fr))] gap-7">
-          <article
-            data-reveal
-            className="group relative flex flex-col overflow-hidden rounded-card bg-paper text-ink"
-          >
-            <Image
-              src={photos.laboratorio}
-              alt={content.imageAlt}
-              sizes="(min-width: 1320px) 410px, (min-width: 700px) 33vw, 100vw"
-              className="h-[230px] w-full object-cover"
-            />
-            <div className="flex flex-col gap-3.5 px-7 pt-[30px] pb-[34px]">
-              <p className="kicker text-brown">{cucina.kicker}</p>
-              <h3 className="font-display text-[32px] leading-[1.1]">
-                <Link
-                  href={`/${locale}${workshopPath("cucina")}`}
-                  className="text-inherit after:absolute after:inset-0"
-                >
-                  {cucina.title}
-                </Link>
-              </h3>
-              <p className="text-[16px] leading-[1.7] text-ink/78">
-                {cucina.body}
-              </p>
-              <span
-                aria-hidden
-                className="link-cta mt-1.5 text-brown transition-colors group-hover:text-olive"
+          {workshopSlugs.map((slug) => {
+            const card = content.cards[slug];
+            const theme = themes[slug];
+
+            return (
+              <article
+                key={slug}
+                data-reveal
+                className={`group relative flex flex-col overflow-hidden rounded-card ${theme.card}`}
               >
-                {cucina.cta}
-              </span>
-            </div>
-          </article>
-
-          <article
-            data-reveal
-            className="relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-card bg-olive px-7 pt-[30px] pb-[34px] text-paper"
-          >
-            <Image
-              src={iconaBianca}
-              alt=""
-              aria-hidden
-              sizes="300px"
-              className="absolute top-[-40px] right-[-70px] h-auto w-[300px] opacity-[0.13]"
-            />
-            <div className="flex flex-col gap-3.5">
-              <p className="kicker text-yellow">{orto.kicker}</p>
-              <h3 className="font-display text-[32px] leading-[1.1]">
-                <Link
-                  href={`/${locale}${workshopPath("orticoltura")}`}
-                  className="text-inherit after:absolute after:inset-0"
-                >
-                  {orto.title}
-                </Link>
-              </h3>
-              <p className="text-[16px] leading-[1.7] text-paper/86">
-                {orto.body}
-              </p>
-              <span aria-hidden className="link-cta mt-1.5 text-yellow">
-                {orto.cta}
-              </span>
-            </div>
-          </article>
-
-          <article
-            data-reveal
-            className="relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-card bg-accent px-7 pt-[30px] pb-[34px] text-ink"
-          >
-            <Image
-              src={icona}
-              alt=""
-              aria-hidden
-              sizes="300px"
-              className="absolute top-[-40px] right-[-70px] h-auto w-[300px] opacity-[0.28]"
-            />
-            <div className="flex flex-col gap-3.5">
-              <p className="kicker text-brown">{aziende.kicker}</p>
-              <h3 className="font-display text-[32px] leading-[1.1]">
-                <Link
-                  href={`/${locale}${workshopPath("aziende")}`}
-                  className="text-inherit after:absolute after:inset-0"
-                >
-                  {aziende.title}
-                </Link>
-              </h3>
-              <p className="text-[16px] leading-[1.7] text-ink/82">
-                {aziende.body}
-              </p>
-              <span aria-hidden className="link-cta mt-1.5 text-ink">
-                {aziende.cta}
-              </span>
-            </div>
-          </article>
+                <Image
+                  src={workshopPhotos[slug]}
+                  alt={card.imageAlt}
+                  sizes="(min-width: 1320px) 410px, (min-width: 700px) 33vw, 100vw"
+                  className="h-[230px] w-full object-cover"
+                />
+                <div className="flex flex-col gap-3.5 px-7 pt-[30px] pb-[34px]">
+                  <p className={`kicker ${theme.kicker}`}>{card.kicker}</p>
+                  <h3 className="font-display text-[32px] leading-[1.1]">
+                    <Link
+                      href={`/${locale}${workshopPath(slug)}`}
+                      className="text-inherit after:absolute after:inset-0"
+                    >
+                      {card.title}
+                    </Link>
+                  </h3>
+                  <p className={`text-[16px] leading-[1.7] ${theme.body}`}>
+                    {card.body}
+                  </p>
+                  <span
+                    aria-hidden
+                    className={`link-cta mt-1.5 transition-colors ${theme.cta}`}
+                  >
+                    {card.cta}
+                  </span>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

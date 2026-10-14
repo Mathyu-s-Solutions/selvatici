@@ -70,19 +70,19 @@ export const en: Content = {
     eyebrow: "About us",
     title: "Two roots, one kitchen",
     paragraph:
-      "Lucanian and Tuscan roots meeting around a wooden table. We bring our travels, our encounters and our grandmothers’ memory into the kitchen, and give it back as an experience to live together.",
+      "Lucanian and Tuscan roots meeting around a table. We bring our travels, our encounters and our grandmothers’ memory into the kitchen, and give it back as an experience to live together.",
     founders: [
-      { name: "Valentina Di Carlo", role: "Founder & art gardener" },
-      { name: "Lorenzo Staderini", role: "Founder & chef" },
+      // Not "pizzaiola": in English that is the tomato-and-oregano dish.
+      { name: "Valentina Di Carlo", role: "Pizza maker & art gardener" },
+      { name: "Lorenzo Staderini", role: "Chef" },
     ],
-    imageAlt: "The founders of I Selvatici in the Castelgrande kitchen",
+    imageAlt: "Valentina and Lorenzo in the Castelgrande kitchen",
   },
 
   laboratori: {
     eyebrow: "The Workshops",
     title: "Playful and recreational, for every age",
     note: "Families, groups of friends, schools and associations, companies. Every path adapts to the group and the season.",
-    imageAlt: "Cooking workshop",
     back: "← All workshops",
     cards: {
       cucina: {
@@ -90,12 +90,14 @@ export const en: Content = {
         title: "Kneading together",
         body: "Bread, fresh pasta, pizza and home recipes. You learn with your hands and eat all together.",
         cta: "Sign up →",
+        imageAlt: "Children kneading pizza dough at a cooking workshop",
       },
       orticoltura: {
         kicker: "02 — Vegetable gardening",
         title: "Hands in the soil",
         body: "Sowing, tending and harvesting as a wellbeing practice. The garden’s rhythm sets the rhythm of the day.",
         cta: "Sign up →",
+        imageAlt: "A trowel full of soil over a flowering bed",
       },
       // TODO(client): the card's title and copy are a proposal, to be signed off.
       aziende: {
@@ -103,6 +105,7 @@ export const en: Content = {
         title: "Cooking as a team",
         body: "Team cooking, working lunches and dinners where you do the cooking. Every event is shaped around what your company needs.",
         cta: "Find out more →",
+        imageAlt: "A group in chef’s hats at a cooking class, ingredients laid out in front",
       },
     },
     // Translated from the founders' Italian copy.
@@ -140,8 +143,7 @@ export const en: Content = {
           "Nothing fires people up like cooking: it draws everyone in and steers them towards a shared goal — sitting down together for lunch or dinner!",
           "Team cooking becomes an enjoyable experience that involves participants in preparing the dishes, under the guidance of trained chefs.",
           "Corporate events are fully customisable. The proposal is agreed around the needs of the company making the request.",
-          // TODO(client): "the school's spaces" — confirm which venue this means.
-          "The company can also use the school’s spaces to round off the time in the kitchen with related activities: presentations, internal briefings, meetings…",
+          "The company can also use the venue’s spaces to round off the time in the kitchen with related activities: presentations, internal briefings, meetings…",
           "The programme is progressive and practical: we will work like a real kitchen brigade, encouraging collaboration, a sense of responsibility, organisation and team spirit.",
         ],
       },
@@ -183,24 +185,24 @@ export const en: Content = {
   agenda: {
     title: "Upcoming dates",
     note: "Limited places — confirmed by phone or WhatsApp.",
-    // TODO(client): only the first date is confirmed. The others are placeholders.
+    // The course only has months: once the first lesson has a day, add
+    // `startDate` and it shows up in the structured data as an event too.
     events: [
       {
-        id: "corso-cucina-2026-02-22",
-        dateLabel: "Sun 22 February 2026",
-        title: "Cooking class",
-        subtitle: "Castelgrande (PZ) — fresh pasta, all ages",
+        id: "corso-cucina-2026-2027",
+        // No-break spaces everywhere but after the dash: if it wraps, it wraps there.
+        dateLabel: "November\u00a02026\u00a0— June\u00a02027",
+        title: "Cooking course — from starters to dessert",
+        subtitle: "Castelgrande (PZ) — by age: 4–6, 7–14, 15–20 and adults",
         ctaLabel: "Sign up →",
         href: "#contatti",
         status: "open",
-        startDate: "2026-02-22T10:00:00+01:00",
-        endDate: "2026-02-22T14:00:00+01:00",
       },
       {
         id: "orticoltura-primavera",
         dateLabel: "Date to be set",
         title: "Vegetable gardening — spring",
-        subtitle: "Sowing and tending the garden, for families and groups",
+        subtitle: "Planning, sowing and tending the garden — for all ages",
         ctaLabel: "Waiting list →",
         href: "#contatti",
         status: "waitlist",

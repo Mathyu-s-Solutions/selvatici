@@ -73,19 +73,18 @@ export const it: Content = {
     eyebrow: "Chi siamo",
     title: "Due radici, una cucina",
     paragraph:
-      "Radici lucane e toscane che si incontrano attorno a un tavolo di legno. Portiamo in cucina i viaggi, gli incontri e la memoria delle nonne, e lo restituiamo a chi partecipa come esperienza da vivere insieme.",
+      "Radici lucane e toscane che si incontrano attorno a un tavolo. Portiamo in cucina i viaggi, gli incontri e la memoria delle nonne, e lo restituiamo a chi partecipa come esperienza da vivere insieme.",
     founders: [
-      { name: "Valentina Di Carlo", role: "Fondatrice & giardiniere d’arte" },
-      { name: "Lorenzo Staderini", role: "Fondatore & chef" },
+      { name: "Valentina Di Carlo", role: "Pizzaiola & giardiniere d’arte" },
+      { name: "Lorenzo Staderini", role: "Chef" },
     ],
-    imageAlt: "I fondatori de I Selvatici nella cucina di Castelgrande",
+    imageAlt: "Valentina e Lorenzo nella cucina di Castelgrande",
   },
 
   laboratori: {
     eyebrow: "I Laboratori",
     title: "Ludico-ricreativi, per tutte le età",
     note: "Famiglie, gruppi di amici, scuole e associazioni, aziende. Ogni percorso si adatta al gruppo e alla stagione.",
-    imageAlt: "Laboratorio di cucina",
     back: "← Tutti i laboratori",
     cards: {
       cucina: {
@@ -93,12 +92,14 @@ export const it: Content = {
         title: "Impastare insieme",
         body: "Pane, pasta fresca, pizza e ricette di casa. Si impara con le mani, si mangia tutti insieme.",
         cta: "Iscriviti →",
+        imageAlt: "Bambini che impastano la pizza a un laboratorio di cucina",
       },
       orticoltura: {
         kicker: "02 — Orticoltura",
         title: "Le mani nella terra",
         body: "Semina, cura e raccolta come pratica di benessere. Il ritmo dell’orto detta il ritmo della giornata.",
         cta: "Iscriviti →",
+        imageAlt: "Una paletta piena di terra sopra un’aiuola fiorita",
       },
       // TODO(cliente): titolo e testo della card sono una proposta, da validare.
       aziende: {
@@ -106,6 +107,7 @@ export const it: Content = {
         title: "Cucinare in squadra",
         body: "Team cooking, pranzi e cene di lavoro dove siete voi a cucinare. Ogni evento si concorda sulle esigenze dell’azienda.",
         cta: "Scopri di più →",
+        imageAlt: "Un gruppo con il cappello da cuoco a un corso di cucina, davanti agli ingredienti",
       },
     },
     // Testi forniti dai fondatori.
@@ -143,8 +145,7 @@ export const it: Content = {
           "Nulla come la cucina accende gli animi, coinvolge le persone e le guida verso un obiettivo comune: il momento conviviale del pranzo o della cena!",
           "I team cooking diventano una piacevole esperienza che coinvolge i corsisti nella preparazione dei piatti, sotto la guida di chef preparati.",
           "Gli eventi per le aziende sono completamente personalizzabili. La proposta verrà concordata in funzione delle esigenze dell’azienda richiedente.",
-          // TODO(cliente): "gli spazi della scuola" — confermare di quale sede si parla.
-          "L’azienda può inoltre utilizzare gli spazi della scuola per integrare il percorso in cucina con altre attività correlate: presentazioni, briefing interni, riunioni…",
+          "L’azienda può inoltre utilizzare gli spazi della struttura per integrare il percorso in cucina con altre attività correlate: presentazioni, briefing interni, riunioni…",
           "Il percorso sarà progressivo e pratico: lavoreremo come una vera brigata di cucina, favorendo collaborazione, senso di responsabilità, organizzazione e spirito di squadra.",
         ],
       },
@@ -187,24 +188,24 @@ export const it: Content = {
   agenda: {
     title: "Prossimi appuntamenti",
     note: "Posti limitati — si conferma per telefono o WhatsApp.",
-    // TODO(cliente): solo la prima data è confermata. Le altre sono segnaposto.
+    // Il corso ha solo i mesi: con il giorno della prima lezione, aggiungere
+    // `startDate` e finirà anche nei dati strutturati come evento.
     events: [
       {
-        id: "corso-cucina-2026-02-22",
-        dateLabel: "Dom 22 febbraio 2026",
-        title: "Corso di cucina",
-        subtitle: "Castelgrande (PZ) — pasta fresca, tutte le età",
+        id: "corso-cucina-2026-2027",
+        // Spazi unificatori ovunque tranne dopo il trattino: se va a capo, va lì.
+        dateLabel: "Novembre\u00a02026\u00a0— giugno\u00a02027",
+        title: "Corso di cucina — dall’antipasto al dolce",
+        subtitle: "Castelgrande (PZ) — per età: 4–6, 7–14, 15–20 anni e adulti",
         ctaLabel: "Iscriviti →",
         href: "#contatti",
         status: "open",
-        startDate: "2026-02-22T10:00:00+01:00",
-        endDate: "2026-02-22T14:00:00+01:00",
       },
       {
         id: "orticoltura-primavera",
         dateLabel: "Data da definire",
         title: "Orticoltura — primavera",
-        subtitle: "Semina e cura dell’orto, per famiglie e gruppi",
+        subtitle: "Progettazione, semina e cura dell’orto — per tutte le età",
         ctaLabel: "Lista d’attesa →",
         href: "#contatti",
         status: "waitlist",

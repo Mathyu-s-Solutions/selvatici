@@ -20,6 +20,8 @@ export type WorkshopCard = {
   title: string;
   body: string;
   cta: string;
+  /** The workshop's photo, on the card and on its page. */
+  imageAlt: string;
 };
 
 /** The page behind a workshop card: `/<lang>/laboratori/<slug>`. */
@@ -131,7 +133,6 @@ export type Content = {
     eyebrow: string;
     title: string;
     note: string;
-    imageAlt: string;
     /** Link from a workshop page back to the cards on the landing. */
     back: string;
     cards: Record<WorkshopSlug, WorkshopCard>;

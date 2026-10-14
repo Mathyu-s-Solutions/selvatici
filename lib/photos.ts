@@ -1,5 +1,7 @@
 import type { StaticImageData } from "next/image";
 
+import type { WorkshopSlug } from "@/lib/workshops";
+
 import chefPasta from "@/assets/img/8614.jpg";
 import chefWork from "@/assets/img/8487.jpg";
 import chiSiamo from "@/assets/img/8289.jpg";
@@ -8,6 +10,10 @@ import hero from "@/assets/img/8393.jpg";
 import laboratorio from "@/assets/img/8358.jpg";
 import progettoDetail from "@/assets/img/8420.jpg";
 import progettoMain from "@/assets/img/8501.jpg";
+// Stand-ins until the client's own shoot (November 2026): CC0 photographs from
+// rawpixel.com, no attribution required. Swap the files, keep the names.
+import aziende from "@/assets/img/aziende-web.webp";
+import orticoltura from "@/assets/img/orticoltura-web.webp";
 
 import g8321 from "@/assets/img/8321.jpg";
 import g8347 from "@/assets/img/8347.jpg";
@@ -36,6 +42,13 @@ export const photos = {
   chefWork,
   cammino,
 } satisfies Record<string, StaticImageData>;
+
+/** The photo on each workshop's card and on its page. */
+export const workshopPhotos = {
+  cucina: laboratorio,
+  orticoltura,
+  aziende,
+} satisfies Record<WorkshopSlug, StaticImageData>;
 
 /** Gallery marquee, row 1 — 70s, left. */
 export const galleryRowOne: StaticImageData[] = [

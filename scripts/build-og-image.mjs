@@ -34,9 +34,7 @@ const PAD = 72;
 const INK = "#333333";
 const PAPER = "#fbf6ec";
 const ACCENT = "#ffb067";
-const OLIVE = "#83883e";
 const YELLOW = "#f8ce79";
-const BROWN = "#a56900";
 
 const seatren = fontkit.openSync("assets/fonts/Seatren.woff2");
 // From the handoff TTF: fontkit cannot instantiate a weight out of a woff2.
@@ -45,31 +43,16 @@ const montserratBold = fontkit
   .getVariation({ wght: 700 });
 
 /**
- * Same rule as the pages: the photograph where the shoot has one, the card's
- * colour with the monogram where it does not.
+ * The same photographs as the cards and pages (lib/photos.ts). `top` is where
+ * the 630px band starts on the photo scaled to 1200 wide, chosen per picture so
+ * the crop keeps what matters — the faces, the trowel, the group in chef hats.
+ * `name` is the colour of the kicker, as on the workshop's card. `shade` darkens
+ * a bright photograph evenly before the veil, so the white wordmark holds.
  */
 const themes = {
-  // `top` is where the 630px band starts on the photo scaled to 1200 wide:
-  // high enough to keep the faces, which a centred crop cuts off.
-  cucina: {
-    photo: { file: "assets/img/8358.jpg", top: 40 },
-    name: ACCENT,
-    title: PAPER,
-  },
-  orticoltura: {
-    background: OLIVE,
-    monogram: { file: "assets/brand/icona-bianca.png", opacity: 0.22 },
-    name: YELLOW,
-    title: PAPER,
-  },
-  aziende: {
-    background: ACCENT,
-    monogram: { file: "assets/brand/icona.png", opacity: 0.45 },
-    name: BROWN,
-    title: INK,
-    // The white wordmark is a hairline outline: on peach it all but vanishes.
-    wordmark: "assets/brand/logo-completo-trim.png",
-  },
+  cucina: { photo: "assets/img/8358.jpg", top: 40, name: ACCENT, shade: 0 },
+  orticoltura: { photo: "assets/img/orticoltura-web.webp", top: 70, name: YELLOW, shade: 0 },
+  aziende: { photo: "assets/img/aziende-web.webp", top: 90, name: ACCENT, shade: 0.3 },
 };
 
 /** The dictionaries are TypeScript: transpile them in memory and import that. */
@@ -107,8 +90,8 @@ function fitted(font, text, max, maxWidth) {
   return { size, ...outline(font, text, size) };
 }
 
-function wordmark(width, file = "assets/brand/logo-bianco-trim.png") {
-  return sharp(file).resize({ width }).toBuffer();
+function wordmark(width) {
+  return sharp("assets/brand/logo-bianco-trim.png").resize({ width }).toBuffer();
 }
 
 async function write(image, out) {
@@ -154,89 +137,51 @@ async function buildLanding() {
 
 async function buildWorkshop(locale, slug, { name, title }) {
   const theme = themes[slug];
-  const layers = [];
 
-  const base = theme.photo
-    ? sharp(
-        await sharp(theme.photo.file)
-          .resize({ width: WIDTH })
-          .extract({ left: 0, top: theme.photo.top, width: WIDTH, height: HEIGHT })
-          .toBuffer(),
-      )
-    : sharp({
-        create: { width: WIDTH, height: HEIGHT, channels: 3, background: theme.background },
-      });
-  /** How far right the title may run: up to the monogram, when there is one. */
-  let titleRight = WIDTH - PAD;
+  const photo = await sharp(theme.photo)
+    .resize({ width: WIDTH })
+    .extract({ left: 0, top: theme.top, width: WIDTH, height: HEIGHT })
+    .toBuffer();
 
-  if (theme.photo) {
-    // Heavier towards the bottom left, where the copy sits.
-    layers.push({
-      input: Buffer.from(
-        `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-           <defs>
-             <linearGradient id="down" x1="0" y1="0" x2="0" y2="1">
-               <stop offset="0%" stop-color="${INK}" stop-opacity="0.62"/>
-               <stop offset="40%" stop-color="${INK}" stop-opacity="0.38"/>
-               <stop offset="100%" stop-color="${INK}" stop-opacity="0.9"/>
-             </linearGradient>
-             <linearGradient id="across" x1="0" y1="0" x2="1" y2="0">
-               <stop offset="0%" stop-color="${INK}" stop-opacity="0.5"/>
-               <stop offset="70%" stop-color="${INK}" stop-opacity="0"/>
-             </linearGradient>
-           </defs>
-           <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#down)"/>
-           <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#across)"/>
-         </svg>`,
-      ),
-      top: 0,
-      left: 0,
-    });
-  }
+  // Heavier towards the bottom left, where the copy sits.
+  const veil = Buffer.from(
+    `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
+       <defs>
+         <linearGradient id="down" x1="0" y1="0" x2="0" y2="1">
+           <stop offset="0%" stop-color="${INK}" stop-opacity="0.62"/>
+           <stop offset="40%" stop-color="${INK}" stop-opacity="0.38"/>
+           <stop offset="100%" stop-color="${INK}" stop-opacity="0.9"/>
+         </linearGradient>
+         <linearGradient id="across" x1="0" y1="0" x2="1" y2="0">
+           <stop offset="0%" stop-color="${INK}" stop-opacity="0.5"/>
+           <stop offset="70%" stop-color="${INK}" stop-opacity="0"/>
+         </linearGradient>
+       </defs>
+       <rect width="${WIDTH}" height="${HEIGHT}" fill="${INK}" fill-opacity="${theme.shade}"/>
+       <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#down)"/>
+       <rect width="${WIDTH}" height="${HEIGHT}" fill="url(#across)"/>
+     </svg>`,
+  );
 
-  if (theme.monogram) {
-    // The glyph is the middle third of a mostly empty square: trim to it first.
-    const glyph = await sharp(theme.monogram.file).trim().toBuffer();
-    const sized = await sharp(glyph)
-      .resize({ height: 430 })
-      .ensureAlpha()
-      .composite([
-        {
-          input: Buffer.from([255, 255, 255, Math.round(255 * theme.monogram.opacity)]),
-          raw: { width: 1, height: 1, channels: 4 },
-          tile: true,
-          blend: "dest-in",
-        },
-      ])
-      .png()
-      .toBuffer({ resolveWithObject: true });
-    const left = WIDTH - PAD - 30 - sized.info.width;
-    layers.push({
-      input: sized.data,
-      top: Math.round((HEIGHT - sized.info.height) / 2),
-      left,
-    });
-    titleRight = left - 28;
-  }
-
-  layers.push({ input: await wordmark(230, theme.wordmark), top: PAD - 14, left: PAD });
-
-  const heading = fitted(seatren, title, 100, titleRight - PAD);
+  const heading = fitted(seatren, title, 100, WIDTH - PAD * 2);
   const titleBaseline = HEIGHT - PAD - 6;
   const label = outline(montserratBold, name.toUpperCase(), 23, 23 * 0.2);
   const labelBaseline = titleBaseline - heading.size * 0.78 - 34;
-  layers.push({
-    input: Buffer.from(
-      `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
-         <path transform="translate(${PAD} ${labelBaseline})" d="${label.d}" fill="${theme.name}"/>
-         <path transform="translate(${PAD} ${titleBaseline})" d="${heading.d}" fill="${theme.title}"/>
-       </svg>`,
-    ),
-    top: 0,
-    left: 0,
-  });
+  const copy = Buffer.from(
+    `<svg width="${WIDTH}" height="${HEIGHT}" xmlns="http://www.w3.org/2000/svg">
+       <path transform="translate(${PAD} ${labelBaseline})" d="${label.d}" fill="${theme.name}"/>
+       <path transform="translate(${PAD} ${titleBaseline})" d="${heading.d}" fill="${PAPER}"/>
+     </svg>`,
+  );
 
-  await write(base.composite(layers), `public/og/${locale}/${slug}.jpg`);
+  await write(
+    sharp(photo).composite([
+      { input: veil, top: 0, left: 0 },
+      { input: await wordmark(230), top: PAD - 14, left: PAD },
+      { input: copy, top: 0, left: 0 },
+    ]),
+    `public/og/${locale}/${slug}.jpg`,
+  );
 }
 
 await buildLanding();
